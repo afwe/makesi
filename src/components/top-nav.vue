@@ -20,8 +20,11 @@
             </div>
         </el-menu-item>
         <el-menu-item class="item">
-            <div class="item" @click="$router.push('/user')" v-show='isLogin'> 
+            <div class="item" @click="$router.push('/user')" v-show='isLogin == true && monitor == false'> 
                 个人中心
+            </div>
+            <div class="item" @click="$router.push('/admin')" v-show='isLogin == true && monitor == true'>
+                 管理中心
             </div>
             <div class="item" @click="showRegister = true" v-show='!isLogin'>
                 登录
@@ -142,3 +145,10 @@ export default{
     }
 }
 </script>
+
+<style scoped>
+.navContainer{
+    height: 64px;
+    width: 100%;
+}
+</style>
