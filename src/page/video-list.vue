@@ -12,12 +12,14 @@
 import { defineComponent } from '@vue/composition-api'
 
 export default {
+    name: videoList,
+    props: ['cid'],
     data(){
 
     },
     methods:{
         getVideoes: async function(){
-            
+
         },
         
     }

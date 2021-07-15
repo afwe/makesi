@@ -13,6 +13,8 @@
 import { defineComponent } from '@vue/composition-api'
 
 export default {
+    name: disscusion,
+    props: ['cid'],
     data(){
 
     },
