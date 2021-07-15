@@ -30,6 +30,10 @@
                 登录
             </div>
         </el-menu-item>
+        <el-menu-item>
+            <img class='avator' />
+        
+        </el-menu-item>
     </el-menu>
     <el-card class="loginPosition" v-show="showLogin">
     <div class="loginForm" v-show="showLogin">

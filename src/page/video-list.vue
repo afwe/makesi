@@ -1,13 +1,10 @@
 <template>
     <div class="mainContainer">
-        <div class="courseTitle">
-            {{courseName}}
+        <div class="title">
+            欢迎学习马克思主义
         </div>
-        <div class="course">
-            课程简介
-        </div>
-        <div class="videoNav">
-            点击进入课程视频
+        <div class="video-list">
+            视频列表
         </div>
     </div>
 </template>
@@ -19,8 +16,8 @@ export default {
 
     },
     methods:{
-        getCourses: async function(){
-
+        getVideoes: async function(){
+            
         },
         
     }

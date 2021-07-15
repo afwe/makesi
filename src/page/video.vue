@@ -1,13 +1,13 @@
 <template>
     <div class="mainContainer">
-        <div class="courseTitle">
-            {{courseName}}
+        <div class="title">
+            {{videoName}}
         </div>
-        <div class="course">
-            课程简介
+        <div class="videoBody">
+            <video src="" />
         </div>
-        <div class="videoNav">
-            点击进入课程视频
+        <div class="discussNav">
+            点击进入讨论区
         </div>
     </div>
 </template>
@@ -19,7 +19,7 @@ export default {
 
     },
     methods:{
-        getCourses: async function(){
+        getVideo: async function(){
 
         },
         
