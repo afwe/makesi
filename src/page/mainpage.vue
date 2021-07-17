@@ -13,7 +13,9 @@ import { defineComponent } from '@vue/composition-api'
 
 export default {
     data(){
-
+        return{
+            
+        }
     },
     methods:{
         getCourses: async function(){

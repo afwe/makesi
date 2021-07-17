@@ -1,17 +1,17 @@
 <template>
     <div class='navContainer'>
     <el-menu mode="horizontal" class='navContainer'>
-        <el-menu-item class="item">
+        <el-menu-item class="item" index="1">
             <div class="item" @click="$router.push('/main')">
                 主页
             </div>
         </el-menu-item>
-        <el-menu-item class="item">
+        <el-menu-item class="item" index="2">
             <div class="item" @click="$router.push('/course')">
                 课程
             </div>
         </el-menu-item>
-        <el-menu-item class="item">
+        <el-menu-item class="item" index="3">
             <div class="item" @click="$router.push('/class')" v-show='isLogin'>
                 班级
             </div>
@@ -19,20 +19,28 @@
                 注册
             </div>
         </el-menu-item>
-        <el-menu-item class="item">
+        <el-menu-item class="item" index="4">
             <div class="item" @click="$router.push('/user')" v-show='isLogin == true && monitor == false'> 
                 个人中心
             </div>
             <div class="item" @click="$router.push('/admin')" v-show='isLogin == true && monitor == true'>
                  管理中心
             </div>
-            <div class="item" @click="showRegister = true" v-show='!isLogin'>
+            <div class="item" @click="showLogin = true" v-show='!isLogin'>
                 登录
             </div>
         </el-menu-item>
-        <el-menu-item>
-            <img class='avator' />
-        
+        <el-menu-item class="item">
+            <el-dropdown class="item" @command="dropDownListener">
+                <el-avatar>
+                    <img :src="avatorSrc" style="height: 40px;border-radius: 50%"/>
+                </el-avatar>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item command="personal">{{userNick}}</el-dropdown-item>
+                    <el-dropdown-item v-if="isLogin==false" command="login">登录</el-dropdown-item>
+                    <el-dropdown-item v-if="isLogin==false" command="register">注册</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
         </el-menu-item>
     </el-menu>
     <el-card class="loginPosition" v-show="showLogin">
@@ -41,7 +49,7 @@
         <input class="info-input" type="text" v-model="userID" placeholder="用户名">
         </div>
         <div>
-        <input class="info-input" type="text" v-model="password" placeholder="密码">
+        <input class="info-input" type="text" v-model="userPassword" placeholder="密码">
         </div>
         <el-radio-button class="loginButton" v-on:click.native="doLogin()">
             登录
@@ -57,7 +65,7 @@
         <input class="info-input" type="text" v-model="userID" placeholder="用户名">
         </div>
         <div>
-        <input class="info-input" type="text" v-model="password" placeholder="密码">
+        <input class="info-input" type="text" v-model="userPassword" placeholder="密码">
         </div>
         <el-radio-button class="loginButton" v-on:click.native="doRegister()">
             注册
@@ -76,12 +84,15 @@ export default{
     data(){
         return{
             isLogin: false,
+            showLogin: false,
+            showRegister: false,
+            avatorSrc: require("../assets/logo.png"),
             mode: "login",
             userID: "",
             userPassword: "",
             userIden: "",
             userClass: "",
-            userName: "",
+            userNick: "未登录",
             userMail: "",
         }
     },
@@ -144,6 +155,16 @@ export default{
                 })
             }
             this.isDone=true;
+        },
+        dropDownListener: function(type){
+
+            if(type == "login"){
+                this.showLogin = true;
+            }else if(type == "register"){
+                this.showRegister = true;
+            }else if(type == "personal"){
+                
+            }
         }
 
     }
@@ -154,5 +175,9 @@ export default{
 .navContainer{
     height: 64px;
     width: 100%;
+}
+.loginPosition{
+    height: 300px;
+    width: 600px;
 }
 </style>
