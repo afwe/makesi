@@ -3,6 +3,7 @@ import Router from 'vue-router'
 
 import mainpage from '@/page/mainpage'
 import course from '@/page/course'
+import manage from '@/page/manage'
 Vue.use(Router)
 
 export default new Router({
@@ -16,6 +17,11 @@ export default new Router({
     {
       path: '/course',
       component: course,
+
+    },
+    {
+      path: '/manage',
+      component: manage,
 
     }
   ]
