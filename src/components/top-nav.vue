@@ -1,15 +1,11 @@
 <template>
     <div class='navContainer'>
-    <el-menu mode="horizontal" class='navContainer'>
-        <el-menu-item class="item" index="1">
-            <div class="item" @click="$router.push('/main')">
-                主页
-            </div>
+    <el-menu default-active="1" mode="horizontal" class='navContainer'>
+        <el-menu-item class="item" index="1" @click="$router.push('/main')">
+            主页
         </el-menu-item>
-        <el-menu-item class="item" index="2">
-            <div class="item" @click="$router.push('/course')">
-                课程
-            </div>
+        <el-menu-item class="item" index="2" @click="$router.push('/course')">
+            课程
         </el-menu-item>
         <el-menu-item class="item" index="3">
             <div class="item" @click="$router.push('/class')" v-show='isLogin'>
@@ -36,7 +32,7 @@
                     <img :src="avatorSrc" style="height: 40px;border-radius: 50%"/>
                 </el-avatar>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="personal">{{userNick}}</el-dropdown-item>
+                    <el-dropdown-item command="personal" disa>{{userNick}}</el-dropdown-item>
                     <el-dropdown-item v-if="isLogin==false" command="login">登录</el-dropdown-item>
                     <el-dropdown-item v-if="isLogin==false" command="register">注册</el-dropdown-item>
                 </el-dropdown-menu>
