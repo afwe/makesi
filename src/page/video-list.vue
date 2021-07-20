@@ -1,10 +1,25 @@
 <template>
     <div class="mainContainer">
-        <div class="title">
-            欢迎学习马克思主义
-        </div>
         <div class="video-list">
-            视频列表
+            <ol class="video-content">
+                <span class="title">视频列表</span>
+                <li>
+                    <div class="video" v-for="(item,index) in videoes" @click="toVideo(item.id)">
+                        {{item.name}}
+                    </div>
+                </li>
+            </ol>
+            <div class="video-pager">
+                <el-pagination
+                    v-if="totVideo > 0"
+                    background
+                    layout="prev, pager, next"
+                    :page-size="20"
+                    :total="totVideo"
+                    :current-page="videoPage"
+                    @current-change="changeVideoPage"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -13,13 +28,30 @@ import { defineComponent } from '@vue/composition-api'
 
 export default {
     data(){
-
+        return{
+            totVideo: 4,
+            videoPage: 1,
+            videoes: [
+                {
+                    id: 1,
+                    name: 2
+                }
+            ]
+        }
     },
     methods:{
+        changeVideoPage:async function(){
+
+        },
         getVideoes: async function(){
 
         },
-        
+        toVideo: async function(id){
+            this.$router.push(`/video?id=${id}`);
+        },
+        render: async function(){
+            
+        }
     }
 }
 </script>

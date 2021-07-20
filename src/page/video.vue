@@ -24,7 +24,9 @@ export default {
         getVideo: async function(){
 
         },
-        
+        render: async function(){
+            
+        }
     }
 }
 </script>

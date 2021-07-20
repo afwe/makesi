@@ -64,7 +64,12 @@ export default {
 
         },
         toVideo: async function(id){
-            this.$router.push(`videoes/?id=${id}`);
+            this.$router.push({
+                path: `/videoes/?id=${id}`
+            });
+        },
+        render:async function(){
+            
         }
     }
 }

@@ -5,6 +5,7 @@ import mainpage from '@/page/mainpage'
 import course from '@/page/course'
 import manage from '@/page/manage'
 import videoList from '@/page/video-list'
+import videoPage from '@/page/video'
 Vue.use(Router)
 
 export default new Router({
@@ -32,7 +33,10 @@ export default new Router({
     {
       path: '/videoes',
       component: videoList,
-
+    },
+    {
+      path: '/video',
+      component: videoPage
     }
   ]
 })
