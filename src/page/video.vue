@@ -15,7 +15,6 @@
 import { defineComponent } from '@vue/composition-api'
 
 export default {
-    name: video,
     props: ['cid'],
     data(){
 
@@ -25,7 +24,7 @@ export default {
 
         },
         render: async function(){
-            
+
         }
     }
 }
