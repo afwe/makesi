@@ -9,7 +9,7 @@
                     </div>
                 </li>
             </ol>
-            <div class="reply-pager">
+            <div class="course-pager">
                 <el-pagination
                     v-if="totCourse > 0"
                     background
@@ -49,6 +49,7 @@ export default {
         return{
             courses:[
                 {
+                    id:1,
                     name:"k1"
                 },
                 {
@@ -77,7 +78,7 @@ export default {
             /*获取课程*/
         },
         toCourse: async function(id){
-            this.$router.push(`course/${id}`);
+            this.$router.push(`course/?id=${id}`);
         },
         getCourses: async function(){
             
