@@ -47,7 +47,8 @@ export default {
             courseName: "test",
             courseDesc: "test",
             courses: [],
-            totCourse: 0
+            totCourse: 0,
+            coursePage: 0,
         }
     },
     created(){

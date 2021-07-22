@@ -1,5 +1,32 @@
 <template>
     <div class="mainContainer">
+        <div class="totWatch">
+            <span>总观看时长:</span>
+            <span>{{totWatch}}</span>
+        </div>
+        <div class="listWatch">
+            <ol class="list-content">
+                <span class="title">课程观看时长</span>
+                <li>
+                    <div class="course" v-for="(item,index) in courses">
+                        <span>{{item.name}}</span>
+                        <span>:</span>
+                        <span>{{item.time}}</span>
+                    </div>
+                </li>
+            </ol>
+            <div class="course-pager">
+                <el-pagination
+                    v-if="totCourse > 0"
+                    background
+                    layout="prev, pager, next"
+                    :page-size="20"
+                    :total="totCourse"
+                    :current-page="coursePage"
+                    @current-change="changeCoursePage"
+                />
+            </div>
+        </div>
         <div id="myChart" :style="{width: '400px', height: '400px'}"></div>
         <div id="main" :style="{width:'600px', height: '400px'}"></div>
     </div>
@@ -15,7 +42,20 @@ require('echarts/lib/component/title')
 export default {
     data(){
         return{
-            videoName: ["v1", "v2", "v3", "v4", "v5", "v6"]
+            videoName: ["v1", "v2", "v3", "v4", "v5", "v6"],
+            totWatch: "00:00:00",
+            correctRate: 0,
+            courses: [{
+                        id:1,
+                        name:"k1",
+                        time: "00:00:00"
+                    },
+                    {
+                        name:"k1",
+                        time: "00:00:00"
+                    },
+                ],
+            totCourse: 0
         }
     },
     mounted(){
@@ -63,16 +103,10 @@ export default {
             }
 
             let data = [{
-                name: '危急',
+                name: '错误',
                 value: 13
             }, {
-                name: '高危',
-                value: 39
-            }, {
-                name: '中危',
-                value: 25
-            }, {
-                name: '低危',
+                name: '正确',
                 value: 75
             }]
 
@@ -88,7 +122,7 @@ export default {
                 label: {
                     normal: {
                         color: '#fff',
-                        formatter: '{b|{b}} {c|{c}} 台',
+                        formatter: '{b|{b}} {c|{c}} %',
                         rich: {
                             b: {
                                 color: "#fff"
@@ -162,7 +196,7 @@ export default {
             let options = {
                 animation: false,
                 backgroundColor: '#010105',
-                color: ["#FE0404", "#FBA200", "#00CEFF", "#00DC58"],
+                color: ["#FE0404", "#00DC58"],
                 series:[
                     seriesForData,
                     seriesForBg,
@@ -177,5 +211,7 @@ export default {
 }
 </script>
 <style scoped>
-
+.listWatch{
+    background-color: bisque;
+}
 </style>

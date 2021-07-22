@@ -19,7 +19,7 @@
             <div class="item" @click="$router.push('/user')" v-show='isLogin == true && monitor == false'> 
                 个人中心
             </div>
-            <div class="item" @click="$router.push('/admin')" v-show='isLogin == true && monitor == true'>
+            <div class="item" @click="$router.push('/manage')" v-show='isLogin == true && monitor == true'>
                  管理中心
             </div>
             <div class="item" @click="showLogin = true" v-show='!isLogin'>
@@ -79,9 +79,11 @@ import { defineComponent } from '@vue/composition-api'
 export default{
     data(){
         return{
-            isLogin: false,
+            isLogin: true,
+            isAdmin: true,
             showLogin: false,
-            showRegister: false,
+            monitor: true,
+            loginMode: "login",
             avatorSrc: require("../assets/logo.png"),
             mode: "login",
             userID: "",
@@ -168,6 +170,10 @@ export default{
 </script>
 
 <style scoped>
+.loginPosition{
+    position: fixed;
+    z-index: 1000;
+}
 .navContainer{
     height: 64px;
     width: 100%;
