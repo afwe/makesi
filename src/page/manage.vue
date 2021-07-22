@@ -55,7 +55,8 @@ export default {
                         time: "00:00:00"
                     },
                 ],
-            totCourse: 0
+            totCourse: 1,
+            coursePage: 1
         }
     },
     mounted(){

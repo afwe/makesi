@@ -35,6 +35,7 @@
                     <el-dropdown-item command="personal" disa>{{userNick}}</el-dropdown-item>
                     <el-dropdown-item v-if="isLogin==false" command="login">登录</el-dropdown-item>
                     <el-dropdown-item v-if="isLogin==false" command="register">注册</el-dropdown-item>
+                    <el-dropdown-item v-if="isLogin==true" command="logout">登出</el-dropdown-item>
                 </el-dropdown-menu>
             </el-dropdown>
         </el-menu-item>
@@ -79,10 +80,10 @@ import { defineComponent } from '@vue/composition-api'
 export default{
     data(){
         return{
-            isLogin: true,
-            isAdmin: true,
+            isLogin: false,
             showLogin: false,
-            monitor: true,
+            showRegister: false,
+            monitor: false,
             loginMode: "login",
             avatorSrc: require("../assets/logo.png"),
             mode: "login",
@@ -154,14 +155,18 @@ export default{
             }
             this.isDone=true;
         },
+        doLogout:async function(){
+
+        },
         dropDownListener: function(type){
 
             if(type == "login"){
                 this.showLogin = true;
             }else if(type == "register"){
                 this.showRegister = true;
-            }else if(type == "personal"){
-                
+            }else if(type == "logout"){
+                this.isLogin = false;
+                this.doLogout();
             }
         }
 
