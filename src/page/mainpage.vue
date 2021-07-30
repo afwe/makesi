@@ -40,8 +40,8 @@
     </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
-
+import { checkLogin_Student } from '../fetch/student_data'
+import { checkLogin_Teacher } from '../fetch/teacher_data'
 export default {
     data(){
         return{

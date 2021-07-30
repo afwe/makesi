@@ -219,7 +219,7 @@ figcaption{
 }
 /* 当前进度*/
 .curr-progress{
-    width: 50%;
+    width: 0%;
     height: 10px;
     background-color: #fff;
 }

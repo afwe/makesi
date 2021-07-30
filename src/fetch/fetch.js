@@ -18,6 +18,9 @@ export default async function ifetch(
   //   "Contest-Type": "application/json"
   // }, headers);
   let header_data = headers;
+  if(localStorage.getItem("token") != undefined){
+    header_data["Authorization"] = localStorage.getItem("token");
+  }
   if (!(data instanceof FormData)) {
     header_data["Accept"] = "application/json";
     header_data["Content-Type"] = "application/json";

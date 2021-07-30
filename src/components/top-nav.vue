@@ -32,7 +32,7 @@
                     <img :src="avatorSrc" style="height: 40px;border-radius: 50%"/>
                 </el-avatar>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="personal" disa>{{userNick}}</el-dropdown-item>
+                    <el-dropdown-item command="personal" >{{userNick}}</el-dropdown-item>
                     <el-dropdown-item v-if="isLogin==false" command="login">登录</el-dropdown-item>
                     <el-dropdown-item v-if="isLogin==false" command="register">注册</el-dropdown-item>
                     <el-dropdown-item v-if="isLogin==true" command="logout">登出</el-dropdown-item>
@@ -48,7 +48,9 @@
         <div>
         <input class="info-input" type="text" v-model="userPassword" placeholder="密码">
         </div>
-        <el-radio-button class="loginButton" v-on:click.native="doLogin()">
+        <el-radio v-model="teacherLogin" label="false">学生</el-radio>
+        <el-radio v-model="teacherLogin" label="true">教师</el-radio>
+        <el-radio-button class="loginButton" @click.native="doLogin()">
             登录
         </el-radio-button>
         <el-radio-button class="closeButton" v-on:click.native="hideLogin()">
@@ -64,6 +66,8 @@
         <div>
         <input class="info-input" type="text" v-model="userPassword" placeholder="密码">
         </div>
+        <el-radio v-model="teacherRegister" label="false">学生</el-radio>
+        <el-radio v-model="teacherRegister" label="true">教师</el-radio>
         <el-radio-button class="loginButton" v-on:click.native="doRegister()">
             注册
         </el-radio-button>
@@ -75,11 +79,13 @@
     </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
-
+import {student_login, student_register, checkLogin_Student} from '../fetch/student_data'
+import {teacher_login, teacher_register, checkLogin_Teacher} from '../fetch/teacher_data'
 export default{
     data(){
         return{
+            teacherRegister: "false",
+            teacherLogin: "false",
             isLogin: false,
             showLogin: false,
             showRegister: false,
@@ -93,67 +99,119 @@ export default{
             userClass: "",
             userNick: "未登录",
             userMail: "",
+            btnAva: true,
+        }
+    },
+    mounted(){
+        if(!(this.checkLogin_Student() || this.checkLogin_Teacher())){
+            localStorage.setItem("Login", false);
+        } else{
+            localStorage.setItem("Login", true);
         }
     },
     methods:{
         close() {
             this.$emit("close");
         },
-        logout: function(){
-            localStorage.clear();
+        checkLogin_Student: async function(){
+            let response;
+            response = await checkLogin_Student({});
+            console.log(response);
+            if(response.code == 200){
+                this.isLogin = true;
+                this.monitor = false;
+                this.userNick = response.data.studentName;
+                console.log(this.userNick);
+                localStorage.setItem("nick", response.data.studentName);
+                localStorage.setItem("userID", response.data.studentId);
+                localStorage.setItem("userNumber", response.data.studentNumber);
+            }
+        },
+        checkLogin_Teacher: async function(){
+            let response;
+            response = await checkLogin_Teacher({});
+            console.log(response);
+            if(response.code == 200){
+                this.isLogin = true;
+                this.monitor = true;
+            }
         },
         hideLogin:function(){
             console.log("!");
             this.showLogin = false;
         },
         doLogin:async function(){
-            if(!this.isDone) return;
-            this.isDone=false;
-            if(localStorage.getItem("userID")!=null) {
-                this.$message({
-                    message:"已登录",
-                    type:"error"
-                })
-                setTimeout(() => {
-                    this.isDone=true;
-                }, 1000);
-                return;
+            if(!this.btnAva) return;
+            this.btnAva = false;
+            if(this.teacherLogin == "true" ){
+                let response = await teacher_login({email: this.userID,pwd: this.userPassword});
+                if(response.code== 200){
+                    localStorage.setItem("token", response.data);
+                    this.$message({
+                        message:"登录成功",
+                        type:"success"
+                    });
+                    this.showLogin = false;
+                }
+                else{
+                    this.$message({
+                        message:"登录失败",
+                        type:"error"
+                    })
+                }
+            } else {
+                let response = await student_login({email: this.userID,pwd: this.userPassword});
+                if(response.code== 200){
+                    localStorage.setItem("token", response.data);
+                    this.$message({
+                        message:"登录成功",
+                        type:"success"
+                    });
+                    this.showLogin = false;
+                }
+                else{
+                    this.$message({
+                        message:response.msg,
+                        type:"error"
+                    })
+                }
             }
-            let response = await login({userID: this.userID,password: this.password});
-            if(response.code== 200){
-
-                this.$message({
-                    message:"登录成功",
-                    type:"success"
-                });
-                this.showLogin = false;
-            }
-            else{
-                this.$message({
-                    message:"登录失败",
-                    type:"error"
-                })
-            }
-            if(localStorage.getItem("role")==2) this.isAdmin = true;
-            this.isDone=true;
+            this.btnAva=true;
         },
         doRegister:async function(){
-            if(!this.isDone) return;
-            this.isDone=false;
-            let response = await register({userID:this.userID,password:this.password});
-            if(response.code == 200){
-                this.$message({
-                    message:"注册成功",
-                    type:"success"
-                })
+            if(!this.btnAva) return;
+            this.btnAva = false;
+            if(this.teacherRegister == "true"){
+                let response = await teacher_register({email:this.userID,pwd:this.userPassword});
+                if(response.code == 200){
+                    this.$message({
+                        message:"注册成功",
+                        type:"success"
+                    })
+                }
+                else{
+                    this.$message({
+                        message: "注册失败",
+                        type:"error"
+                    })
+                } 
+            } else{
+                let response = await student_register({email:this.userID,pwd:this.userPassword});
+                if(response.code == 200){
+                    this.$message({
+                        message:"注册成功",
+                        type:"success"
+                    })
+                }
+                else{
+                    this.$message({
+                        message: "注册失败",
+                        type:"error"
+                    })
+                } 
             }
-            else{
-                this.$message({
-                    message: "注册失败",
-                    type:"error"
-                })
-            }
-            this.isDone=true;
+            
+            this.btnAva=true;
         },
         doLogout:async function(){
 
