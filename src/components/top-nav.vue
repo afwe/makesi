@@ -103,11 +103,25 @@ export default{
         }
     },
     mounted(){
-        if(!(this.checkLogin_Student() || this.checkLogin_Teacher())){
-            localStorage.setItem("Login", false);
-        } else{
-            localStorage.setItem("Login", true);
-        }
+        localStorage.setItem("Login", false);
+        localStorage.setItem("monitor", false);
+        this.checkLogin_Teacher().then(
+            (flag) => {
+            if(flag){
+                localStorage.setItem("Login", true);
+                localStorage.setItem("monitor", false);
+            }
+        }).then(()=>{
+        if(!this.isLogin){
+            this.checkLogin_Student().then(
+                (flag) => {
+                    if(flag){
+                        localStorage.setItem("Login", true);
+                        localStorage.setItem("monitor", false);
+                    }
+            })
+        }});
+        
     },
     methods:{
         close() {
@@ -116,8 +130,8 @@ export default{
         checkLogin_Student: async function(){
             let response;
             response = await checkLogin_Student({});
-            console.log(response);
             if(response.code == 200){
+                console.log(response)
                 this.isLogin = true;
                 this.monitor = false;
                 this.userNick = response.data.studentName;
@@ -125,16 +139,20 @@ export default{
                 localStorage.setItem("nick", response.data.studentName);
                 localStorage.setItem("userID", response.data.studentId);
                 localStorage.setItem("userNumber", response.data.studentNumber);
+                return true;
             }
+            return false;
         },
         checkLogin_Teacher: async function(){
             let response;
             response = await checkLogin_Teacher({});
-            console.log(response);
             if(response.code == 200){
+                console.log(response)
                 this.isLogin = true;
                 this.monitor = true;
+                return true;
             }
+            return false;
         },
         hideLogin:function(){
             console.log("!");
@@ -147,6 +165,9 @@ export default{
                 let response = await teacher_login({email: this.userID,pwd: this.userPassword});
                 if(response.code== 200){
                     localStorage.setItem("token", response.data);
+                    this.isLogin = true;
+                    this.monitor = true;
+                    console.log(response);
                     this.$message({
                         message:"登录成功",
                         type:"success"
@@ -163,6 +184,7 @@ export default{
                 let response = await student_login({email: this.userID,pwd: this.userPassword});
                 if(response.code== 200){
                     localStorage.setItem("token", response.data);
+                    this.isLogin = true;
                     this.$message({
                         message:"登录成功",
                         type:"success"

@@ -1,2 +1,2 @@
-let baseUrl = "/api/";
+let baseUrl = "/";
 export {baseUrl};

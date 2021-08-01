@@ -32,13 +32,14 @@
                 <div>{{courseDesc}}</div>
             </div>
             <div class="videoNav">
+                <span @click="joinCourse()">加入课程</span>
                 <span @click="toVideo(courseID)">点击进入课程视频</span>
             </div>
         </div>
     </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { join_course , get_course_by_id} from '../fetch/course'
 
 export default {
     data(){
@@ -58,8 +59,21 @@ export default {
         }
     },
     methods:{
+        joinCourse: async function(){
+            let response;
+            response = await join_course(this.courseID);
+        },
         getCourses: async function(){
-
+            let response;
+            response = await get_course_by_id(this.courseID);
+            if(response.code == 200){
+                console.log(response);
+            } else{
+                this.$message({
+                    message: '获取课程失败',
+                    type: 'error'
+                })
+            }
         },
         toCourse: async function(){
 

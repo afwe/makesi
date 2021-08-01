@@ -1,5 +1,22 @@
 <template>
     <div class="mainContainer">
+        <el-button class="createCourse" @click="showCreate=true">
+            <span>创建课程</span>
+        </el-button>
+        <div class="createPanel" v-show="showCreate==true">
+            <div>
+                <input class="info-input" type="text" v-model="courseName" placeholder="课程名称">
+            </div>
+            <div>
+                <input class="info-input" type="text" v-model="courseIntro" placeholder="课程简介">
+            </div>
+            <el-radio-button class="createButton" v-on:click.native="createCourse()">
+                创建
+            </el-radio-button>
+            <el-radio-button class="closeButton" v-on:click.native="showCreate=false">
+                关闭
+            </el-radio-button>
+        </div>
         <div class="totWatch">
             <span>总观看时长:</span>
             <span>{{totWatch}}</span>
@@ -32,6 +49,8 @@
     </div>
 </template>
 <script>
+
+import {create_course, create_course_identify} from '../fetch/course';
 // 引入基本模板
 let echarts = require('echarts/lib/echarts')
 // 引入柱状图组件
@@ -42,6 +61,9 @@ require('echarts/lib/component/title')
 export default {
     data(){
         return{
+            showCreate: false,
+            courseIntro: "",
+            courseName: "",
             videoName: ["v1", "v2", "v3", "v4", "v5", "v6"],
             totWatch: "00:00:00",
             correctRate: 0,
@@ -56,7 +78,8 @@ export default {
                     },
                 ],
             totCourse: 1,
-            coursePage: 1
+            coursePage: 1,
+            isDone: true
         }
     },
     mounted(){
@@ -64,6 +87,22 @@ export default {
         this.render1();
     },
     methods:{
+        createCourse:async function(){
+            if(!this.isDone) return;
+            this.isDone = false;
+            let response;
+            response = await create_course_identify();
+            if(response.code == 200){
+                response = await create_course({
+                    courseName: this.courseName,
+                    courseIntro: this.courseIntro
+                });
+            }
+            this.isDone = true;
+        },
+        changeCoursePage: function(){
+
+        },
         drawLine(){
             let myChart = this.$echarts.init(document.getElementById('myChart'))
             myChart.setOption({
