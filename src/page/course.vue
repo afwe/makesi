@@ -29,7 +29,7 @@
             </div>
             <div class="course">
                 <span>课程简介</span>
-                <div>{{courseDesc}}</div>
+                <div>{{courseIntro}}</div>
             </div>
             <div class="videoNav">
                 <span @click="joinCourse()">加入课程</span>
@@ -46,7 +46,7 @@ export default {
         return{
             courseID: "1",
             courseName: "test",
-            courseDesc: "test",
+            courseIntro: "test",
             courses: [],
             totCourse: 0,
             coursePage: 0,
@@ -57,11 +57,20 @@ export default {
         if(this.$route.query.id != "undefined"){
             this.courseID = this.$route.query.id;
         }
+        this.render().then(
+            (data) => {
+                if(data){
+                    this.courseName = data.data.courseName;
+                    this.courseIntro = data.data.courseIntro;
+                }
+            }
+        )
     },
     methods:{
         joinCourse: async function(){
-            let response;
-            response = await join_course(this.courseID);
+            console.log(typeof(parseInt(this.courseID)))
+            let response = await join_course(parseInt(this.courseID));
+            console.log(response)
         },
         getCourses: async function(){
             let response;
@@ -84,7 +93,13 @@ export default {
             });
         },
         render:async function(){
-            
+            let response = await get_course_by_id(this.courseID);
+            console.log(response)
+            if(response.code == 200){
+                
+                return response;
+            }
+            return false;
         }
     }
 }

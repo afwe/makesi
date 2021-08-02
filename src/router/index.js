@@ -6,6 +6,7 @@ import course from '@/page/course'
 import manage from '@/page/manage'
 import videoList from '@/page/video-list'
 import videoPage from '@/page/video'
+import editPage from '@/page/edit'
 Vue.use(Router)
 
 export default new Router({
@@ -37,6 +38,10 @@ export default new Router({
     {
       path: '/video',
       component: videoPage
+    },
+    {
+      path: '/edit',
+      component: editPage
     }
   ]
 })

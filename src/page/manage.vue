@@ -97,6 +97,7 @@ export default {
                     courseName: this.courseName,
                     courseIntro: this.courseIntro
                 });
+                console.log(response);
             }
             this.isDone = true;
         },

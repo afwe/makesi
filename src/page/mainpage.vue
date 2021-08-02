@@ -4,8 +4,8 @@
             <ol class="course-content">
                 <span class="title">课程列表</span>
                 <li>
-                    <div class="course" v-for="(item,index) in courses" @click="toCourse(item.id)">
-                        {{item.name}}
+                    <div class="course" v-for="(item,index) in courses" @click="toCourse(item.courseId)">
+                        {{item.courseName}}
                     </div>
                 </li>
             </ol>
@@ -42,6 +42,7 @@
 <script>
 import { checkLogin_Student } from '../fetch/student_data'
 import { checkLogin_Teacher } from '../fetch/teacher_data'
+import {get_all_courses} from '../fetch/course'
 export default {
     data(){
         return{
@@ -70,6 +71,15 @@ export default {
             ]
         }
     },
+    mounted(){
+        this.getCourses().then(
+            (data) => {
+                if(data){
+                    console.log(data);
+                    this.courses = data.data;
+                }
+        })
+    },
     methods:{
         changeCoursePage(page){
             this.currentCoursePage = page;
@@ -79,7 +89,11 @@ export default {
             this.$router.push(`course/?id=${id}`);
         },
         getCourses: async function(){
-            
+            let response = await get_all_courses();
+            if(response.code == 200){
+                return response;
+            }
+            return false;
         },
         
     }
