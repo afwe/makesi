@@ -8,8 +8,11 @@
             <div>编辑视频段</div>
             <div>添加子节点</div>
         </div>
-        <div id="tree" :style="{width: '1000px', height: '1000px'}">
+        <div id="tree" :style="{width: '1700px', height: '800px'}">
         </div>
+        <el-button>
+            重置树状图
+        </el-button>
     </div>
 </template>
 <script>
@@ -51,6 +54,7 @@ export default {
                 id: 0,
                 url: "",
                 name: "根节点",
+                videoID: "",
                 children: [
 
                 ]
@@ -70,20 +74,24 @@ export default {
                 series:[{
                         type: 'tree',
                         data: [self.treeData],
-                        left: '2%',
+                        left: '10%',
                         right: '2%',
                         top: '15%',
                         bottom: '10%',
                         symbol: 'emptyCircle',
+                        symbolSize: 4,
                         expandAndCollapse: true,//默认：true；子树折叠和展开的交互，默认打开 。
-                        initialTreeDepth:2,//默认：2，树图初始展开的层级（深度）。根节点是第 0 层，然后是第 1 层、第 2 层，... ，直到叶子节点
+                        initialTreeDepth: 6,//默认：2，树图初始展开的层级（深度）。根节点是第 0 层，然后是第 1 层、第 2 层，... ，直到叶子节点
+                        throttle:100, //设置触发视图刷新的频率。单位为毫秒（ms）。
+                        zoomOnMouseWheel:true, //如何触发缩放。可选值为：true：表示不按任何功能键，鼠标滚轮能触发缩放。false：表示鼠标滚轮不能触发缩放。'shift'：表示按住 shift 和鼠标滚轮能触发缩放。'ctrl'：表示按住 ctrl 和鼠标滚轮能触发缩放。'alt'：表示按住 alt 和鼠标滚轮能触发缩放。
+                        moveOnMouseMove:true, //如何触发数据窗口平移。true：表示不按任何功能键，鼠标移动能触发数据窗口平移。false：表示鼠标滚轮不能触发缩放。'shift'：表示按住 shift 和鼠标移动能触发数据窗口平移。'ctrl'：表示按住 ctrl 和鼠标移动能触发数据窗口平移。'alt'：表示按住 alt 和鼠标移动能触发数据窗口平移。
                         label: {
                             normal: {
                                 position: 'top',//标签的位置。
                                 rotate: 0,//标签旋转。从 -90 度到 90 度。正值是逆时针。
                                 verticalAlign: 'middle',//文字垂直对齐方式，默认自动。
                                 align: 'right',//文字水平对齐方式，默认自动。
-                                fontSize: 12,//文字的字体大小
+                                fontSize: 10,//文字的字体大小
                             }
                         },
                         leaves: {
@@ -93,7 +101,7 @@ export default {
                                     rotate: 0,
                                     verticalAlign: 'middle',
                                     align: 'left',
-                                    fontSize: 8,//文字的字体大小
+                                    fontSize: 10,//文字的字体大小
                                 }
                             }
                         },
@@ -102,8 +110,6 @@ export default {
                 ]
             });
         },
-
-
 
         getNodeByID: function(root){
             let ans;
@@ -135,13 +141,15 @@ export default {
             this.totNode++;
             if(node.children != undefined){
                 node.children.push({
-                    id:newID
+                    id:newID,
+                    name: "节点" + newID
                 })
             }
             else{
                 node.children = [];
                 node.children.push({
-                    id:newID
+                    id:newID,
+                    name: "节点" + newID
                 })
             }
             this.setMyCharts();
@@ -180,20 +188,21 @@ export default {
                 series:[{
                         type: 'tree',
                         data: [self.treeData],
-                        left: '2%',
+                        left: '50%',
                         right: '2%',
                         top: '15%',
                         bottom: '10%',
-                        symbol: 'emptyCircle',
+                        symbol: 'circle',
                         expandAndCollapse: true,//默认：true；子树折叠和展开的交互，默认打开 。
                         initialTreeDepth:2,//默认：2，树图初始展开的层级（深度）。根节点是第 0 层，然后是第 1 层、第 2 层，... ，直到叶子节点
+                        symbolSize: 100,
                         label: {
                             normal: {
                                 position: 'top',//标签的位置。
                                 rotate: 0,//标签旋转。从 -90 度到 90 度。正值是逆时针。
                                 verticalAlign: 'middle',//文字垂直对齐方式，默认自动。
                                 align: 'right',//文字水平对齐方式，默认自动。
-                                fontSize: 12,//文字的字体大小
+                                fontSize: 100,//文字的字体大小
                             }
                         },
                         leaves: {
