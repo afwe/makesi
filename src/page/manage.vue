@@ -1,7 +1,12 @@
 <template>
     <div class="mainContainer">
+        <upload v-show="showUpload==true">
+        </upload>
         <el-button class="createCourse" @click="showCreate=true">
             <span>创建课程</span>
+        </el-button>
+        <el-button class="createCourse" @click="showCreate=true">
+            <span>上传视频</span>
         </el-button>
         <div class="createPanel" v-show="showCreate==true">
             <div>
@@ -49,7 +54,7 @@
     </div>
 </template>
 <script>
-
+import upload from './uploadtest.vue';
 import {create_course, create_course_identify} from '../fetch/course';
 // 引入基本模板
 let echarts = require('echarts/lib/echarts')
@@ -59,8 +64,10 @@ require('echarts/lib/chart/bar')
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
 export default {
+    component:[upload],
     data(){
         return{
+            showUpload: false,
             showCreate: false,
             courseIntro: "",
             courseName: "",

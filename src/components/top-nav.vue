@@ -155,7 +155,6 @@ export default{
             return false;
         },
         hideLogin:function(){
-            console.log("!");
             this.showLogin = false;
         },
         doLogin:async function(){

@@ -4,9 +4,11 @@
         </div>
         <div id="end" class="block">
         </div>-->
-        <div v-show="showPanel == true">
-            <div>编辑视频段</div>
-            <div>添加子节点</div>
+        <div class="editPannel" v-show="showPanel == true">
+            <input v-model="selectedNode.name" placeholder="选项名称"></input>
+            <el-button @click="">编辑视频段</el-button>
+            <el-button @click="addNode()">添加子节点</el-button>
+            <el-button @click="closePanel">关闭</el-button>
         </div>
         <div id="tree" :style="{width: '1700px', height: '800px'}">
         </div>
@@ -16,37 +18,12 @@
     </div>
 </template>
 <script>
+import {getVideoByCourseID} from '../fetch/video';
+import {updateTreeByID} from '../fetch/coreTree';
 export default {
     data(){
         return{
-            /*treeData:{
-                "children": [
-                    {
-                        "children": [
-                            {
-                                "children": [
-                                    {
-                                        "children": [],
-                                        "name": "低压车间表计82"
-                                    }
-                                ],
-                                "name": "低压关口表计1"
-                            }
-                        ],
-                        "name": "高压子表计122"
-                    },
-                    {
-                        "children": [
-                            {
-                                "children": [],
-                                "name": "低压关口表计101"
-                            }
-                        ],
-                        "name": "高压子表计141"
-                    }
-                ],
-                "name": "高压总表计102"
-            }*/
+            courseID: 8,
             showPanel: false,
             totNode: 1,
             nodeID: 0,
@@ -58,7 +35,8 @@ export default {
                 children: [
 
                 ]
-            }
+            },
+            selectedNode:{}
         }
     },
     methods:{
@@ -111,9 +89,16 @@ export default {
             });
         },
 
+
+        closePanel: function(){
+            this.showPanel = false;
+            this.setMyCharts();
+        },
         getNodeByID: function(root){
             let ans;
+            console.log("!");
             if(root.id == this.nodeID) {
+                this.selectedNode = root;
                 return root;
             }
             else{
@@ -162,21 +147,6 @@ export default {
             this.setMyCharts();
         },
         render: function(){
-            /*for(let i = 1; i <= 7; i++){
-                for(let j = 1; j <= 4; j++){
-                    let newBlock = document.createElement("div");
-                    newBlock.id = "d-" + (i + (j - 1) * 7);
-                    newBlock.className = "block";
-                    newBlock.style.width = "60px";
-                    newBlock.style.height = "30px";
-                    newBlock.style.backgroundColor = "aqua"
-                    newBlock.style.marginTop = (j * 30) + "px";
-                    newBlock.style.marginLeft = ((i - 1) * 60 +60) + "px";
-                    console.log(newBlock);
-                    document.getElementById("pathContainer").appendChild(newBlock);
-                    console.log(document.getElementById("pathContainer"));
-                }
-            }*/
             let myChart = this.$echarts.init(document.getElementById("tree"));
             let self = this;
             myChart.setOption({
@@ -225,13 +195,20 @@ export default {
             });
             myChart.on('click',function(param){
                 self.nodeID = param.data.id;
-                self.addNode();
+                console.log(self.nodeID);
+                self.getNodeByID(self.treeData);
+                console.log(this.selectedNode);
+                self.showPanel = true;
             })
 
         }
     },
     mounted(){
         this.render();
+        getVideoByCourseID(this.courseID).then(response => {
+            console.log("!");
+            console.log(response);
+        })
     }
 }
 </script>
@@ -240,25 +217,16 @@ export default {
     display:flex;
     flex-flow: row;
 }
-.block{
-    position: fixed;
-    background-color: blue;
-    width: 60px;
-    height: 30px;
-}
-#root{
-    margin-top:100px;
-    background-color: yellow !important;
-}
-#end{
-    margin-top:100px;
-    background-color: red !important;
-    left: 600px;
-}
 #pathContainer{
     margin-top: 200px;
     margin-left: 100px;
     width: 1000px;
     height: 500px;
+}
+.editPannel{
+    width: 500px;
+    height: 500px;
+    display: flex;
+    flex-flow: column;
 }
 </style>

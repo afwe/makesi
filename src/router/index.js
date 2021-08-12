@@ -7,6 +7,7 @@ import manage from '@/page/manage'
 import videoList from '@/page/video-list'
 import videoPage from '@/page/video'
 import editPage from '@/page/edit'
+import uploadtest from '@/page/uploadtest'
 Vue.use(Router)
 
 export default new Router({
@@ -42,6 +43,10 @@ export default new Router({
     {
       path: '/edit',
       component: editPage
-    }
+    },
+    {
+      path: "/upload",
+      component: uploadtest
+    },
   ]
 })
