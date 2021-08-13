@@ -4,28 +4,30 @@
             {{videoName}}
         </div>
         <div class="videoBody">
-            <figure>
-        <!--  多媒体标题-->
-        <figcaption>视频案例</figcaption>
-        <div class="palyer">
-            <video src="http://www.w3school.com.cn/i/movie.mp4"></video>
-            <!-- 控制条-->
-            <div class="controls">
-                <!-- 播放暂停-->
-                <a href="#" class="switch  icon-play"></a>
-                <div class="progress">
-                    <!-- 当前进度-->
-                    <div class="curr-progress"></div>
-                </div>
-                <!-- 时间-->
-                <div class="time">
-                    <span class="curr-time">00:00:00</span>/<span class="total-time">00:00:00</span>
-                </div>
-                <!-- 全屏-->
-                <a href="#" class="extend  icon-resize-full"></a>
+            <div class="mask" v-show="showMask==true">
             </div>
-        </div>
-    </figure>
+            <figure>
+                <!--  多媒体标题-->
+                <figcaption>视频案例</figcaption>
+                <div class="palyer">
+                    <video id="playwindow" src=""></video>
+                    <!-- 控制条-->
+                    <div class="controls">
+                        <!-- 播放暂停-->
+                        <a href="#" class="switch  icon-play"></a>
+                        <div class="progress">
+                            <!-- 当前进度-->
+                            <div class="curr-progress"></div>
+                        </div>
+                        <!-- 时间-->
+                        <div class="time">
+                            <span class="curr-time">00:00:00</span>/<span class="total-time">00:00:00</span>
+                        </div>
+                        <!-- 全屏-->
+                        <a href="#" class="extend  icon-resize-full"></a>
+                    </div>
+                </div>
+            </figure>
         </div>
         <div class="discussNav">
             点击进入讨论区
@@ -40,6 +42,33 @@ export default {
         return{
             videoName: "",
             videoID: "",
+            showMask: false,
+            treeData:{
+                id: 0,
+                url: "http://www.w3school.com.cn/i/movie.mp4",
+                name: "根节点",
+                videoID: "",
+                children: [
+                    {
+                        id: 1,
+                        url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
+                        name: "选项1",
+                        videoID: "",
+                        children: [
+
+                        ]
+                    },
+                    {
+                        id: 2,
+                        url: "http://vjs.zencdn.net/v/oceans.mp4",
+                        name: "选项2",
+                        videoID: "",
+                        children: [
+
+                        ]
+                    }
+                ]
+            }
         }
     },
     mounted(){
@@ -137,6 +166,36 @@ export default {
             var video = document.querySelector('video');
             video.mozRequestFullScreen();
         }
+        let self = this;
+        video.addEventListener("ended",function(){
+            if(self.treeData.children != undefined && self.treeData.children != []){
+                console.log(self.treeData)
+                self.treeData.children.forEach(element => {
+                    let newButton = document.createElement("button");
+                    newButton.innerText = element.name;
+                    newButton.data = element;
+                    newButton.onclick = function(){
+                        self.treeData = this.data;
+                        video.src = self.treeData.url;
+                        self.showMask = false;
+                        video.play();
+                    };
+                    document.querySelector('.mask').appendChild(newButton);
+                });
+                self.showMask = true;
+            }
+            else{
+                self.$message({
+                    message: "恭喜你完成了视频学习",
+                    type: "success"
+                })
+            }
+        })
+
+        if(this.treeData.url != ""){
+            video.src = this.treeData.url;
+        }
+
     },
     methods:{
         getVideo: async function(){
@@ -254,5 +313,12 @@ figcaption{
 }
 .icon-resize-full{
     background: url(../assets/logo.png);
+}
+.mask{
+    position: fixed;
+    width: 1000px;
+    height: 600px;
+    z-index: 1005;
+    background-color: black;
 }
 </style>

@@ -15,15 +15,18 @@
         <el-button>
             重置树状图
         </el-button>
+        <el-button @click="uploadTree()">
+             上传视频结构
+        </el-button>
     </div>
 </template>
 <script>
 import {getVideoByCourseID} from '../fetch/video';
-import {updateTreeByID} from '../fetch/coreTree';
+import {updateTreeByID, getTreeByID} from '../fetch/coreTree';
 export default {
     data(){
         return{
-            courseID: 8,
+            courseID: 3,
             showPanel: false,
             totNode: 1,
             nodeID: 0,
@@ -89,14 +92,25 @@ export default {
             });
         },
 
-
+        uploadTree: async function(){
+            console.log(this.treeData);
+            let response = await updateTreeByID({
+                courseID: this.courseID,
+                UploadVideoParam: this.treeData
+            });
+            if(response.code == 200){
+                this.$message({
+                    type:"success",
+                    message:"上传结构成功"
+                })
+            };
+        },
         closePanel: function(){
             this.showPanel = false;
             this.setMyCharts();
         },
         getNodeByID: function(root){
             let ans;
-            console.log("!");
             if(root.id == this.nodeID) {
                 this.selectedNode = root;
                 return root;
@@ -104,7 +118,6 @@ export default {
             else{
                 if(root.children != undefined && root.children.length != 0){
                     root.children.forEach(next => {
-                        console.log(this.getNodeByID(next));
                         let node = this.getNodeByID(next);
                         if(node != undefined) ans = node;
                     });
@@ -195,9 +208,7 @@ export default {
             });
             myChart.on('click',function(param){
                 self.nodeID = param.data.id;
-                console.log(self.nodeID);
                 self.getNodeByID(self.treeData);
-                console.log(this.selectedNode);
                 self.showPanel = true;
             })
 
@@ -205,8 +216,7 @@ export default {
     },
     mounted(){
         this.render();
-        getVideoByCourseID(this.courseID).then(response => {
-            console.log("!");
+        getTreeByID({cid: this.courseID, vid: 1}).then(response => {
             console.log(response);
         })
     }

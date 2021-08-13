@@ -43,7 +43,7 @@
         
         data(){
             return{
-                courseID: 8,
+                courseID: 3,
                 videoFlag: false,
                 //是否显示进度条
                 videoUploadPercent: "",
