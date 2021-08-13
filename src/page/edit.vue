@@ -34,12 +34,13 @@ export default {
                 id: 0,
                 url: "",
                 name: "根节点",
-                videoID: "",
+                videoID: 2,
                 children: [
 
                 ]
             },
-            selectedNode:{}
+            selectedNode:{},
+            edge:[]
         }
     },
     methods:{
@@ -91,13 +92,56 @@ export default {
                 ]
             });
         },
-
+        buildTreeData: function(){
+            let treeData = {};
+            let indgreeMap = new Map();
+            this.edge.forEach(
+                Edge => {
+                    indgreeMap.set(Edge.to, true);
+                    indgreeMap.set(Edge.fa, true);
+                }
+            )
+            this.edge.forEach(
+                Edge => {
+                    indgreeMap.delete(Edge.to);
+                }
+            )
+            indgreeMap.forEach(
+                id => {
+                    treeData.id = id;
+                } 
+            )
+            buildData
+        },
+        convertGraph: function(node, father){
+            console.log(node);
+            if(father.id != node.id){
+                this.edge.push({
+                    fatherID: father.id,
+                    fatherVideoID: father.videoID,
+                    childID: node.id,
+                    childVideoID: node.videoID
+                })
+            }
+            if(node.children != undefined && node.children != []){
+                node.children.forEach(
+                    element => {
+                        this.convertGraph(element, node.videoID);
+                    }
+                )
+            }
+        },
         uploadTree: async function(){
             console.log(this.treeData);
+            this.treeData.courseId = 3;
+            this.edge = [];
+            this.convertGraph(this.treeData, this.treeData);
+            console.log(this.edge);
             let response = await updateTreeByID({
                 courseID: this.courseID,
                 UploadVideoParam: this.treeData
             });
+            console.log(response);
             if(response.code == 200){
                 this.$message({
                     type:"success",
@@ -140,6 +184,7 @@ export default {
             if(node.children != undefined){
                 node.children.push({
                     id:newID,
+                    videoID: newID,
                     name: "节点" + newID
                 })
             }
