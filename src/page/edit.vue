@@ -92,26 +92,50 @@ export default {
                 ]
             });
         },
+
+        connectEdge(node){
+            this.edge.forEach(
+                Edge => {
+                    if(Edge.fatherID == node.id){
+                        if(node.children == undefined) node.children = [];
+                        node.children.push({
+                            id: Edge.childID,
+                            videoID: Edge.childVideoID,
+                            name: Edge.name
+                            } 
+                        );
+                    }
+                }
+            )
+            node.children.forEach(
+                next => {
+                    this.connectEdge(next);
+                }
+            )
+        },
         buildTreeData: function(){
             let treeData = {};
             let indgreeMap = new Map();
+            let idVideoIDMap = new Map();
             this.edge.forEach(
                 Edge => {
-                    indgreeMap.set(Edge.to, true);
-                    indgreeMap.set(Edge.fa, true);
+                    idVideoIDMap.set(Edge.fatherID, Edge.fatherVideoID);
+                    idVideoIDMap.set(Edge.childID, Edge.childVideoID);
                 }
             )
             this.edge.forEach(
                 Edge => {
-                    indgreeMap.delete(Edge.to);
+                    idVideoIDMap.delete(Edge.to);
                 }
             )
-            indgreeMap.forEach(
-                id => {
-                    treeData.id = id;
+            idVideoIDMap.forEach(
+                item => {
+                    treeData.id = item.key;
+                    treeData.videoID = item.value;
                 } 
             )
-            buildData
+            connectEdge(treeData);
+            console.log(treeData);
         },
         convertGraph: function(node, father){
             console.log(node);
@@ -120,7 +144,8 @@ export default {
                     fatherID: father.id,
                     fatherVideoID: father.videoID,
                     childID: node.id,
-                    childVideoID: node.videoID
+                    childVideoID: node.videoID,
+                    name: node.name
                 })
             }
             if(node.children != undefined && node.children != []){
