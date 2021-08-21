@@ -40,6 +40,8 @@ import { defineComponent } from '@vue/composition-api'
 export default {
     data(){
         return{
+            treeData: {},
+            edge: [],
             videoName: "",
             videoID: "",
             showMask: false,
@@ -198,6 +200,53 @@ export default {
 
     },
     methods:{
+        connectEdge(node){
+            this.edge.forEach(
+                Edge => {
+                    if(Edge.fatherID == node.id){
+                        if(node.children == undefined) node.children = [];
+                        node.children.push({
+                            id: Edge.childID,
+                            videoID: Edge.childVideoID,
+                            name: Edge.name
+                            } 
+                        );
+                    }
+                }
+            )
+            if(node.children != undefined && node.children != []){
+                node.children.forEach(
+                    next => {
+                        this.connectEdge(next);
+                    }
+                )
+            }
+            
+        },
+        buildTreeData: function(){
+            let treeData = {};
+            let idVideoIDMap = new Map();
+            this.edge.forEach(
+                Edge => {
+                    idVideoIDMap.set(Edge.fatherID, Edge.fatherVideoID);
+                    idVideoIDMap.set(Edge.childID, Edge.childVideoID);
+                }
+            )
+            this.edge.forEach(
+                Edge => {
+                    idVideoIDMap.delete(Edge.childID);
+                }
+            )
+            idVideoIDMap.forEach(
+                (value, key) => {
+                    treeData.id = key;
+                    treeData.videoID = value;
+                }
+            )
+            console.log(treeData);
+            this.connectEdge(treeData);
+            console.log(treeData);
+        },
         getVideo: async function(){
 
         },
