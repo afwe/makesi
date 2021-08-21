@@ -167,7 +167,7 @@ export default {
             this.buildTreeData();
             let response = await updateTreeByID({
                 courseID: this.courseID,
-                UploadVideoParam: this.treeData
+                edge: JSON.stringify(this.edge)
             });
             console.log(response);
             if(response.code == 200){

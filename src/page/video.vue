@@ -35,7 +35,7 @@
     </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { getVideoByCourseID } from '../fetch/video'
 
 export default {
     data(){
@@ -248,7 +248,7 @@ export default {
             console.log(treeData);
         },
         getVideo: async function(){
-
+            
         },
         render: async function(){
 
