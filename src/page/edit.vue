@@ -107,11 +107,14 @@ export default {
                     }
                 }
             )
-            node.children.forEach(
-                next => {
-                    this.connectEdge(next);
-                }
-            )
+            if(node.children != undefined && node.children != []){
+                node.children.forEach(
+                    next => {
+                        this.connectEdge(next);
+                    }
+                )
+            }
+            
         },
         buildTreeData: function(){
             let treeData = {};
@@ -125,16 +128,17 @@ export default {
             )
             this.edge.forEach(
                 Edge => {
-                    idVideoIDMap.delete(Edge.to);
+                    idVideoIDMap.delete(Edge.childID);
                 }
             )
             idVideoIDMap.forEach(
-                item => {
-                    treeData.id = item.key;
-                    treeData.videoID = item.value;
-                } 
+                (value, key) => {
+                    treeData.id = key;
+                    treeData.videoID = value;
+                }
             )
-            connectEdge(treeData);
+            console.log(treeData);
+            this.connectEdge(treeData);
             console.log(treeData);
         },
         convertGraph: function(node, father){
@@ -151,17 +155,16 @@ export default {
             if(node.children != undefined && node.children != []){
                 node.children.forEach(
                     element => {
-                        this.convertGraph(element, node.videoID);
+                        this.convertGraph(element, node);
                     }
                 )
             }
         },
         uploadTree: async function(){
-            console.log(this.treeData);
             this.treeData.courseId = 3;
             this.edge = [];
             this.convertGraph(this.treeData, this.treeData);
-            console.log(this.edge);
+            this.buildTreeData();
             let response = await updateTreeByID({
                 courseID: this.courseID,
                 UploadVideoParam: this.treeData
