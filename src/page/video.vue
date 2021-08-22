@@ -35,10 +35,11 @@
     </div>
 </template>
 <script>
-
+import {getPartByID} from '../fetch/video';
 export default {
     data(){
         return{
+            courseID: 3,
             treeData: {},
             edge: [],
             videoName: "",
@@ -73,6 +74,9 @@ export default {
         }
     },
     mounted(){
+
+        this.render();
+        this.buildTreeData();
                 // 思路：
         /*
         * 1、点击按钮 实现播放暂停并且切换图标
@@ -99,6 +103,7 @@ export default {
                if(video.paused){
 //                   播放
                    video.play();
+                   console.log(video.src);
                    //切换图标
                    this.classList.remove('icon-play');
                    this.classList.add('icon-pause');
@@ -192,39 +197,41 @@ export default {
                 })
             }
         })
-
-        if(this.treeData.url != ""){
-            video.src = this.treeData.url;
-        }
-
     },
     methods:{
         connectEdge(node){
-            node.url = this.getVideoByID(node.videoID);
-            this.edge.forEach(
-                Edge => {
-                    if(Edge.fatherID == node.id){
-                        if(node.children == undefined) node.children = [];
-                        node.children.push({
-                            id: Edge.childID,
-                            videoID: Edge.childVideoID,
-                            name: Edge.name
-                            } 
-                        );
-                    }
-                }
-            )
-            if(node.children != undefined && node.children != []){
-                node.children.forEach(
-                    next => {
-                        this.connectEdge(next);
+            let self = this;
+            this.getVideoByID(node.videoID).then(url =>{
+                node.url = "http://" + url;
+                this.edge.forEach(
+                    Edge => {
+                        if(Edge.fatherID == node.id){
+                            if(node.children == undefined) node.children = [];
+                            if(Edge.childID != undefined)
+                            node.children.push({
+                                id: Edge.childID,
+                                videoID: Edge.childVideoID,
+                                name: Edge.name
+                                } 
+                            );
+                        }
                     }
                 )
-            }
-            
+                if(node.children != undefined && node.children != []){
+                    node.children.forEach(
+                        next => {
+                            this.connectEdge(next);
+                        }
+                    )
+                }
+                if(node.id == 0){
+                    let  video=document.querySelector('video');
+                    video.src =this.treeData.url;
+                }
+            });
         },
         buildTreeData: function(){
-            let treeData = {};
+            let Data = {};
             let idVideoIDMap = new Map();
             this.edge.forEach(
                 Edge => {
@@ -239,20 +246,36 @@ export default {
             )
             idVideoIDMap.forEach(
                 (value, key) => {
-                    treeData.id = key;
-                    treeData.videoID = value;
+                    Data.id = key;
+                    Data.videoID = value;
                 }
             )
-            console.log(treeData);
-            this.connectEdge(treeData);
-            console.log(treeData);
+            this.connectEdge(Data);
+            this.treeData = Data;
         },
-        getVideoByID: function(id){
-            return ``;
+        getVideoByID: async function(id){
+            console.log(id);
+            let response = await getPartByID({
+                courseID: this.courseID,
+                videoID:id
+                });
+                console.log(response);
+            if(response.code == 200){
+                return response.data;
+            }
+            else{
+                this.$message({
+                    type :'error',
+                    message: '视频url获取失败'
+                    }
+                )
+            }
         },
         render: function(){
             this.edge = JSON.parse(localStorage.getItem('edge'));
+            this.edge = JSON.parse(this.edge);
         }
+
     }
 }
 </script>

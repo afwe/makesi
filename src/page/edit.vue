@@ -4,9 +4,20 @@
         </div>
         <div id="end" class="block">
         </div>-->
+        <div class="VideOSelect" v-show="showVideoSelect == true">
+            <input type="text" v-model="selectedNode.videoID" placeholder="视频id">
+            <el-button @click="showVideoSelect=false">关闭</el-button>
+        </div>
+        <div class="videoList" v-show="showVideoSelect == true">
+            <div class="list-item" v-for="(item,index) in partList">
+                <span>{{item.videoId}}</span>-
+                <span>{{item.name}}</span>
+                
+            </div>
+        </div>
         <div class="editPannel" v-show="showPanel == true">
             <input v-model="selectedNode.name" placeholder="选项名称"></input>
-            <el-button @click="">编辑视频段</el-button>
+            <el-button @click="showVideoSelect=true">编辑视频段</el-button>
             <el-button @click="addNode()">添加子节点</el-button>
             <el-button @click="closePanel">关闭</el-button>
         </div>
@@ -21,11 +32,13 @@
     </div>
 </template>
 <script>
-import {getVideoByCourseID} from '../fetch/video';
+import {getPartListByCourseID} from '../fetch/video';
 import {updateTreeByID, getTreeByID} from '../fetch/coreTree';
 export default {
     data(){
         return{
+            showVideoSelect: false,
+            showVideoList: false,
             courseID: 3,
             showPanel: false,
             totNode: 1,
@@ -45,6 +58,9 @@ export default {
         }
     },
     methods:{
+        setVideoID(){
+
+        },
         setMyCharts: function(){
             let myChart = this.$echarts.init(document.getElementById("tree"));
             let self = this;
@@ -166,6 +182,17 @@ export default {
             this.edge = [];
             this.convertGraph(this.treeData, this.treeData);
             this.buildTreeData();
+            if(this.edge.length == 0){
+                this.edge.push({
+                    fatherID: 0,
+                    fatherVideoID: this.treeData.videoID,
+                    childID: undefined,
+                    childVideoID: undefined,
+                    name: this.treeData.name
+                    })
+            }
+            console.log("!")
+            console.log(this.edge);
             let response = await updateTreeByID({
                 courseId: this.courseID,
                 title: "title",
@@ -234,6 +261,18 @@ export default {
             }
             this.setMyCharts();
         },
+        getPartList: async function(){
+            let response = await getPartListByCourseID(this.courseID);
+            if(response.code == 200){
+                this.partList = response.data;
+            }
+            else{
+                this.$message({
+                    type: 'error',
+                    message: '获取片段列表失败'
+                })
+            }
+        },
         render: function(){
             let myChart = this.$echarts.init(document.getElementById("tree"));
             let self = this;
@@ -286,15 +325,14 @@ export default {
                 self.getNodeByID(self.treeData);
                 self.showPanel = true;
             })
-
         }
     },
     mounted(){
-        this.partList = localStorage.getItem('partList');
+        this.getPartList();
         this.render();
-        getTreeByID({cid: this.courseID, vid: 1}).then(response => {
+        /*getTreeByID({cid: this.courseID, vid: 1}).then(response => {
             console.log(response);
-        })
+        })*/
     }
 }
 </script>

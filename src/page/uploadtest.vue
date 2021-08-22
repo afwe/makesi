@@ -86,7 +86,7 @@
                     // 接收视频传回来的名称和保存地址
                     // 至于怎么使用看你啦~
                     this.$message.success('视频上传成功！')
-                    localStorage.setItem('partList', res.data);
+                    localStorage.setItem('partList', JSON.stringify(res.data));
                 } else {
                     this.$message.error('视频上传失败，请重新上传！')
                 }

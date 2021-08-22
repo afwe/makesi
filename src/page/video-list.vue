@@ -29,7 +29,7 @@ import { getVideoListByCourseID } from '../fetch/video'
 export default {
     data(){
         return{
-            courseID: "",
+            courseID: 3,
             totVideo: 4,
             videoPage: 1,
             videoes: [
@@ -40,9 +40,13 @@ export default {
             ]
         }
     },
+    mounted(){
+        this.courseID = this.$route.query.id;
+        this.render();
+    },
     methods:{
         changeVideoPage:async function(){
-
+            
         },
         getVideoes: async function(){
 
@@ -53,7 +57,9 @@ export default {
         },
         render: async function(){
             let response = await getVideoListByCourseID(this.courseID);
+            console.log(response);
             if(response.code == 200){
+                
                 this.videoes = response.data;
             }
         }
