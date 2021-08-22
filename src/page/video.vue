@@ -35,7 +35,6 @@
     </div>
 </template>
 <script>
-import { getVideoByCourseID } from '../fetch/video'
 
 export default {
     data(){
@@ -201,6 +200,7 @@ export default {
     },
     methods:{
         connectEdge(node){
+            node.url = this.getVideoByID(node.videoID);
             this.edge.forEach(
                 Edge => {
                     if(Edge.fatherID == node.id){
@@ -247,11 +247,11 @@ export default {
             this.connectEdge(treeData);
             console.log(treeData);
         },
-        getVideo: async function(){
-            
+        getVideoByID: function(id){
+            return ``;
         },
-        render: async function(){
-
+        render: function(){
+            this.edge = JSON.parse(localStorage.getItem('edge'));
         }
     }
 }

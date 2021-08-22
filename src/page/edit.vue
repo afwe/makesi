@@ -40,6 +40,7 @@ export default {
                 ]
             },
             selectedNode:{},
+            partList: [],
             edge:[]
         }
     },
@@ -166,7 +167,8 @@ export default {
             this.convertGraph(this.treeData, this.treeData);
             this.buildTreeData();
             let response = await updateTreeByID({
-                courseID: this.courseID,
+                courseId: this.courseID,
+                title: "title",
                 edge: JSON.stringify(this.edge)
             });
             console.log(response);
@@ -288,6 +290,7 @@ export default {
         }
     },
     mounted(){
+        this.partList = localStorage.getItem('partList');
         this.render();
         getTreeByID({cid: this.courseID, vid: 1}).then(response => {
             console.log(response);
