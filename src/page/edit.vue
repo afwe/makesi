@@ -1,10 +1,6 @@
 <template>
     <div class="mainContainer">
-        <!--<div id="root" class="block">
-        </div>
-        <div id="end" class="block">
-        </div>-->
-        <div class="VideOSelect" v-show="showVideoSelect == true">
+        <div class="VideoSelect" v-show="showVideoSelect == true">
             <input type="text" v-model="selectedNode.videoID" placeholder="视频id">
             <el-button @click="showVideoSelect=false">关闭</el-button>
         </div>
@@ -23,7 +19,7 @@
         </div>
         <div id="tree" :style="{width: '1700px', height: '800px'}">
         </div>
-        <el-button>
+        <el-button @click="undo()">
             重置树状图
         </el-button>
         <el-button @click="uploadTree()">
@@ -46,7 +42,7 @@ export default {
             treeData:{
                 id: 0,
                 url: "",
-                name: "根节点",
+                name: "C1S1",
                 videoID: 2,
                 children: [
 
@@ -58,8 +54,17 @@ export default {
         }
     },
     methods:{
-        setVideoID(){
+        undo: function(){
+            this.treeData = {
+                id: 0,
+                url: "",
+                name: "C1S1",
+                videoID: 0,
+                children: [
 
+                ]
+            },
+            this.setMyCharts();
         },
         setMyCharts: function(){
             let myChart = this.$echarts.init(document.getElementById("tree"));
@@ -195,7 +200,7 @@ export default {
             console.log(this.edge);
             let response = await updateTreeByID({
                 courseId: this.courseID,
-                title: "title",
+                title: this.treeData.name,
                 edge: JSON.stringify(this.edge)
             });
             console.log(response);
@@ -330,6 +335,10 @@ export default {
     mounted(){
         this.getPartList();
         this.render();
+        if(localStorage.getItem("curCourseID") != undefined){
+            this.courseID = localStorage.getItem("curCourseID");
+        }
+        console.log(this.courseID);
         /*getTreeByID({cid: this.courseID, vid: 1}).then(response => {
             console.log(response);
         })*/
@@ -338,8 +347,8 @@ export default {
 </script>
 <style scoped>
 .mainContainer{
-    display:flex;
-    flex-flow: row;
+    display: flex;
+    flex-flow: column;
 }
 #pathContainer{
     margin-top: 200px;
@@ -352,5 +361,11 @@ export default {
     height: 500px;
     display: flex;
     flex-flow: column;
+}
+.editPannel{
+    position:fixed;
+    z-index: 1001;
+    top: 300px;
+    left: 500px;
 }
 </style>

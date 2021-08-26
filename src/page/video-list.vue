@@ -4,9 +4,9 @@
             <ol class="video-content">
                 <span class="title">视频列表</span>
                 <li>
-                    <div class="video" v-for="(item,index) in videoes" @click="toVideo(index)">
+                    <el-button class="video" v-for="(item,index) in videoes" @click="toVideo(index)">
                         {{item.title}}
-                    </div>
+                    </el-button>
                 </li>
             </ol>
             <div class="video-pager">
@@ -59,8 +59,20 @@ export default {
             let response = await getVideoListByCourseID(this.courseID);
             console.log(response);
             if(response.code == 200){
-                
-                this.videoes = response.data;
+                let array = response.data;
+                array.forEach(element => {
+                    let videoName = element.title;
+                    let sPosition = videoName.indexOf('S');
+                    element.c = parseInt(videoName.substr(1,sPosition - 1));
+                    element.s = parseInt(videoName.substr(sPosition + 1, videoName.length - sPosition));
+                    element.title = "第" + element.c + "章" + "第" + element.s + "节";
+                });
+                let Sort = function(val1, val2){
+                    if(val1.c == val2.c) return val1.s - val2.s;
+                    else return val1.c - val2.c;
+                }
+                array.sort(Sort);
+                this.videoes = array;
             }
         }
     }

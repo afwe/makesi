@@ -2,11 +2,35 @@
     <div class="mainContainer">
         <upload v-show="showUpload==true">
         </upload>
+         <div class="course-list" v-show="showCourseList==true">
+            <ol class="course-content">
+                <span class="title">课程列表</span>
+                <li>
+                    <div class="course" v-for="(item,index) in courses" @click="setCurCourse(item.courseId)">
+                        {{item.courseName}}
+                    </div>
+                </li>
+            </ol>
+            <div class="course-pager">
+                <el-pagination
+                    v-if="totCourse > 0"
+                    background
+                    layout="prev, pager, next"
+                    :page-size="20"
+                    :total="totCourse"
+                    :current-page="coursePage"
+                    @current-change="changeCoursePage"
+                />
+            </div>
+        </div>
         <el-button class="createCourse" @click="showCreate=true">
             <span>创建课程</span>
         </el-button>
-        <el-button class="createCourse" @click="showCreate=true">
+        <el-button class="createCourse" @click="showUpload=!showUpload">
             <span>上传视频</span>
+        </el-button>
+        <el-button class="createCourse" @click="showCourseList=!showCourseList">
+            <span>添加视频</span>
         </el-button>
         <div class="createPanel" v-show="showCreate==true">
             <div>
@@ -55,7 +79,9 @@
 </template>
 <script>
 import upload from './uploadtest.vue';
+import edit from './edit.vue';
 import {create_course, create_course_identify} from '../fetch/course';
+import {get_all_courses} from '../fetch/course'
 // 引入基本模板
 let echarts = require('echarts/lib/echarts')
 // 引入柱状图组件
@@ -64,13 +90,20 @@ require('echarts/lib/chart/bar')
 require('echarts/lib/component/tooltip')
 require('echarts/lib/component/title')
 export default {
-    component:[upload],
+    components:{
+        upload,
+        edit
+    },
     data(){
         return{
+            showEdit: false,
+            showCourseList: false,
             showUpload: false,
             showCreate: false,
+            editCourseID: '',
             courseIntro: "",
             courseName: "",
+            courses: [],
             videoName: ["v1", "v2", "v3", "v4", "v5", "v6"],
             totWatch: "00:00:00",
             correctRate: 0,
@@ -92,8 +125,31 @@ export default {
     mounted(){
         this.drawLine();
         this.render1();
+        this.getCourses().then(
+            (data) => {
+                if(data){
+                    console.log(data);
+                    this.courses = data.data;
+                }
+            }
+        )
     },
     methods:{
+        setCurCourse: function(id){
+            localStorage.setItem("curCourseID", id);
+            this.$router.push('edit');
+        },
+        changeCoursePage(page){
+            this.currentCoursePage = page;
+            /*获取课程*/
+        },
+        getCourses: async function(){
+            let response = await get_all_courses();
+            if(response.code == 200){
+                return response;
+            }
+            return false;
+        },
         createCourse:async function(){
             if(!this.isDone) return;
             this.isDone = false;

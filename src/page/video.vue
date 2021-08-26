@@ -3,38 +3,40 @@
         <div class="title">
             {{videoName}}
         </div>
-        <div class="videoBody">
-            <div class="mask" v-show="showMask==true">
+        <div class="mask" v-show="showMask==true"></div>
+        <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="640" height="264">
+            <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+        </video>
+        <!--<div class="videoBody">
+            
             </div>
             <figure>
-                <!--  多媒体标题-->
                 <figcaption>视频案例</figcaption>
                 <div class="palyer">
                     <video id="playwindow" src=""></video>
-                    <!-- 控制条-->
                     <div class="controls">
-                        <!-- 播放暂停-->
                         <a href="#" class="switch  icon-play"></a>
                         <div class="progress">
-                            <!-- 当前进度-->
                             <div class="curr-progress"></div>
                         </div>
-                        <!-- 时间-->
                         <div class="time">
                             <span class="curr-time">00:00:00</span>/<span class="total-time">00:00:00</span>
                         </div>
-                        <!-- 全屏-->
                         <a href="#" class="extend  icon-resize-full"></a>
                     </div>
                 </div>
             </figure>
         </div>
+        -->
         <div class="discussNav">
             点击进入讨论区
         </div>
+        
     </div>
 </template>
 <script>
+import videojs from 'video.js'
+import 'video.js/dist/video-js.css'
 import {getPartByID} from '../fetch/video';
 export default {
     data(){
@@ -77,14 +79,7 @@ export default {
 
         this.render();
         this.buildTreeData();
-                // 思路：
         /*
-        * 1、点击按钮 实现播放暂停并且切换图标
-        * 2、算出视频的总时显示出出来
-        * 3、当视频播放的时候，进度条同步，当前时间同步
-        * 4、点击实现全屏
-        */
-//        获取需要的标签
             var  video=document.querySelector('video');
 //          播放按钮
             var  playBtn=document.querySelector('.switch');
@@ -97,6 +92,10 @@ export default {
 //          全屏
             var extend=document.querySelector('.extend');
             var tTime=0;
+            currProgress.onmouseup=function(){
+                let nowValue = currProgress.style.width;
+                console.log()
+            }
 //         1、点击按钮 实现播放暂停并且切换图标
            playBtn.onclick=function(){
 //               如果视频播放 就暂停，如果暂停 就播放
@@ -197,6 +196,46 @@ export default {
                 })
             }
         })
+        */
+       let self = this;
+       let options = {
+           controls : true,      
+	        height:300, 
+	        width:600,
+       }
+       var player = videojs('example_video_1', options, function onPlayerReady() {
+            videojs.log('播放器已经准备好了!');
+            let video = document.getElementById('videoSrc');
+            video.src = self.treeData.url;
+            // In this context, `this` is the player that was created by Video.js.<br>  // 注意，这个地方的上下文， `this` 指向的是Video.js的实例对像player
+            this.play();
+            let videoBody = this;
+            // How about an event listener?<br>  // 如何使用事件监听？
+            this.on('ended', function() {
+                if(self.treeData.children != undefined && self.treeData.children != []){
+                    console.log(self.treeData)
+                    self.treeData.children.forEach(element => {
+                        let newButton = document.createElement("button");
+                        newButton.innerText = element.name;
+                        newButton.data = element;
+                        newButton.onclick = function(){
+                            self.treeData = this.data;
+                            video.src = self.treeData.url;
+                            self.showMask = false;
+                            videoBody.play();
+                        };
+                        document.querySelector('.mask').appendChild(newButton);
+                    });
+                    self.showMask = true;
+                }
+                else{
+                    self.$message({
+                        message: "恭喜你完成了视频学习",
+                        type: "success"
+                    })
+                }
+            });
+        });
     },
     methods:{
         connectEdge(node){
