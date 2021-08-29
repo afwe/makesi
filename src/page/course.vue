@@ -1,39 +1,18 @@
 <template>
     <div class="mainContainer">
-        <div v-if="!courseID">
-            <div class="course-list">
-                <ol class="course-content">
-                    <span class="title">课程列表</span>
-                    <li>
-                        <div class="course" v-for="(item,index) in courses" @click="toCourse(item.id)">
-                            {{item.name}}
-                        </div>
-                    </li>
-                </ol>
-                <div class="course-pager">
-                    <el-pagination
-                        v-if="totCourse > 0"
-                        background
-                        layout="prev, pager, next"
-                        :page-size="20"
-                        :total="totCourse"
-                        :current-page="coursePage"
-                        @current-change="changeCoursePage"
-                    />
-                </div>
+        <div class="left">
+            <div class='btnNest'>
+                <el-button @click.native="joinCourse()" class="btn">加入课程</el-button>
+                <el-button @click.native="toVideo(courseID)" class="btn">课程视频</el-button>
             </div>
         </div>
-        <div v-if="!!courseID">
+        <div class="right">
             <div class="courseTitle">
                 {{courseName}}
             </div>
             <div class="course">
                 <span>课程简介</span>
                 <div>{{courseIntro}}</div>
-            </div>
-            <div class="videoNav">
-                <span @click="joinCourse()">加入课程</span>
-                <span @click="toVideo(courseID)">点击进入课程视频</span>
             </div>
         </div>
     </div>
@@ -104,3 +83,30 @@ export default {
     }
 }
 </script>
+<style scoped>
+.mainContainer{
+    display: flex;
+    flex-flow: row;
+}
+.left{
+    height: 300px;
+    width: 500px;
+    display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
+}
+.right{
+    height: 400px;
+    width: 500px;
+}
+.btnNest{
+    display: flex;
+    flex-flow: row;
+}
+.btn{
+    width: 100px;
+    height: 50px;
+    background-color: #fe0000;
+    color: #ffff01; 
+}
+</style>

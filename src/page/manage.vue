@@ -3,25 +3,11 @@
         <upload v-show="showUpload==true">
         </upload>
          <div class="course-list" v-show="showCourseList==true">
-            <ol class="course-content">
-                <span class="title">课程列表</span>
-                <li>
-                    <div class="course" v-for="(item,index) in courses" @click="setCurCourse(item.courseId)">
-                        {{item.courseName}}
-                    </div>
-                </li>
-            </ol>
-            <div class="course-pager">
-                <el-pagination
-                    v-if="totCourse > 0"
-                    background
-                    layout="prev, pager, next"
-                    :page-size="20"
-                    :total="totCourse"
-                    :current-page="coursePage"
-                    @current-change="changeCoursePage"
-                />
-            </div>
+            <span class="title">课程列表</span>
+            <br>
+            <el-button class="course" v-for="(item,index) in courses" @click="setCurCourse(item.courseId)">
+                {{item.courseName}}
+            </el-button>
         </div>
         <el-button class="createCourse" @click="showCreate=true">
             <span>创建课程</span>

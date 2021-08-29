@@ -346,6 +346,9 @@ export default {
 }
 </script>
 <style scoped>
+*{
+    margin-left: 0;
+}
 .mainContainer{
     display: flex;
     flex-flow: column;

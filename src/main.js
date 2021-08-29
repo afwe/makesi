@@ -6,12 +6,14 @@ import router from './router'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import * as echarts from 'echarts';
+import less from 'less'
 
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
 
 Vue.use(ElementUI);
+Vue.use(less);
 Vue.prototype.$echarts = echarts;
 new Vue({
   el: '#app',

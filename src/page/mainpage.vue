@@ -4,9 +4,9 @@
             <ol class="course-content">
                 <span class="title">课程列表</span>
                 <li>
-                    <div class="course" v-for="(item,index) in courses" @click="toCourse(item.courseId)">
+                    <el-card class="course" v-for="(item,index) in courses.slice((currentPage-1)*pagesize,currentPage*pagesize)" @click.native="toCourse(item.courseId)">
                         {{item.courseName}}
-                    </div>
+                    </el-card>
                 </li>
             </ol>
             <div class="course-pager">
@@ -14,10 +14,10 @@
                     v-if="totCourse > 0"
                     background
                     layout="prev, pager, next"
-                    :page-size="20"
-                    :total="totCourse"
-                    :current-page="coursePage"
-                    @current-change="changeCoursePage"
+                    :page-size="pagesize"
+                    :total="courses.length"
+                    :current-page="currentPage"
+                    @current-change="page_change"
                 />
             </div>
         </div>
@@ -33,6 +33,7 @@
                 :src="carousels[index].url"
                 :alt="carousels[index].title"
                 :title="carousels[index].title"
+                style="height:100%; width:100%;" 
                 />
             </el-carousel-item>
             </el-carousel>
@@ -55,7 +56,8 @@ export default {
                     name:"k1"
                 },
             ],
-            coursePage: 0,
+            pagesize: 4,
+            currentPage: 1,
             totCourse: 2,
             carousels: [
                 {
@@ -81,9 +83,8 @@ export default {
         })
     },
     methods:{
-        changeCoursePage(page){
-            this.currentCoursePage = page;
-            /*获取课程*/
+        page_change(page){
+            this.currentPage = page;
         },
         toCourse: async function(id){
             this.$router.push(`course/?id=${id}`);
@@ -99,25 +100,31 @@ export default {
     }
 }
 </script>
-<style scoped>
+<style scoped lang="less">
+ol{
+    list-style:none;;
+}
 .mainContainer{
     display: flex;
     flex-flow: row;
 }
 .course-list{
     width:250px;
-    height: 500px;
-    background-color: blue;
+    height: 600px;
 }
 .course{
+    margin-top: 10px;
     width:200px;
-    height:50px;
-    background-color: red;
+    height:100px;
+    box-shadow:10px;
+    border-radius: 10px;
+    background-color: #fe0000;
+    color: #ffff01;
     cursor:pointer;
 }
 .welcome{
+    margin-left: 100px;
     height: 500px;
-    width: 500px;
-    background-color: yellow;
+    width: 600px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="mainContainer">
-        <div class="video-list">
+        <!--<div class="video-list">
             <ol class="video-content">
                 <span class="title">视频列表</span>
                 <li>
@@ -20,7 +20,18 @@
                     @current-change="changeVideoPage"
                 />
             </div>
-        </div>
+        </div>-->
+        <span class="title">视频列表</span>
+        <el-collapse class="videoList">
+            <el-collapse-item v-for="(item,cindex) in chapter" class="title">
+                <template slot="title">
+                    第{{cindex+1}}章
+                </template>
+                <el-card v-for="(item,sindex) in chapter[cindex]" class="videoItem">
+                    {{item.title}}
+                </el-card>
+            </el-collapse-item>
+        </el-collapse>
     </div>
 </template>
 <script>
@@ -37,6 +48,9 @@ export default {
                     id: 1,
                     title: 2
                 }
+            ],
+            chapter: [
+
             ]
         }
     },
@@ -53,7 +67,9 @@ export default {
         },
         toVideo: async function(index){
             localStorage.setItem("edge", JSON.stringify(this.videoes[index].edge));
-            this.$router.push(`/video`);
+            this.$router.push({
+                path: `/video/?id=${this.courseID}&vid=${this.videoes[index].id}`
+            });
         },
         render: async function(){
             let response = await getVideoListByCourseID(this.courseID);
@@ -72,9 +88,28 @@ export default {
                     else return val1.c - val2.c;
                 }
                 array.sort(Sort);
+                for(let i = 1; i <= array[array.length-1].c; i++){
+                    this.chapter.push([]);
+                }
+                array.forEach(
+                    element => {
+                        this.chapter[element.c-1].push(element);
+                    }
+                )
                 this.videoes = array;
             }
         }
     }
 }
 </script>
+<style scoped>
+.videoItem{
+    margin-top: 10px;
+    background-color: #fe0000;
+    color: #ffff01;
+}
+.title{
+    background-color: #fe0000;
+    color: #ffff01;
+}
+</style>
