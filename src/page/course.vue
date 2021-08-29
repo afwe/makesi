@@ -1,6 +1,8 @@
 <template>
     <div class="mainContainer">
         <div class="left">
+            <div class='dang'>
+            </div>
             <div class='btnNest'>
                 <el-button @click.native="joinCourse()" class="btn">加入课程</el-button>
                 <el-button @click.native="toVideo(courseID)" class="btn">课程视频</el-button>
@@ -12,7 +14,7 @@
             </div>
             <div class="course">
                 <span>课程简介</span>
-                <div>{{courseIntro}}</div>
+                <div class='introNest'>{{courseIntro}}</div>
             </div>
         </div>
     </div>
@@ -89,7 +91,7 @@ export default {
     flex-flow: row;
 }
 .left{
-    height: 300px;
+    height: 500px;
     width: 500px;
     display: flex;
     flex-flow: column;
@@ -108,5 +110,22 @@ export default {
     height: 50px;
     background-color: #fe0000;
     color: #ffff01; 
+}
+.courseTitle{
+    font-size: 100px;
+}
+.introNest{
+    width: 500px;
+    height: 400px;
+    background-color: #fe0000;
+    color: #ffff01;
+}
+.dang{
+    height: 300px;
+    width: 500px;
+    background:#fff url('../assets/cr1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    box-shadow: 0 0 25px aquamarine;
 }
 </style>

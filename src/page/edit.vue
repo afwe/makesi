@@ -1,6 +1,6 @@
 <template>
     <div class="mainContainer">
-        <div class="VideoSelect" v-show="showVideoSelect == true">
+        <!--<div class="VideoSelect" v-show="showVideoSelect == true">
             <input type="text" v-model="selectedNode.videoID" placeholder="视频id">
             <el-button @click="showVideoSelect=false">关闭</el-button>
         </div>
@@ -8,23 +8,46 @@
             <div class="list-item" v-for="(item,index) in partList">
                 <span>{{item.videoId}}</span>-
                 <span>{{item.name}}</span>
-                
             </div>
-        </div>
-        <div class="editPannel" v-show="showPanel == true">
-            <input v-model="selectedNode.name" placeholder="选项名称"></input>
-            <el-button @click="showVideoSelect=true">编辑视频段</el-button>
+        </div>-->
+        <el-dialog :title="title" :visible.sync="showPanel" @close="closePanel" :modal-append-to-body="false">
+            <!--<div class="editPannel" v-show="showPanel == true">
+                <el-button @click="closePanel">关闭</el-button>
+            </div>-->
+            <el-input v-model="selectedNode.name" placeholder="选项名称"></el-input>
+            <!--<el-button @click="showVideoSelect=true">编辑视频段</el-button>-->
+            <el-select v-model="selectedNode.videoID" >
+                <el-option label="选择视频" value=""></el-option>
+                <el-option v-for="item in partList" :key="item.id" :label="item.name" :value="item.videoId">
+                </el-option>
+            </el-select>
             <el-button @click="addNode()">添加子节点</el-button>
-            <el-button @click="closePanel">关闭</el-button>
+        </el-dialog>
+        <div class='chapterNest'>
+            第
+            <el-select v-model="chapterID" >
+                <el-option label="选择视频" value=""></el-option>
+                <el-option v-for="(item, index) in chapterArray" :key="index" :label="item" :value="item">
+                </el-option>
+            </el-select>
+            章第
+              <el-select v-model="sessionID" >
+                <el-option label="选择视频" value=""></el-option>
+                <el-option v-for="(item, index) in sessionArray" :key="index" :label="item" :value="item">
+                </el-option>
+            </el-select>
+            节
         </div>
         <div id="tree" :style="{width: '1700px', height: '800px'}">
         </div>
-        <el-button @click="undo()">
-            重置树状图
-        </el-button>
-        <el-button @click="uploadTree()">
-             上传视频结构
-        </el-button>
+        <div class='btnNest'>
+            <el-button @click="undo()">
+                重置树状图
+            </el-button>
+            <el-button @click="uploadTree()">
+                上传视频结构
+            </el-button>
+        </div>
     </div>
 </template>
 <script>
@@ -33,6 +56,8 @@ import {updateTreeByID, getTreeByID} from '../fetch/coreTree';
 export default {
     data(){
         return{
+            chapterID: 1,
+            sessionID: 1,
             showVideoSelect: false,
             showVideoList: false,
             courseID: 3,
@@ -48,6 +73,8 @@ export default {
 
                 ]
             },
+            chapterArray: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+            sessionArray: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
             selectedNode:{},
             partList: [],
             edge:[]
@@ -58,7 +85,7 @@ export default {
             this.treeData = {
                 id: 0,
                 url: "",
-                name: "C1S1",
+                name: "根节点",
                 videoID: 0,
                 children: [
 
@@ -198,6 +225,7 @@ export default {
             }
             console.log("!")
             console.log(this.edge);
+            this.treeData.name = 'C' + this.chapterID + 'S' + this.sessionID;
             let response = await updateTreeByID({
                 courseId: this.courseID,
                 title: this.treeData.name,
@@ -370,5 +398,9 @@ export default {
     z-index: 1001;
     top: 300px;
     left: 500px;
+}
+.btnNest{
+    display: flex;
+    flex-flow: row;
 }
 </style>
