@@ -4,11 +4,10 @@
             {{videoName}}
         </div>
         <div class="mask" v-show="showMask==true"></div>
-        <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="640" height="264">
+        <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1600" height="900">
             <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
         </video>
         <!--<div class="videoBody">
-            
             </div>
             <figure>
                 <figcaption>视频案例</figcaption>
@@ -85,8 +84,8 @@ export default {
         let self = this;
         let options = {
             controls : true,      
-                height:300, 
-                width:600,
+                height:630, 
+                width:1120,
         }
         var player = videojs('example_video_1', options, function onPlayerReady() {
             videojs.log('播放器已经准备好了!');
@@ -319,10 +318,21 @@ figcaption{
     background: url(../assets/logo.png);
 }
 .mask{
-    position: fixed;
-    width: 1000px;
-    height: 600px;
+    top: 150px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
     z-index: 1005;
-    background-color: black;
+    background:#fff url('../assets/cr2.jpg');
+    background-repeat: no-repeat;
+    filter:blur(10px);
+    -webkit-filter:blur(10px);
+    -moz-filter:blur(10px);
+    -ms-filter:blur(10px);
+    -o-filter:blur(10px); 
+}
+.video-js{
+    margin-top: 100px;
+    margin-left: 100px;
 }
 </style>
