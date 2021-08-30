@@ -8,6 +8,8 @@ import videoList from '@/page/video-list'
 import videoPage from '@/page/video'
 import editPage from '@/page/edit'
 import uploadtest from '@/page/uploadtest'
+import courseManage from '@/page/courseManage'
+import videoManage from '@/page/videoManage'
 Vue.use(Router)
 
 export default new Router({
@@ -48,5 +50,13 @@ export default new Router({
       path: "/upload",
       component: uploadtest
     },
+    {
+      path: "/courseManage",
+      component: courseManage
+    },
+    {
+      path: "/videoManage",
+      component: videoManage
+    }
   ]
 })

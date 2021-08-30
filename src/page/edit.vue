@@ -23,7 +23,7 @@
             </el-select>
             <el-button @click="addNode()">添加子节点</el-button>
         </el-dialog>
-        <div class='chapterNest'>
+        <!--<div class='chapterNest'>
             第
             <el-select v-model="chapterID" >
                 <el-option label="选择视频" value=""></el-option>
@@ -37,7 +37,7 @@
                 </el-option>
             </el-select>
             节
-        </div>
+        </div>-->
         <div id="tree" :style="{width: '1700px', height: '800px'}">
         </div>
         <div class='btnNest'>

@@ -97,6 +97,6 @@
 <style scoped>
 .album{
     width: 400px;
-    height: 200px;
+    height: 400px;
 }
 </style>

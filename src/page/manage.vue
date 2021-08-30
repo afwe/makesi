@@ -1,7 +1,10 @@
 <template>
     <div class="mainContainer">
-        <upload v-show="showUpload==true">
-        </upload>
+        <el-dialog title="上传视频" :visible.sync="showUpload" @close="showUpload=false" :modal-append-to-body="false">
+            <upload>
+            </upload>
+        </el-dialog>
+        
          <div class="course-list" v-show="showCourseList==true">
             <span class="title">课程列表</span>
             <br>
@@ -9,14 +12,11 @@
                 {{item.courseName}}
             </el-button>
         </div>
-        <el-button class="createCourse" @click="showCreate=true">
-            <span>创建课程</span>
-        </el-button>
         <el-button class="createCourse" @click="showUpload=!showUpload">
             <span>上传视频</span>
         </el-button>
-        <el-button class="createCourse" @click="showCourseList=!showCourseList">
-            <span>添加视频</span>
+        <el-button class="createCourse" @click="$router.push('/courseManage')">
+            <span>课程管理</span>
         </el-button>
         <div class="createPanel" v-show="showCreate==true">
             <div>
