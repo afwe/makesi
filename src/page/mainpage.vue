@@ -100,7 +100,7 @@ export default {
     }
 }
 </script>
-<style scoped lang="less">
+<style scoped>
 ol{
     list-style:none;;
 }
