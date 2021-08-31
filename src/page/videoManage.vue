@@ -31,7 +31,8 @@
         <el-table-column  label="视频名称" prop="title"></el-table-column>
         <el-table-column label="操作">
             <template slot-scope="scope">
-                <el-button size="mini" @click="handleEdit(scope.row.id)">编辑视频结构</el-button>
+                <el-button size="mini" @click="handleEdit(scope.row)">编辑视频结构</el-button>
+                <el-button size="mini" @click="handleStatus(scope.row)">查看视频数据</el-button>
                 <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
             </template>
         </el-table-column>
@@ -79,6 +80,14 @@ export default{
         this.render();
     },
     methods:{
+        handleStatus: function(video){
+            localStorage.setItem('curVideoID', video.id);
+            this.setEdge(video);
+            this.$router.push(`./status?id=${this.courseID}&vid=${video.id}`);
+        },
+        setEdge: function(video){
+            localStorage.setItem("edge", JSON.stringify(video.edge));
+        },
         showPanel: function(){
             showCreate = true;
         },
@@ -86,8 +95,9 @@ export default{
             this.showCreate = false;
             this.render();
         },
-        handleEdit: function(videoID){
-            console.log(videoID);
+        handleEdit: function(video){
+            console.log(video.id);
+            this.setEdge(video);
             this.$router.push('/edit');
         },
         handleDelete: function(videoID){

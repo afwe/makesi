@@ -3,7 +3,10 @@
         <div class="title">
             {{videoName}}
         </div>
-        <div class="mask" v-show="showMask==true"></div>
+        <div class="mask" v-show="showMask==true">
+            <div class='btnLayer'></div>
+        </div>
+
         <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1600" height="900">
             <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
         </video>
@@ -48,7 +51,7 @@ export default {
             videoName: "",
             videoID: "",
             showMask: false,
-            treeData:{
+            /*treeData:{
                 id: 0,
                 url: "http://www.w3school.com.cn/i/movie.mp4",
                 name: "根节点",
@@ -73,7 +76,7 @@ export default {
                         ]
                     }
                 ]
-            }
+            }*/
         }
     },
     mounted(){
@@ -108,7 +111,7 @@ export default {
                             self.showMask = false;
                             videoBody.play();
                         };
-                        document.querySelector('.mask').appendChild(newButton);
+                        document.querySelector('.btnLayer').appendChild(newButton);
                     });
                     self.showMask = true;
                 }
@@ -323,13 +326,18 @@ figcaption{
     width: 100%;
     height: 100%;
     z-index: 1005;
-    background:#fff url('../assets/cr2.jpg');
-    background-repeat: no-repeat;
     filter:blur(10px);
     -webkit-filter:blur(10px);
     -moz-filter:blur(10px);
     -ms-filter:blur(10px);
     -o-filter:blur(10px); 
+}
+.btnLayer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    
 }
 .video-js{
     margin-top: 100px;

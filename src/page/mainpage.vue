@@ -1,14 +1,12 @@
 <template>
     <div class="mainContainer">
         <div class="course-list">
-            <ol class="course-content">
+            <div class="course-content">
                 <span class="title">课程列表</span>
-                <li>
-                    <el-card class="course" v-for="(item,index) in courses.slice((currentPage-1)*pagesize,currentPage*pagesize)" @click.native="toCourse(item.courseId)">
+                <el-card class="course" v-for="(item,index) in courses.slice((currentPage-1)*pagesize,currentPage*pagesize)" @click.native="toCourse(item.courseId)">
                         {{item.courseName}}
-                    </el-card>
-                </li>
-            </ol>
+                </el-card>
+            </div>
             <div class="course-pager">
                 <el-pagination
                     v-if="totCourse > 0"
@@ -118,8 +116,7 @@ ol{
     height:100px;
     box-shadow:10px;
     border-radius: 10px;
-    background-color: #fe0000;
-    color: #ffff01;
+    color: blue;
     cursor:pointer;
 }
 .welcome{
