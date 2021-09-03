@@ -1,7 +1,7 @@
 <template>
     <div class="mainContainer">
         <div class="videoStatusNest">
-            <div class="eLine" v-for="(item,index) in partTimeList">
+            <div id="eLine">
             </div>
         </div>
         <div class="branchStatusNest">
@@ -19,6 +19,21 @@ export default {
             videoID: '',
             courseID: '',
             partTimeList: [],
+            branchNodes: [
+                [
+                    {
+
+                    },
+                    {
+
+                    }
+                ],
+                [
+                    {
+                        
+                    }
+                ]
+            ],
             treeData: {},
             edge: [],
         }
@@ -55,6 +70,23 @@ export default {
                 )
             }
         },
+        searchTreeBranch: function(node){
+            if(node.children != undefined && node.children != []){
+                this.branchNodes.push([]);
+                node.children.forEach(
+                    element => {
+                        this.branchNodes[this.branchNodes.lenggth-1].push(element);
+                    }
+                )
+            }
+            if(node.children != undefined && node.children != []){
+                node.children.forEach(
+                    element => {
+                        this.searchTreeBranch(element);
+                    }
+                )
+            }
+        },
         buildTreeData: function(){
             let Data = {};
             let idVideoIDMap = new Map();
@@ -79,10 +111,159 @@ export default {
             this.treeData = Data;
         },
         videoStatusRender(){
-
+            let myChart = this.$echarts.init(document.getElementById('eLine'));
+            this.partTimeList.sort((element1, element2) => {
+                return element1.id - element2.id;
+            });
+            let nameArray = [];
+            let timeArray = [];
+            this.partTimeList.forEach(
+                element => {
+                    nameArray.push(element.name);
+                    timeArray.push(element.time);
+                }
+            )
+            myChart.setOption({
+                title: { text: 'echarts test' },
+                tooltip: {},
+                xAxis: {
+                    data: nameArray
+                },
+                yAxis: {},
+                series: [{
+                    name: '销量',
+                    type: 'bar',
+                    data: timeArray
+                }]
+            });
         },
         branchStatusRender(){
+                       function dataProcess (data) {
+            let len = data.length
+            let placeholder = {
+                value: 0,
+                itemStyle: {
+                    opacity: 0
+                },
+                label: {
+                    show: false
+                },
+                labelLine: {
+                    show: false
+                }
+            }
+            let i =0
+            while (i < len) {
+                data.push(placeholder)
+                i++
+            }
+            return data
+            }
 
+            let data = [{
+                name: '错误',
+                value: 13
+            }, {
+                name: '正确',
+                value: 75
+            }]
+
+            console.log(dataProcess(data))
+
+            let seriesForData = {
+                roseType: "area",
+                type: "pie",
+                z: 5,
+                data: data,
+                center: ['10%', '50%'],
+                radius: ['10%', '50%'],
+                label: {
+                    normal: {
+                        color: '#fff',
+                        formatter: '{b|{b}} {c|{c}} %',
+                        rich: {
+                            b: {
+                                color: "#fff"
+                            },
+                            c: {
+                                fontWeight: "bold"
+                            }
+
+                        }
+                    },
+                    labelLine: {
+                        normal: {
+                            length: 0,
+                            length2: 200,
+                            lineStyle: {
+                                color: "#274862"
+                            },
+                            show: true
+                        }
+                    }
+                },
+                labelLine:{
+                    normal: {
+                        length: 0,
+                        length2: 200,
+                        lineStyle: {
+                            color: "#274862"
+                        }
+                    }
+                }
+            }
+
+            let seriesForBg = {
+                type: 'pie',
+                z: 2,
+                center: ['10%', '50%'],
+                radius: ['5%', '60%'],
+                silent: true,
+                data: [{
+                    value: 1,
+                    itemStyle: {
+                        normal: {
+                            color: {
+                                type: 'radial',
+                                "x": 0.1,
+                                "y": 0.5,
+                                r: 1,
+                                colorStops: [{
+                                    offset: 0,
+                                    color: "rgb(36,52,67)"
+                                }, {
+                                    offset: 1,
+                                    color: "rgb(12,20,28, 0.5)"
+                                }]
+                            }
+                        }
+                    }
+                }, {
+                    value: 1,
+                    itemStyle: {
+                        emphasis: {
+                            opacity: 0
+                        },
+                        normal: {
+                            opacity: 0
+                        }
+                    }
+                }]
+            }
+
+            let options = {
+                animation: false,
+                backgroundColor: '#010105',
+                color: ["#FE0404", "#00DC58"],
+                series:[
+                    seriesForData,
+                    seriesForBg,
+                ]
+            }
+
+            let myChart = this.$echarts.init(document.getElementById('main'))
+
+            myChart.setOption(options);
         }
     }
 }

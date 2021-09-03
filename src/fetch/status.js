@@ -20,3 +20,30 @@ export const logTime = (data) => fetch('', 'POST', data);
     }
 */
 export const logPick = (data) => fetch('', 'POST', data);
+/*
+{
+    courseId: ,
+    videoId:
+}
+*/
+export const get_visit_status = (data) => fetch('', 'POST', data);
+/*
+{
+    courseId: ,
+    videoId: ,
+}
+*/
+export const get_time_status = (data) => fetch('', 'POST', data);
+/*
+{
+    courseId: ,
+    videoid: ,
+}
+直接返回object数组[
+    {
+        id: ,
+        times: ,
+    }
+]
+*/
+export const get_pick_status = (data) => fetch('', 'POST', data);

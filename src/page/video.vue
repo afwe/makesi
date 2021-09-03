@@ -80,8 +80,25 @@ export default {
         }
     },
     mounted(){
+        let statusResponse;
+        
         this.courseID = this.$route.query.id;
         this.videoID = this.$route.query.vid;
+        logVisit({
+            courseId: this.courseID,
+            videoId: this.videoID
+        }).then(data => {
+            console.log(data);
+        });
+        setInterval(() => {
+            logTime({
+                mTime: 5000,
+                videoId: this.videoID,
+                courseId: this.courseID
+            }).then(data => {
+                console.log(data);
+            })
+        })
         this.render();
         this.buildTreeData();
         let self = this;
@@ -103,13 +120,25 @@ export default {
                     console.log(self.treeData)
                     self.treeData.children.forEach(element => {
                         let newButton = document.createElement("button");
+                        newButton.className = 'choice'
                         newButton.innerText = element.name;
                         newButton.data = element;
                         newButton.onclick = function(){
+                            logPick({
+                                partId: this.id,
+                            }).then(data => {
+                                console.log(data);
+                            })
                             self.treeData = this.data;
                             video.src = self.treeData.url;
                             self.showMask = false;
                             videoBody.play();
+                            let btnArray = document.getElementsByClassName('choice');
+                            btnArray.forEach(
+                                btn => {
+                                    btn.parrentNode.removeChild(btn);
+                                }
+                            )
                         };
                         document.querySelector('.btnLayer').appendChild(newButton);
                     });

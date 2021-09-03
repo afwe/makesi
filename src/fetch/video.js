@@ -6,3 +6,5 @@ export const getVideoListByCourseID = (id) => fetch(`api/courses/${id}/video`, "
 
 export const getPartListByCourseID = (id) => fetch(`api/courses/${id}/videoList`, "POST", "");
 
+export const deleteVideoByID = (data) => fetch('', 'POST', data);
+

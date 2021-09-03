@@ -41,7 +41,7 @@
 </template>
 <script>
 import {updateTreeByID, getTreeByID} from '../fetch/coreTree';
-import { getVideoListByCourseID } from '../fetch/video'
+import { getVideoListByCourseID, deleteVideoByID } from '../fetch/video'
 export default{
     data(){
         return{
@@ -101,7 +101,14 @@ export default{
             this.$router.push('/edit');
         },
         handleDelete: function(videoID){
-
+            let self = this;
+            deleteVideoByID({videoId: videoID}).then(
+                data => {
+                    if(data.code == 200){
+                        self.render();
+                    }
+                }
+            )
         },
         changeVideoPage:async function(){
             
