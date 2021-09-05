@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-import { defineComponent } from '@vue/composition-api'
+import { get_time_status, get_pick_status } from '../fetch/status'
 
 export default {
     data(){
@@ -44,6 +44,22 @@ export default {
         this.videoID = this.$route.query.vid;
         this.edge = JSON.parse(localStorage.getItem('edge'));
         this.edge = JSON.parse(this.edge);
+        get_time_status({
+            courseId: this.courseID,
+            videoId: this.videoID
+        }).then(
+            data => {
+
+            }
+        );
+        get_pick_status({
+            courseId: this.courseID,
+            videoId: this.videoID
+        }).then(
+            data => {
+                
+            }
+        )
     },
     methods:{
         connectEdge(node){
