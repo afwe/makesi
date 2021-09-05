@@ -13,13 +13,13 @@ export const logVisit = (data) => fetch('', 'POST', data);
         mTime: 3
     }
 */
-export const logTime = (data) => fetch('', 'POST', data);
+export const logTime = (data) => fetch('api/data/watch_time', 'POST', data);
 /*
     {
         partId,
     }
 */
-export const logPick = (data) => fetch('', 'POST', data);
+export const logPick = (data) => fetch('api/data/option/set', 'POST', data);
 /*
 {
     courseId: ,
@@ -33,7 +33,7 @@ export const get_visit_status = (data) => fetch('', 'POST', data);
     videoId: ,
 }
 */
-export const get_time_status = (data) => fetch('', 'POST', data);
+export const get_time_status = (data) => fetch('api/data/watch_time/get', 'POST', data);
 /*
 {
     courseId: ,
@@ -42,8 +42,8 @@ export const get_time_status = (data) => fetch('', 'POST', data);
 直接返回object数组[
     {
         id: ,
-        times: ,
+        times: ,s
     }
 ]
 */
-export const get_pick_status = (data) => fetch('', 'POST', data);
+export const get_pick_status = (data) => fetch('api/data/option/visit', 'POST', data);

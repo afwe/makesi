@@ -27,7 +27,7 @@
                 <template slot="title">
                     第{{cindex+1}}章
                 </template>
-                <el-card v-for="(item,sindex) in chapter[cindex]" class="videoItem">
+                <el-card v-for="(item,sindex) in chapter[cindex]" class="videoItem" @click.native="toVideo(item.id)">
                     {{item.title}}
                 </el-card>
             </el-collapse-item>
@@ -65,7 +65,13 @@ export default {
         getVideoes: async function(){
 
         },
-        toVideo: async function(index){
+        toVideo: async function(id){
+            let index = 0;
+            this.videoes.forEach(
+                (element, i) => {
+                    if(element.id == id) index = i; 
+                }
+            )
             localStorage.setItem("edge", JSON.stringify(this.videoes[index].edge));
             this.$router.push({
                 path: `/video/?id=${this.courseID}&vid=${this.videoes[index].id}`

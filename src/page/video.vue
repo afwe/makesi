@@ -3,13 +3,14 @@
         <div class="title">
             {{videoName}}
         </div>
-        <div class="mask" v-show="showMask==true">
-            <div class='btnLayer'></div>
+        <div class="videoLayer">
+            <div class="mask" v-show="showMask==true">
+                <div class='btnLayer'></div>
+            </div>
+            <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1600" height="900">
+                <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+            </video>
         </div>
-
-        <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1600" height="900">
-            <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
-        </video>
         <!--<div class="videoBody">
             </div>
             <figure>
@@ -98,7 +99,7 @@ export default {
             }).then(data => {
                 console.log(data);
             })
-        })
+        }, 5000);
         this.render();
         this.buildTreeData();
         let self = this;
@@ -125,7 +126,7 @@ export default {
                         newButton.data = element;
                         newButton.onclick = function(){
                             logPick({
-                                partId: this.id,
+                                partId: this.videoId,
                             }).then(data => {
                                 console.log(data);
                             })
@@ -133,10 +134,11 @@ export default {
                             video.src = self.treeData.url;
                             self.showMask = false;
                             videoBody.play();
-                            let btnArray = document.getElementsByClassName('choice');
+                            let btnArray = Array.from(document.getElementsByClassName('choice'));
+                            console.log(btnArray);
                             btnArray.forEach(
                                 btn => {
-                                    btn.parrentNode.removeChild(btn);
+                                    document.querySelector('.btnLayer').removeChild(btn);
                                 }
                             )
                         };
@@ -350,26 +352,26 @@ figcaption{
     background: url(../assets/logo.png);
 }
 .mask{
-    top: 150px;
     position: absolute;
     width: 100%;
     height: 100%;
     z-index: 1005;
-    filter:blur(10px);
-    -webkit-filter:blur(10px);
-    -moz-filter:blur(10px);
-    -ms-filter:blur(10px);
-    -o-filter:blur(10px); 
 }
 .btnLayer{
     width: 100%;
     height: 100%;
     display: flex;
     flex-flow: column;
-    
+    justify-content: flex-end;
+}
+.videoLayer{
+    position: relative;
+    width: 800px;
+    height: 600px;
 }
 .video-js{
-    margin-top: 100px;
-    margin-left: 100px;
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
 }
 </style>

@@ -10,7 +10,7 @@
                 <span>{{item.name}}</span>
             </div>
         </div>-->
-        <el-dialog :title="title" :visible.sync="showPanel" @close="closePanel" :modal-append-to-body="false">
+        <el-dialog title="编辑节点" :visible.sync="showPanel" @close="closePanel" :modal-append-to-body="false">
             <!--<div class="editPannel" v-show="showPanel == true">
                 <el-button @click="closePanel">关闭</el-button>
             </div>-->
@@ -81,6 +81,60 @@ export default {
         }
     },
     methods:{
+        connectEdge(node){
+            let self = this;
+            this.getVideoByID(node.videoID).then(url =>{
+                node.url = "http://" + url;
+                this.edge.forEach(
+                    Edge => {
+                        if(Edge.fatherID == node.id){
+                            if(node.children == undefined) node.children = [];
+                            if(Edge.childID != undefined)
+                            node.children.push({
+                                id: Edge.childID,
+                                videoID: Edge.childVideoID,
+                                name: Edge.name
+                                } 
+                            );
+                        }
+                    }
+                )
+                if(node.children != undefined && node.children != []){
+                    node.children.forEach(
+                        next => {
+                            this.connectEdge(next);
+                        }
+                    )
+                }
+                if(node.id == 0){
+                    let  video=document.querySelector('video');
+                    video.src =this.treeData.url;
+                }
+            });
+        },
+        buildTreeData: function(){
+            let Data = {};
+            let idVideoIDMap = new Map();
+            this.edge.forEach(
+                Edge => {
+                    idVideoIDMap.set(Edge.fatherID, Edge.fatherVideoID);
+                    idVideoIDMap.set(Edge.childID, Edge.childVideoID);
+                }
+            )
+            this.edge.forEach(
+                Edge => {
+                    idVideoIDMap.delete(Edge.childID);
+                }
+            )
+            idVideoIDMap.forEach(
+                (value, key) => {
+                    Data.id = key;
+                    Data.videoID = value;
+                }
+            )
+            this.connectEdge(Data);
+            this.treeData = Data;
+        },
         undo: function(){
             this.treeData = {
                 id: 0,
@@ -296,6 +350,7 @@ export default {
         },
         getPartList: async function(){
             let response = await getPartListByCourseID(this.courseID);
+            console.log(response)
             if(response.code == 200){
                 this.partList = response.data;
             }
@@ -363,9 +418,12 @@ export default {
     mounted(){
         this.getPartList();
         this.render();
+        this.edge = JSON.parse(localStorage.getItem('edge'));
+        this.edge = JSON.parse(this.edge);
         if(localStorage.getItem("curCourseID") != undefined){
             this.courseID = localStorage.getItem("curCourseID");
         }
+
         console.log(this.courseID);
         /*getTreeByID({cid: this.courseID, vid: 1}).then(response => {
             console.log(response);

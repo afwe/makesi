@@ -13,7 +13,8 @@
                             v-bind:on-progress="uploadVideoProcess"
                             v-bind:on-success="handleVideoSuccess"
                             v-bind:before-upload="beforeUploadVideo"
-                            v-bind:show-file-list="false">
+                            multiple
+                            >
                         <!--<video v-if="videoForm.showVideoPath !='' && !videoFlag"
                             v-bind:src="videoForm.showVideoPath"
                             class="avatar video-avatar"
@@ -43,6 +44,7 @@
         
         data(){
             return{
+                fileListArr : [],
                 courseID: 3,
                 videoFlag: false,
                 //是否显示进度条
@@ -69,27 +71,30 @@
                     this.$message.error('上传视频大小不能超过300MB哦!')
                     return false
                 }
-                },
+            },
                 // 视频上传过程中执行
-                uploadVideoProcess (event, file, fileList) {
-                this.Plus = false
-                this.videoFlag = true
-                this.videoUploadPercent = file.percentage.toFixed(0)
-                },
-                // 视频上传成功是执行
-                handleVideoSuccess (res, file) {
-                this.Plus = false
-                this.videoUploadPercent = 100
-                console.log(res)
-                // 如果为200代表视频保存成功
-                if (res.code == 200) {
-                    // 接收视频传回来的名称和保存地址
-                    // 至于怎么使用看你啦~
-                    this.$message.success('视频上传成功！')
-                    localStorage.setItem('partList', JSON.stringify(res.data));
-                } else {
-                    this.$message.error('视频上传失败，请重新上传！')
-                }
+            uploadVideoProcess (event, file, fileList) {
+            this.Plus = false
+            this.videoFlag = true
+            this.videoUploadPercent = file.percentage.toFixed(0)
+            },
+            // 视频上传成功是执行
+            handleVideoSuccess (res, file) {
+            this.Plus = false
+            this.videoUploadPercent = 100
+            console.log(res)
+            // 如果为200代表视频保存成功
+            if (res.code == 200) {
+                // 接收视频传回来的名称和保存地址
+                // 至于怎么使用看你啦~
+                this.$message.success('视频上传成功！');
+                localStorage.setItem('partList', JSON.stringify(res.data));
+            } else {
+                this.$message.error('视频上传失败，请重新上传！');
+            }
+            },
+            onChangeFl: function(){
+
             }
         }
     }

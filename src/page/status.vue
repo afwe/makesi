@@ -4,7 +4,7 @@
             <div id="eLine">
             </div>
         </div>
-        <div class="branchStatusNest">
+        <div id="branchStatusNest">
             <div class="ePank" v-for="(item,index) in branchList">
             </div>
         </div>
@@ -110,7 +110,7 @@ export default {
             this.connectEdge(Data);
             this.treeData = Data;
         },
-        videoStatusRender(){
+        videoStatusRender: function(){
             let myChart = this.$echarts.init(document.getElementById('eLine'));
             this.partTimeList.sort((element1, element2) => {
                 return element1.id - element2.id;
@@ -137,36 +137,30 @@ export default {
                 }]
             });
         },
-        branchStatusRender(){
-                       function dataProcess (data) {
-            let len = data.length
-            let placeholder = {
-                value: 0,
-                itemStyle: {
-                    opacity: 0
-                },
-                label: {
-                    show: false
-                },
-                labelLine: {
-                    show: false
+        branchStatusRender: function(branchList, index){
+            function dataProcess (data) {
+                let len = data.length
+                let placeholder = {
+                    value: 0,
+                    itemStyle: {
+                        opacity: 0
+                    },
+                    label: {
+                        show: false
+                    },
+                    labelLine: {
+                        show: false
+                    }
                 }
-            }
-            let i =0
-            while (i < len) {
-                data.push(placeholder)
-                i++
-            }
-            return data
+                let i =0
+                while (i < len) {
+                    data.push(placeholder)
+                    i++
+                }
+                return data
             }
 
-            let data = [{
-                name: '错误',
-                value: 13
-            }, {
-                name: '正确',
-                value: 75
-            }]
+            let data = branchList;
 
             console.log(dataProcess(data))
 
@@ -260,10 +254,18 @@ export default {
                     seriesForBg,
                 ]
             }
-
-            let myChart = this.$echarts.init(document.getElementById('main'))
-
+            let newLayer = document.createElement('div');
+            newLayer.id = `p${index}`;
+            document.getElementById('branchStatusNest').appendChild(newLayer);
+            let myChart = this.$echarts.init(newLayer);
             myChart.setOption(options);
+        },
+        createPank: function(){
+            this.branchNodes.forEach(
+                (element, index) => {
+                    this.createPank(element, index);
+                }
+            )
         }
     }
 }
