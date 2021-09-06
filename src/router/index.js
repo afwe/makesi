@@ -3,7 +3,7 @@ import Router from 'vue-router'
 
 import mainpage from '@/page/mainpage'
 import course from '@/page/course'
-import manage from '@/page/manage'
+import upload from '@/page/uploadtest2'
 import videoList from '@/page/video-list'
 import videoPage from '@/page/video'
 import editPage from '@/page/edit'
@@ -57,6 +57,10 @@ export default new Router({
     {
       path: "/videoManage",
       component: videoManage
+    },
+    {
+      path: "/uploadtest",
+      component: upload
     }
   ]
 })

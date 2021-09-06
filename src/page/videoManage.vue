@@ -23,8 +23,15 @@
                 创建
         </el-radio-button>
     </el-dialog>
+    <el-dialog title="上传视频" :visible.sync="showUpload" @close="showUpload=false" :modal-append-to-body="false">
+            <upload>
+            </upload>
+        </el-dialog>
     <el-button class="createCourse" @click="showCreate=true">
         创建视频
+    </el-button>
+    <el-button class="createCourse" @click="showUpload=!showUpload">
+        上传视频
     </el-button>
     <el-table :data="videoes" stripe border>
         <el-table-column  type="index"></el-table-column>
@@ -40,15 +47,20 @@
 </div>
 </template>
 <script>
+import upload from './uploadtest2.vue';
 import {updateTreeByID, getTreeByID} from '../fetch/coreTree';
 import { getVideoListByCourseID, deleteVideoByID } from '../fetch/video'
 export default{
+    components:{
+        upload
+    },
     data(){
         return{
             courseID: '',
             chapterID: 1,
             sessionID: 1,
             showCreate: false,
+            showUpload: false,
             treeData: {
                 id: 0,
                 url: "",

@@ -13,7 +13,7 @@
             </el-button>
         </div>
         <el-button class="createCourse" @click="showUpload=!showUpload">
-            <span>上传视频</span>
+            上传视频
         </el-button>
         <el-button class="createCourse" @click="$router.push('/courseManage')">
             <span>课程管理</span>

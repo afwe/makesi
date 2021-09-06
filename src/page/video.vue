@@ -91,11 +91,12 @@ export default {
         }).then(data => {
             console.log(data);
         });
+        let ms = 5000;
         setInterval(() => {
             logTime({
-                mTime: 5000,
                 videoId: this.videoID,
-                courseId: this.courseID
+                courseId: this.courseID,
+                msTime: ms,
             }).then(data => {
                 console.log(data);
             })
@@ -229,13 +230,13 @@ export default {
             if(response.code == 200){
                 return response.data;
             }
-            else{
+            /*else{
                 this.$message({
                     type :'error',
                     message: '视频url获取失败'
                     }
                 )
-            }
+            }*/
         },
         render: function(){
             this.edge = JSON.parse(localStorage.getItem('edge'));

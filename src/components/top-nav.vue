@@ -11,9 +11,6 @@
             <div class="item" @click="$router.push('/class')" v-show='isLogin'>
                 班级
             </div>
-            <div class="item" @click="showRegister = true" v-show='!isLogin'>
-                注册
-            </div>
         </el-menu-item>
         <el-menu-item class="item" index="4">
             <div class="item" @click="$router.push('/user')" v-show='isLogin == true && monitor == false'> 
@@ -22,8 +19,8 @@
             <div class="item" @click="$router.push('/manage')" v-show='isLogin == true && monitor == true'>
                  管理中心
             </div>
-            <div class="item" @click="showLogin = true" v-show='!isLogin'>
-                登录
+            <div class="item" @click="showLogin=true" v-show='!isLogin'>
+                登录/注册
             </div>
         </el-menu-item>
         <el-menu-item class="item">
@@ -40,8 +37,7 @@
             </el-dropdown>
         </el-menu-item>
     </el-menu>
-    <el-card class="loginPosition" v-show="showLogin">
-    <div class="loginForm" v-show="showLogin">
+    <el-dialog title="大国工业" :visible.sync="showLogin" @close="closePanel" :modal-append-to-body="false">
         <div>
         <input class="info-input" type="text" v-model="userID" placeholder="用户名">
         </div>
@@ -53,11 +49,11 @@
         <el-radio-button class="loginButton" @click.native="doLogin()">
             登录
         </el-radio-button>
-        <el-radio-button class="closeButton" v-on:click.native="hideLogin()">
-            关闭
+        <el-radio-button class="loginButton" v-on:click.native="doRegister()">
+            注册
         </el-radio-button>
-    </div>
-    </el-card>
+    </el-dialog>
+    <!--
     <el-card class="loginPosition" v-show="showRegister">
     <div class="loginForm" v-show="showRegister">
         <div>
@@ -75,7 +71,7 @@
             关闭
         </el-radio-button>
     </div>
-    </el-card>
+    </el-card>-->
     </div>
 </template>
 <script>
@@ -124,8 +120,8 @@ export default{
         
     },
     methods:{
-        close() {
-            this.$emit("close");
+        closepanel: function(){
+            this.showLogin = false;
         },
         checkLogin_Student: async function(){
             let response;

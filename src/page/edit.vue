@@ -88,14 +88,16 @@ export default {
                 this.edge.forEach(
                     Edge => {
                         if(Edge.fatherID == node.id){
-                            if(node.children == undefined) node.children = [];
-                            if(Edge.childID != undefined)
-                            node.children.push({
-                                id: Edge.childID,
-                                videoID: Edge.childVideoID,
-                                name: Edge.name
-                                } 
-                            );
+                            if(node.children == undefined) {
+                                node.children = [];
+                            }
+                            if(Edge.childID != undefined){
+                                node.children.push({
+                                    id: Edge.childID,
+                                    videoID: Edge.childVideoID,
+                                    name: Edge.name
+                                });
+                            }
                         }
                     }
                 )
@@ -105,10 +107,6 @@ export default {
                             this.connectEdge(next);
                         }
                     )
-                }
-                if(node.id == 0){
-                    let  video=document.querySelector('video');
-                    video.src =this.treeData.url;
                 }
             });
         },
@@ -220,7 +218,7 @@ export default {
             
         },
         buildTreeData: function(){
-            let treeData = {};
+            let treeData = this.treeData;
             let indgreeMap = new Map();
             let idVideoIDMap = new Map();
             this.edge.forEach(
@@ -240,12 +238,10 @@ export default {
                     treeData.videoID = value;
                 }
             )
-            console.log(treeData);
             this.connectEdge(treeData);
-            console.log(treeData);
+            
         },
         convertGraph: function(node, father){
-            console.log(node);
             if(father.id != node.id){
                 this.edge.push({
                     fatherID: father.id,
@@ -262,9 +258,9 @@ export default {
                     }
                 )
             }
+            
         },
         uploadTree: async function(){
-            this.treeData.courseId = 3;
             this.edge = [];
             this.convertGraph(this.treeData, this.treeData);
             this.buildTreeData();
@@ -277,8 +273,6 @@ export default {
                     name: this.treeData.name
                     })
             }
-            console.log("!")
-            console.log(this.edge);
             this.treeData.name = 'C' + this.chapterID + 'S' + this.sessionID;
             let response = await updateTreeByID({
                 courseId: this.courseID,
@@ -339,6 +333,7 @@ export default {
                     name: "节点" + newID
                 })
             }
+            console.log(node);
             this.setMyCharts();
         },
         deleteNode: function(){
@@ -353,6 +348,10 @@ export default {
             console.log(response)
             if(response.code == 200){
                 this.partList = response.data;
+                this.partList.push({
+                    name: "无视频",
+                    videoId: -1
+                })
             }
             else{
                 this.$message({
@@ -420,11 +419,13 @@ export default {
         this.render();
         this.edge = JSON.parse(localStorage.getItem('edge'));
         this.edge = JSON.parse(this.edge);
+        console.log(this.edge);
         if(localStorage.getItem("curCourseID") != undefined){
             this.courseID = localStorage.getItem("curCourseID");
         }
-
-        console.log(this.courseID);
+        this.buildTreeData();
+        console.log(this.treeData);
+        this.setMyCharts();
         /*getTreeByID({cid: this.courseID, vid: 1}).then(response => {
             console.log(response);
         })*/
