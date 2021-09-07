@@ -19,7 +19,7 @@ export const logTime = (data) => fetch('api/data/watch_time', 'POST', data);
         partId,
     }
 */
-export const logPick = (data) => fetch(`api/data/${data.courseId}/${data.partId}/option`, 'POST', "");
+export const logPick = (data) => fetch(`api/data/${data.courseId}/${data.videoId}/option`, 'POST', "");
 /*
 {
     courseId: ,

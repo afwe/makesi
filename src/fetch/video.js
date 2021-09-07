@@ -8,5 +8,5 @@ export const getPartListByCourseID = (id) => fetch(`api/courses/${id}/videoList`
 
 export const getuploadsignature = () => fetch('api/secret_key', 'POST', '');
 
-export const deleteVideoByID = (data) => fetch(`api/courses/delete/${data.videoId}`, "POST", '');
+export const deleteVideoByID = (data) => fetch(`api/courses/delete/`, "POST", data);
 

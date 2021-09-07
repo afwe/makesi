@@ -40,7 +40,7 @@
             <template slot-scope="scope">
                 <el-button size="mini" @click="handleEdit(scope.row)">编辑视频结构</el-button>
                 <el-button size="mini" @click="handleStatus(scope.row)">查看视频数据</el-button>
-                <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+                <el-button size="mini" type="danger" @click="handleDelete(scope.row.name)">删除</el-button>
             </template>
         </el-table-column>
     </el-table>
@@ -71,13 +71,6 @@ export default{
                 ]
             },
             edge:[
-                {
-                    fatherID: 0,
-                    fatherVideoID: '',
-                    childID: undefined,
-                    childVideoID: undefined,
-                    name: "根节点"
-                }
             ],
             chapterArray: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
             sessionArray: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
@@ -112,9 +105,9 @@ export default{
             this.setEdge(video);
             this.$router.push('/edit');
         },
-        handleDelete: function(videoID){
+        handleDelete: function(title){
             let self = this;
-            deleteVideoByID({videoId: videoID}).then(
+            deleteVideoByID({title: title, courseId: this.courseID}).then(
                 data => {
                     if(data.code == 200){
                         self.render();
@@ -160,6 +153,7 @@ export default{
                     let sPosition = videoName.indexOf('S');
                     element.c = parseInt(videoName.substr(1,sPosition - 1));
                     element.s = parseInt(videoName.substr(sPosition + 1, videoName.length - sPosition));
+                    element.name = element.title;
                     element.title = "第" + element.c + "章" + "第" + element.s + "节";
                 });
                 let Sort = function(val1, val2){

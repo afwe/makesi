@@ -344,14 +344,12 @@ export default {
             this.setMyCharts();
         },
         getPartList: async function(){
+            console.log(this.courseID);
             let response = await getPartListByCourseID(this.courseID);
             console.log(response)
             if(response.code == 200){
                 this.partList = response.data;
-                this.partList.push({
-                    name: "无视频",
-                    videoId: -1
-                })
+                console.log(this.partList)
             }
             else{
                 this.$message({
@@ -415,14 +413,18 @@ export default {
         }
     },
     mounted(){
-        this.getPartList();
-        this.render();
         this.edge = JSON.parse(localStorage.getItem('edge'));
-        this.edge = JSON.parse(this.edge);
         console.log(this.edge);
+        this.edge = JSON.parse(this.edge);
+        console.log(this.edge)
+        console.log("!")
+        console.log(localStorage.getItem('curCourseID'));
         if(localStorage.getItem("curCourseID") != undefined){
             this.courseID = localStorage.getItem("curCourseID");
+            console.log(localStorage.getItem('curCourseID'));
         }
+        this.getPartList();
+        this.render();
         this.buildTreeData();
         console.log(this.treeData);
         this.setMyCharts();

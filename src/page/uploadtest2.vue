@@ -24,20 +24,26 @@
 <script>
 import TcVod from 'vod-js-sdk-v6'
 import {getuploadsignature} from '../fetch/video'
+import {uploadVideo} from '../fetch/upload'
 export default {
     data(){
         return{
             videoFlag: false,
+            courseId: '',
             videoUploadPercent: 0,
             videoForm: {
 
             }
         }
     },
+    mounted(){
+        this.courseId = localStorage.getItem('curCourseID');
+    },
     methods:{
         // 视频-自定义地址
         httpRequest(file){
             const _this = this;
+            console.log(file);
             // 限制视频格式
             if (["video/mp4", "video/quicktime"].indexOf(file.file.type) == -1) {
                 this.$message.error("视频格式有误，上传失败");
@@ -91,7 +97,21 @@ export default {
                 }).catch(err => {
                 console.log(err)
                 })*/
-                console.log(doneResult)
+                console.log(doneResult);
+                console.log({
+                    videoId: doneResult.fileId,
+                    url: doneResult.video.url,
+                    videoName: file.file.name,
+                    courseId: this.courseId
+                })
+                uploadVideo({
+                    videoId: doneResult.fileId,
+                    url: doneResult.video.url,
+                    videoName: file.file.name,
+                    courseId: this.courseId
+                }).then(data => {
+                    console.log(data);
+                })
                 this.$message({
                     message: "上传成功",
                     type: "success"

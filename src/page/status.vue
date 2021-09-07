@@ -79,26 +79,28 @@ export default {
                 courseId: this.courseID
             }).then(
                 data => { 
-                    self.timeList = data.data;
+                    
                     data.data.sort(function(val1,val2){
                         return val1.mtime-val2.mtime;
                     })
                     data.data.forEach(element => {
-                        self.totTime += element.mtime;
-                        element.mtime/=1000;
-                        console.log(element);
-                        element.mtime = `${parseInt(element.mtime/3600)}时${parseInt((element.mtime-parseInt(element.mtime/3600)*3600)/60)}分${parseInt(element.mtime%60)}秒`
+                        if(element.videoId == self.videoID){
+                            self.totTime += element.mtime;
+                            element.mtime/=1000;
+                            console.log(element);
+                            element.mtime = `${parseInt(element.mtime/3600)}时${parseInt((element.mtime-parseInt(element.mtime/3600)*3600)/60)}分${parseInt(element.mtime%60)}秒`
+                            self.timeList.push(element);
+                        }
+                        
                 })
                 self.totTime /= 1000;
         });
-        get_pick_status({
-            courseId: this.courseID,
-            videoId: this.videoID
-        }).then(
-            data => {
-                
-            }
-        )
+        this.edge = localStorage.getItem('edge');
+        this.edge = JSON.parse(edge);
+        this.edge = JSON.parse(edge);
+        this.buildTreeData();
+        this.searchTreeBranch();
+        this.createPank();
     },
     methods:{
         handleSizeChange(val) {
@@ -132,15 +134,19 @@ export default {
             }
         },
         searchTreeBranch: function(node){
-            if(node.children != undefined && node.children != []){
+            if(node.children != undefined && node.children.length>1){
                 this.branchNodes.push([]);
                 node.children.forEach(
                     element => {
-                        this.branchNodes[this.branchNodes.lenggth-1].push(element);
+                        this.branchNodes[this.branchNodes.length-1].push(element);
+                        get_time_status({courseId:this.courseID,videoId: element.videoID}).then(
+                            data => {
+                                element.times = data.times;
+                        })  
                     }
                 )
             }
-            if(node.children != undefined && node.children != []){
+            if(node.children != undefined && node.children>1){
                 node.children.forEach(
                     element => {
                         this.searchTreeBranch(element);
@@ -324,7 +330,8 @@ export default {
         createPank: function(){
             this.branchNodes.forEach(
                 (element, index) => {
-                    this.createPank(element, index);
+
+                    this.branchStatusRender(element, index);
                 }
             )
         }

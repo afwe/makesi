@@ -86,32 +86,26 @@ export default {
         
         this.courseID = this.$route.query.id;
         this.videoID = this.$route.query.vid;
-        /*logVisit({
+        logVisit({
             courseId: this.courseID,
             videoId: this.videoID
         }).then(data => {
             console.log(data);
-        });*/
+        });
         this.clock = setInterval(() => {
-            logTime({
+            /*logTime({
                 videoId: this.videoID,
                 courseId: this.courseID,
                 mtime: 5000,
             }).then(data => {
                 console.log(data);
-            });
-            get_time_status({
+            });*/
+            /*get_time_status({
                 videoId: this.videoID,
                 courseId: this.courseID
             }).then(data => {
                 console.log(data);
-            });
-            get_pick_status({
-                courseId: this.courseID,
-                videoId: this.videoID
-            }).then(data=>{
-                console.log(data);
-            })
+            });*/
         }, 5000);
         this.render();
         this.buildTreeData();
@@ -140,13 +134,14 @@ export default {
                         newButton.onclick = function(){
                             logPick({
                                 courseId: self.courseID,
-                                partId: this.data.videoID,
+                                videoId: this.data.videoID,
                             }).then(data => {
                                 console.log('!');
                                 console.log(data);
                             })
                             self.treeData = this.data;
                             video.src = self.treeData.url;
+                            console.log(video.src);
                             self.showMask = false;
                             videoBody.play();
                             let btnArray = Array.from(document.getElementsByClassName('choice'));
@@ -186,6 +181,7 @@ export default {
         connectEdge(node){
             let self = this;
             this.getVideoByID(node.videoID).then(url =>{
+                console.log(url);
                 node.url = "http://" + url;
                 this.edge.forEach(
                     Edge => {
@@ -211,6 +207,7 @@ export default {
                 if(node.id == 0){
                     let  video=document.querySelector('video');
                     video.src =this.treeData.url;
+                    console.log(video.src);
                 }
             });
         },
