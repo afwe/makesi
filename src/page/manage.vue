@@ -48,15 +48,14 @@
                 </li>
             </ol>
             <div class="course-pager">
-                <el-pagination
-                    v-if="totCourse > 0"
-                    background
-                    layout="prev, pager, next"
-                    :page-size="20"
-                    :total="totCourse"
-                    :current-page="coursePage"
+                <el-pagination background layout="prev, pager, next"
+                    small
+                    :page-size="2"
                     @current-change="changeCoursePage"
-                />
+                    :current-page.sync="currentPage"
+                    :pager-count="5"  
+                    :total="courses.length">
+                </el-pagination>
             </div>
         </div>
         <div id="myChart" :style="{width: '400px', height: '400px'}"></div>
@@ -103,7 +102,6 @@ export default {
                         time: "00:00:00"
                     },
                 ],
-            totCourse: 1,
             coursePage: 1,
             isDone: true
         }
@@ -149,9 +147,6 @@ export default {
                 console.log(response);
             }
             this.isDone = true;
-        },
-        changeCoursePage: function(){
-
         },
         drawLine(){
             let myChart = this.$echarts.init(document.getElementById('myChart'))

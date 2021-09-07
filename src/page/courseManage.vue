@@ -28,7 +28,7 @@
 <script>
 import edit from './edit.vue';
 import {create_course, create_course_identify} from '../fetch/course';
-import {get_all_courses} from '../fetch/course'
+import {get_all_courses, deleteCourseByID} from '../fetch/course'
 
 export default {
     data(){
@@ -75,7 +75,20 @@ export default {
             this.$router.push('/videoManage');
         },
         handleDelete: function(coureId){
-
+            deleteCourseByID({courseId: coureId}).then(
+                data => {
+                    if(data.code == 200){
+                        this.getCourses().then(
+            (data) => {
+                if(data){
+                    console.log(data);
+                    this.courses = data.data;
+                }
+            }
+        )
+                    }
+                }
+            )
         },
         getCourses: async function(){
             let response = await get_all_courses();

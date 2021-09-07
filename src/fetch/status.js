@@ -19,7 +19,7 @@ export const logTime = (data) => fetch('api/data/watch_time', 'POST', data);
         partId,
     }
 */
-export const logPick = (data) => fetch('api/data/option/set', 'POST', data);
+export const logPick = (data) => fetch(`api/data/${data.courseId}/${data.partId}/option`, 'POST', "");
 /*
 {
     courseId: ,
@@ -46,4 +46,4 @@ export const get_time_status = (data) => fetch('api/data/watch_time/get', 'POST'
     }
 ]
 */
-export const get_pick_status = (data) => fetch('api/data/option/visit', 'POST', data);
+export const get_pick_status = (data) => fetch('api/data/get/visit', 'POST', data);

@@ -10,6 +10,7 @@ import editPage from '@/page/edit'
 import uploadtest from '@/page/uploadtest'
 import courseManage from '@/page/courseManage'
 import videoManage from '@/page/videoManage'
+import status from '@/page/status'
 Vue.use(Router)
 
 export default new Router({
@@ -61,6 +62,10 @@ export default new Router({
     {
       path: "/uploadtest",
       component: upload
+    },
+    {
+      path: "/status",
+      component: status
     }
   ]
 })

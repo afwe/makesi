@@ -231,7 +231,7 @@ export default{
             this.btnAva=true;
         },
         doLogout:async function(){
-
+            localStorage.clear();
         },
         dropDownListener: function(type){
 

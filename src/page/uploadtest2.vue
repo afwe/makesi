@@ -91,6 +91,7 @@ export default {
                 }).catch(err => {
                 console.log(err)
                 })*/
+                console.log(doneResult)
                 this.$message({
                     message: "上传成功",
                     type: "success"

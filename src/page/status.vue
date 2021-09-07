@@ -1,7 +1,33 @@
 <template>
     <div class="mainContainer">
-        <div class="videoStatusNest">
-            <div id="eLine">
+        <div class="totTime">
+            总时长:{{parseInt(totTime/3600)}}时{{parseInt((totTime-parseInt(totTime/3600)*3600)/60)}}分{{parseInt(totTime%60)}}秒
+        </div>
+        <div class="studentTime">
+            <el-table
+                :data="timeList.slice((currentPage-1)*pagesize,currentPage*pagesize)"
+                :stripe="stripe"
+                :current-page.sync="currentPage"
+                style="width: 100%">
+                <el-table-column
+                    prop="studentId"
+                    label="用户Id"
+                    width="180">
+                </el-table-column>
+                <el-table-column
+                    prop="mtime"
+                    label="时长">
+                </el-table-column>
+            </el-table>
+            <div class="pagination">
+                <el-pagination
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :page-sizes="[10, 15, 20]"
+                    :page-size="pagesize"
+                    layout="total, sizes, prev, pager, next, jumper"
+                    :total="timeList.length">
+                </el-pagination>
             </div>
         </div>
         <div id="branchStatusNest">
@@ -18,7 +44,10 @@ export default {
         return{
             videoID: '',
             courseID: '',
-            partTimeList: [],
+            totTime: 0,
+            timeList: [],
+            pagesize: 10,
+            currentPage: 1,
             branchNodes: [
                 [
                     {
@@ -44,14 +73,24 @@ export default {
         this.videoID = this.$route.query.vid;
         this.edge = JSON.parse(localStorage.getItem('edge'));
         this.edge = JSON.parse(this.edge);
+        let self = this;
         get_time_status({
-            courseId: this.courseID,
-            videoId: this.videoID
-        }).then(
-            data => {
-
-            }
-        );
+                videoId: this.videoID,
+                courseId: this.courseID
+            }).then(
+                data => { 
+                    self.timeList = data.data;
+                    data.data.sort(function(val1,val2){
+                        return val1.mtime-val2.mtime;
+                    })
+                    data.data.forEach(element => {
+                        self.totTime += element.mtime;
+                        element.mtime/=1000;
+                        console.log(element);
+                        element.mtime = `${parseInt(element.mtime/3600)}时${parseInt((element.mtime-parseInt(element.mtime/3600)*3600)/60)}分${parseInt(element.mtime%60)}秒`
+                })
+                self.totTime /= 1000;
+        });
         get_pick_status({
             courseId: this.courseID,
             videoId: this.videoID
@@ -62,6 +101,12 @@ export default {
         )
     },
     methods:{
+        handleSizeChange(val) {
+            this.pagesize=val;
+        },
+        handleCurrentChange(val) {
+            this.currentPage = val;
+        },
         connectEdge(node){
             let self = this;
             this.edge.forEach(
@@ -127,7 +172,7 @@ export default {
             this.treeData = Data;
         },
         videoStatusRender: function(){
-            let myChart = this.$echarts.init(document.getElementById('eLine'));
+            /*let myChart = this.$echarts.init(document.getElementById('eLine'));
             this.partTimeList.sort((element1, element2) => {
                 return element1.id - element2.id;
             });
@@ -151,7 +196,7 @@ export default {
                     type: 'bar',
                     data: timeArray
                 }]
-            });
+            });*/
         },
         branchStatusRender: function(branchList, index){
             function dataProcess (data) {
@@ -287,5 +332,8 @@ export default {
 }
 </script>
 <style scoped>
-
+.mainContainer{
+    width: 1000px;
+    height: 600px;
+}
 </style>

@@ -41,7 +41,7 @@
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
 import {getPartByID} from '../fetch/video';
-import {logVisit, logTime, logPick} from '../fetch/status';
+import {logVisit, logTime, get_time_status, logPick, get_pick_status} from '../fetch/status';
 export default {
     data(){
         return{
@@ -52,6 +52,7 @@ export default {
             videoName: "",
             videoID: "",
             showMask: false,
+            clock: "",
             /*treeData:{
                 id: 0,
                 url: "http://www.w3school.com.cn/i/movie.mp4",
@@ -85,19 +86,30 @@ export default {
         
         this.courseID = this.$route.query.id;
         this.videoID = this.$route.query.vid;
-        logVisit({
+        /*logVisit({
             courseId: this.courseID,
             videoId: this.videoID
         }).then(data => {
             console.log(data);
-        });
-        let ms = 5000;
-        setInterval(() => {
+        });*/
+        this.clock = setInterval(() => {
             logTime({
                 videoId: this.videoID,
                 courseId: this.courseID,
-                msTime: ms,
+                mtime: 5000,
             }).then(data => {
+                console.log(data);
+            });
+            get_time_status({
+                videoId: this.videoID,
+                courseId: this.courseID
+            }).then(data => {
+                console.log(data);
+            });
+            get_pick_status({
+                courseId: this.courseID,
+                videoId: this.videoID
+            }).then(data=>{
                 console.log(data);
             })
         }, 5000);
@@ -119,16 +131,18 @@ export default {
             // How about an event listener?<br>  // 如何使用事件监听？
             this.on('ended', function() {
                 if(self.treeData.children != undefined && self.treeData.children != []){
-                    console.log(self.treeData)
                     self.treeData.children.forEach(element => {
                         let newButton = document.createElement("button");
                         newButton.className = 'choice'
                         newButton.innerText = element.name;
                         newButton.data = element;
+                        
                         newButton.onclick = function(){
                             logPick({
-                                partId: this.videoId,
+                                courseId: self.courseID,
+                                partId: this.data.videoID,
                             }).then(data => {
+                                console.log('!');
                                 console.log(data);
                             })
                             self.treeData = this.data;
@@ -155,6 +169,9 @@ export default {
                 }
             });
         });
+    },
+    beforeDestroy(){
+        clearInterval(this.clock);
     },
     methods:{
         doLogVisit(){
