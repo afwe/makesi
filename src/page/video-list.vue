@@ -70,10 +70,7 @@ export default {
             let index = 0;
 
             this.videoes.forEach(
-                (i,element) => {
-                    conosle.log("?");
-                    conosle.log(element);
-                    console.log(i);
+                (element, i) => {
                     if(element.id == id) index = i; 
                 }
             )

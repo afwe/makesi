@@ -86,6 +86,7 @@ export default {
         this.videoID = this.$route.query.vid;
         this.edge = JSON.parse(localStorage.getItem('edge'));
         this.edge = JSON.parse(this.edge);
+        console.log(this.edge);
         let self = this;
         get_time_status({
                 videoId: this.videoID,
@@ -148,6 +149,7 @@ export default {
         },
         searchTreeBranch: function(node){
             if(node.children != undefined && node.children.length>1){
+                console.log("!!");
                 this.branchNodes.push([]);
                 node.children.forEach(
                     (element, index) => {
@@ -164,7 +166,7 @@ export default {
                     }
                 )
             }
-            if(node.children != undefined && node.children.length>1){
+            if(node.children != undefined && node.children.length>0){
                 node.children.forEach(
                     element => {
                         this.searchTreeBranch(element);
@@ -403,7 +405,7 @@ export default {
             let newLayer = document.createElement('div');
             newLayer.id = `p${index}`;
             newLayer.style.height = '600px';
-            newLayer.style.width = '750px';
+            newLayer.style.width = '800px';
             newLayer.style.backgroundColor = 'black';
             document.getElementById('branchStatusNest').appendChild(newLayer);
             let myChart = this.$echarts.init(newLayer);

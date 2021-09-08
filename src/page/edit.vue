@@ -110,7 +110,8 @@ export default {
                 }
             });
         },
-        buildTreeData: function(){
+        /*buildTreeData: function(){
+            console.log("??")
             let Data = {};
             let idVideoIDMap = new Map();
             this.edge.forEach(
@@ -119,6 +120,15 @@ export default {
                     idVideoIDMap.set(Edge.childID, Edge.childVideoID);
                 }
             )
+            let tot = 0;
+            idVideoIDMap.forEach(
+                (value, key) => {
+                    tot+=1;
+                }
+            )
+            console.log("{}");
+            this.totNode = tot;
+            console.log(this.totNode);
             this.edge.forEach(
                 Edge => {
                     idVideoIDMap.delete(Edge.childID);
@@ -132,7 +142,7 @@ export default {
             )
             this.connectEdge(Data);
             this.treeData = Data;
-        },
+        },*/
         undo: function(){
             this.treeData = {
                 id: 0,
@@ -218,6 +228,7 @@ export default {
             
         },
         buildTreeData: function(){
+            console.log("??")
             let treeData = this.treeData;
             let indgreeMap = new Map();
             let idVideoIDMap = new Map();
@@ -227,11 +238,20 @@ export default {
                     idVideoIDMap.set(Edge.childID, Edge.childVideoID);
                 }
             )
+            let tot = 0;
+            idVideoIDMap.forEach(
+                (value, index) => {
+                    tot += 1;
+                }
+            )
+            this.totNode = tot;
+            console.log(this.totNode);
             this.edge.forEach(
                 Edge => {
                     idVideoIDMap.delete(Edge.childID);
                 }
             )
+            
             idVideoIDMap.forEach(
                 (value, key) => {
                     treeData.id = key;
@@ -273,17 +293,11 @@ export default {
                     name: this.treeData.name
                     })
             }
-            console.log({
-                courseId: this.courseID,
-                title: this.treeData.name,
-                edge: JSON.stringify(this.edge)
-            });
             let response = await updateTreeByID({
                 courseId: this.courseID,
                 title: this.treeData.name,
                 edge: JSON.stringify(this.edge)
             });
-            console.log(response);
             if(response.code == 200){
                 this.$message({
                     type:"success",
@@ -337,7 +351,6 @@ export default {
                     name: "节点" + newID
                 })
             }
-            console.log(node);
             this.setMyCharts();
         },
         deleteNode: function(){
@@ -348,12 +361,9 @@ export default {
             this.setMyCharts();
         },
         getPartList: async function(){
-            console.log(this.courseID);
             let response = await getPartListByCourseID(this.courseID);
-            console.log(response)
             if(response.code == 200){
                 this.partList = response.data;
-                console.log(this.partList);
             }
             else{
                 this.$message({
@@ -418,20 +428,15 @@ export default {
     },
     mounted(){
         this.edge = JSON.parse(localStorage.getItem('edge'));
-        console.log(this.edge);
         this.edge = JSON.parse(this.edge);
-        console.log(this.edge)
-        console.log("!")
-        console.log(localStorage.getItem('curCourseID'));
         if(localStorage.getItem("curCourseID") != undefined){
             this.courseID = localStorage.getItem("curCourseID");
-            console.log(localStorage.getItem('curCourseID'));
         }
         this.getPartList();
         this.render();
         this.buildTreeData();
+        if(this.totNode < 1) this.totNode = 1;
         this.treeData.name = localStorage.getItem('treeName');
-        console.log(this.treeData);
         this.setMyCharts();
         /*getTreeByID({cid: this.courseID, vid: 1}).then(response => {
             console.log(response);
