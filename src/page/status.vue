@@ -428,7 +428,7 @@ export default {
     height: 600px;
 }
 #branchStatusNest{
-    width: 1500px;
+    width: 1600px;
     height: 600px;
     display: flex;
     flex-flow: row;
