@@ -66,12 +66,19 @@ export default {
 
         },
         toVideo: async function(id){
+            console.log()
             let index = 0;
+
             this.videoes.forEach(
-                (element, i) => {
+                (i,element) => {
+                    conosle.log("?");
+                    conosle.log(element);
+                    console.log(i);
                     if(element.id == id) index = i; 
                 }
             )
+            console.log(id);
+            console.log(index);
             localStorage.setItem("edge", JSON.stringify(this.videoes[index].edge));
             this.$router.push({
                 path: `/video/?id=${this.courseID}&vid=${this.videoes[index].id}`

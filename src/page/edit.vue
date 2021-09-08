@@ -67,7 +67,7 @@ export default {
             treeData:{
                 id: 0,
                 url: "",
-                name: "C1S1",
+                name: "",
                 videoID: 2,
                 children: [
 
@@ -273,7 +273,11 @@ export default {
                     name: this.treeData.name
                     })
             }
-            this.treeData.name = 'C' + this.chapterID + 'S' + this.sessionID;
+            console.log({
+                courseId: this.courseID,
+                title: this.treeData.name,
+                edge: JSON.stringify(this.edge)
+            });
             let response = await updateTreeByID({
                 courseId: this.courseID,
                 title: this.treeData.name,
@@ -426,6 +430,7 @@ export default {
         this.getPartList();
         this.render();
         this.buildTreeData();
+        this.treeData.name = localStorage.getItem('treeName');
         console.log(this.treeData);
         this.setMyCharts();
         /*getTreeByID({cid: this.courseID, vid: 1}).then(response => {

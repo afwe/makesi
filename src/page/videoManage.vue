@@ -101,7 +101,9 @@ export default{
             this.render();
         },
         handleEdit: function(video){
-            console.log(video.id);
+            console.log('!');
+            console.log(video);
+            localStorage.setItem('treeName', video.name);
             this.setEdge(video);
             this.$router.push('/edit');
         },
