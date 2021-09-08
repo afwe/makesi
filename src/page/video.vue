@@ -86,26 +86,29 @@ export default {
         
         this.courseID = this.$route.query.id;
         this.videoID = this.$route.query.vid;
-        logVisit({
+        /*logVisit({
             courseId: this.courseID,
             videoId: this.videoID
         }).then(data => {
             console.log(data);
-        });
+        });*/
         this.clock = setInterval(() => {
-            /*logTime({
+            logTime({
                 videoId: this.videoID,
                 courseId: this.courseID,
                 mtime: 5000,
             }).then(data => {
                 console.log(data);
-            });*/
+            });
             /*get_time_status({
                 videoId: this.videoID,
                 courseId: this.courseID
             }).then(data => {
                 console.log(data);
             });*/
+            get_pick_status({videoId: 7,courseId:5}).then(data=>{
+                console.log(data)
+            })
         }, 5000);
         this.render();
         this.buildTreeData();
@@ -182,7 +185,7 @@ export default {
             let self = this;
             this.getVideoByID(node.videoID).then(url =>{
                 console.log(url);
-                node.url = "http://" + url;
+                node.url = url;
                 this.edge.forEach(
                     Edge => {
                         if(Edge.fatherID == node.id){

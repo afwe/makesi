@@ -30,9 +30,9 @@
                 </el-pagination>
             </div>
         </div>
+        <span>选项信息</span>
         <div id="branchStatusNest">
-            <div class="ePank" v-for="(item,index) in branchList">
-            </div>
+        
         </div>
     </div>
 </template>
@@ -51,15 +51,28 @@ export default {
             branchNodes: [
                 [
                     {
-
+                        name: "?",
+                        value: 2
                     },
                     {
-
+                        name: "!",
+                        value: 3
+                    },
+                    {
+                        name: "!",
+                        value: 3
+                    },
+                    {
+                        name: "!",
+                        value: 3
                     }
                 ],
                 [
                     {
-                        
+                        name: "?",value: 4
+                    },
+                    {
+                        name: "!",value: 0
                     }
                 ]
             ],
@@ -96,11 +109,11 @@ export default {
                 self.totTime /= 1000;
         });
         this.edge = localStorage.getItem('edge');
-        this.edge = JSON.parse(edge);
-        this.edge = JSON.parse(edge);
+        this.edge = JSON.parse(this.edge);
+        this.edge = JSON.parse(this.edge);
         this.buildTreeData();
-        this.searchTreeBranch();
-        this.createPank();
+        this.searchTreeBranch(this.treeData);
+        /*this.createPank();*/
     },
     methods:{
         handleSizeChange(val) {
@@ -137,16 +150,21 @@ export default {
             if(node.children != undefined && node.children.length>1){
                 this.branchNodes.push([]);
                 node.children.forEach(
-                    element => {
-                        this.branchNodes[this.branchNodes.length-1].push(element);
-                        get_time_status({courseId:this.courseID,videoId: element.videoID}).then(
+                    (element, index) => {
+                        let nowIndex = this.branchNodes.length-1;
+                        this.branchNodes[nowIndex].push(element);
+                        get_pick_status({courseId:this.courseID,videoId: element.videoID}).then(
                             data => {
-                                element.times = data.times;
+                                console.log(data);
+                                element.value = data.data;
+                                if(index == node.children.length - 1){
+                                    this.branchStatusRender(this.branchNodes[nowIndex], nowIndex);
+                                }
                         })  
                     }
                 )
             }
-            if(node.children != undefined && node.children>1){
+            if(node.children != undefined && node.children.length>1){
                 node.children.forEach(
                     element => {
                         this.searchTreeBranch(element);
@@ -205,127 +223,191 @@ export default {
             });*/
         },
         branchStatusRender: function(branchList, index){
-            function dataProcess (data) {
-                let len = data.length
-                let placeholder = {
-                    value: 0,
-                    itemStyle: {
-                        opacity: 0
-                    },
+            let tempData = [];
+            branchList.forEach(
+                element => {
+                    tempData.push({
+                        name: element.name,
+                        value: element.value
+                    })
+                }
+            )
+            console.log(tempData);
+            // 最终输出数据
+            var result = [];
+            
+            // 颜色
+            var color=['#00F0FF', '#00FFD8', '#00FF78', '#0083FE', '#00BFFF'];
+            
+            // 间隔数据的样式
+            var placeHolderStyle = {
+                normal: {
                     label: {
                         show: false
                     },
                     labelLine: {
                         show: false
-                    }
-                }
-                let i =0
-                while (i < len) {
-                    data.push(placeholder)
-                    i++
-                }
-                return data
-            }
-
-            let data = branchList;
-
-            console.log(dataProcess(data))
-
-            let seriesForData = {
-                roseType: "area",
-                type: "pie",
-                z: 5,
-                data: data,
-                center: ['10%', '50%'],
-                radius: ['10%', '50%'],
-                label: {
-                    normal: {
-                        color: '#fff',
-                        formatter: '{b|{b}} {c|{c}} %',
-                        rich: {
-                            b: {
-                                color: "#fff"
-                            },
-                            c: {
-                                fontWeight: "bold"
-                            }
-
-                        }
                     },
-                    labelLine: {
-                        normal: {
-                            length: 0,
-                            length2: 200,
-                            lineStyle: {
-                                color: "#274862"
-                            },
-                            show: true
-                        }
-                    }
-                },
-                labelLine:{
-                    normal: {
-                        length: 0,
-                        length2: 200,
-                        lineStyle: {
-                            color: "#274862"
-                        }
-                    }
+                    color: 'rgba(0, 0, 0, 0)',
+                    borderColor: 'rgba(0, 0, 0, 0)',
+                    borderWidth: 0
                 }
-            }
-
-            let seriesForBg = {
-                type: 'pie',
-                z: 2,
-                center: ['10%', '50%'],
-                radius: ['5%', '60%'],
-                silent: true,
-                data: [{
-                    value: 1,
+            };
+            
+            // 循环加入间隔数据
+            for (var i = 0; i < tempData.length; i++) {
+                result.push({
+                    value: tempData[i].value,
+                    name: tempData[i].name,
                     itemStyle: {
                         normal: {
-                            color: {
-                                type: 'radial',
-                                "x": 0.1,
-                                "y": 0.5,
-                                r: 1,
-                                colorStops: [{
-                                    offset: 0,
-                                    color: "rgb(36,52,67)"
-                                }, {
-                                    offset: 1,
-                                    color: "rgb(12,20,28, 0.5)"
-                                }]
+                            borderWidth: 2,
+                            shadowBlur: 20,
+                            borderColor:color[i],
+                            shadowColor: color[i]
+                        }
+                    }
+                });
+            }
+            
+            
+            // 设置字体样式
+            var rich = {
+                            b: { // 名字
+                                fontSize: 12,
+                                color: '#aae8ff',
+                                align: 'left',
+                                padding: 2
+                            },
+                            hr: { // 分割线
+                                borderColor: '#00ffff',
+                                width: '100%',
+                                borderWidth: 1,
+                                height: 0
+                            },
+                            w: { // 数据存量
+                                fontSize: 12,
+                                color: '#aae8ff',
+                                align: 'left',
+                                padding: 2
+                            },
+                            c: { // 数据
+                                fontSize: 12,
+                                align: 'center',
+                                padding: 2,
+                                color: '#53C6F2'
+                            },
+                            a: { // 单位
+                                fontSize: 12,
+                                align: 'center',
+                                padding: 2,
+                                color: '#53C6F2'
                             }
                         }
-                    }
-                }, {
-                    value: 1,
-                    itemStyle: {
-                        emphasis: {
-                            opacity: 0
-                        },
-                        normal: {
-                            opacity: 0
-                        }
-                    }
-                }]
-            }
 
-            let options = {
-                animation: false,
-                backgroundColor: '#010105',
-                color: ["#FE0404", "#00DC58"],
-                series:[
-                    seriesForData,
-                    seriesForBg,
-                ]
-            }
+            var option = {
+                backgroundColor: 'transparent',// 画布背景色
+                tooltip: { // 提示框
+                    trigger: 'item',
+                    formatter: "{b} : {d}%"
+                    //formatter: "{b} : {d}% <br/> {c}"
+                },
+                series: [{
+                        type: 'pie',
+                        radius: ['50%', '60%'],//内 外圆半径
+                        center: ['50%', '50%'],
+                        color: ['#00F0FF', '#00FFD8', '#00FF78', '#0083FE', '#00BFFF'],// 色块填充颜色
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true,
+                                    position: 'outside',
+                                    color: '#ddd',
+                                    formatter: function(params) {
+                                        var percent = 0;
+                                        var total = 0;
+                                        for (var i = 0; i < tempData.length; i++) {
+                                            total += tempData[i].value;
+                                        }
+                                        percent = ((params.value) * 1000).toFixed(0);
+                                        if(params.name !== '') {
+                                        return  '{b|'+params.name+'} \n {hr|} \n {w|选择次数:} {c|'+params.value+'} {a|次}'
+                                        }else {
+                                            return '';
+                                        }
+                                    },
+                                    rich: rich
+                                },
+                                labelLine: {
+                                    length:20,
+                                    length2:30,
+                                    show: true,
+                                    color:'#00ffff'
+                                }
+                            }
+                        },
+                        data: result
+                        /*labelLine: {
+                            normal: {
+                                show: true,
+                                length: 20,
+                                length2: 30,
+                                lineStyle: {
+                                    color: '#CCCCCC',
+                                    width: 2
+                                }
+                            }
+                        },*/
+                        /*label: {
+                            normal: {
+                                //formatter: '{b|{b}} \n {hr|} \n {w|数据存量:} {c|{c}%} {a|条}',
+                                formatter: '{b|{b}} \n {hr|} \n {w|数据存量:} {c|{c}} {a|条}',
+                                rich: {
+                                    b: { // 名字
+                                        fontSize: 18,
+                                        color: '#94C8DC',
+                                        align: 'left',
+                                        padding: 2
+                                    },
+                                    hr: { // 分割线
+                                        borderColor: '#CCCCCC',
+                                        width: '100%',
+                                        borderWidth: 2,
+                                        height: 0
+                                    },
+                                    w: { // 数据存量
+                                        fontSize: 18,
+                                        color: '#94C8DC',
+                                        align: 'left',
+                                        padding: 2
+                                    },
+                                    c: { // 数据
+                                        fontSize: 18,
+                                        align: 'center',
+                                        padding: 2,
+                                        color: '#53C6F2'
+                                    },
+                                    a: { // 单位
+                                        fontSize: 18,
+                                        align: 'center',
+                                        padding: 2,
+                                        color: '#53C6F2'
+                                    }
+                                } //rich end
+                            }
+                        } //lable end*/
+                    }
+
+                ]// series end
+            };
             let newLayer = document.createElement('div');
             newLayer.id = `p${index}`;
+            newLayer.style.height = '600px';
+            newLayer.style.width = '750px';
+            newLayer.style.backgroundColor = 'black';
             document.getElementById('branchStatusNest').appendChild(newLayer);
             let myChart = this.$echarts.init(newLayer);
-            myChart.setOption(options);
+            myChart.setOption(option);
         },
         createPank: function(){
             this.branchNodes.forEach(
@@ -342,5 +424,12 @@ export default {
 .mainContainer{
     width: 1000px;
     height: 600px;
+}
+#branchStatusNest{
+    width: 1500px;
+    height: 600px;
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
 }
 </style>

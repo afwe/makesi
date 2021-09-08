@@ -349,7 +349,7 @@ export default {
             console.log(response)
             if(response.code == 200){
                 this.partList = response.data;
-                console.log(this.partList)
+                console.log(this.partList);
             }
             else{
                 this.$message({
