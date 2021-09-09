@@ -150,6 +150,7 @@ export default {
                             })
                             self.treeData = this.data;
                             video.src = self.treeData.url;
+                            console.log("change");
                             console.log(video.src);
                             self.showMask = false;
                             videoBody.play();
