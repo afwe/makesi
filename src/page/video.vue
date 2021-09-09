@@ -5,7 +5,9 @@
         </div>
         <div class="videoLayer">
             <div class="mask" v-show="showMask==true">
+                <div class="layerNest">
                 <div class='btnLayer'></div>
+                </div>
             </div>
             <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1600" height="900">
                 <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
@@ -130,7 +132,11 @@ export default {
                 if(self.treeData.children != undefined && self.treeData.children != []){
                     self.treeData.children.forEach(element => {
                         let newButton = document.createElement("button");
-                        newButton.className = 'choice'
+                        newButton.className = 'choice';
+                        newButton.style.background="rgba(255, 0, 0, 0.5)";
+                        newButton.style.color="yellow";
+                        newButton.style.height="50px";
+                        newButton.style.width="200px";
                         newButton.innerText = element.name;
                         newButton.data = element;
                         
@@ -264,6 +270,10 @@ export default {
 </script>
 
 <style scoped>
+.choice{
+    opacity: 10;
+    outline: none;
+}
 .videoBody{
     width: 1000px;
     height: 600px;
@@ -375,12 +385,18 @@ figcaption{
     height: 100%;
     z-index: 1005;
 }
+.layerNest{
+    height: 50%;
+    width: 100%;
+    margin-top: 20%;
+}
 .btnLayer{
     width: 100%;
     height: 100%;
     display: flex;
-    flex-flow: column;
-    justify-content: flex-end;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
 }
 .videoLayer{
     position: relative;
