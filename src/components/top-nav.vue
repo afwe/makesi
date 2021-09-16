@@ -4,9 +4,9 @@
         <el-menu-item class="item" index="1" @click="$router.push('/main')">
             主页
         </el-menu-item>
-        <el-menu-item class="item" index="2" @click="$router.push('/course')">
+        <!--<el-menu-item class="item" index="2" @click="$router.push('/course')">
             课程
-        </el-menu-item>
+        </el-menu-item>-->
         <el-menu-item class="item" index="3">
             <div class="item" @click="$router.push('/class')" v-show='isLogin'>
                 班级

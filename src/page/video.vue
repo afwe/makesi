@@ -9,8 +9,8 @@
                 <div class='btnLayer'></div>
                 </div>
             </div>
-            <video id="example_video_1" class="video-js vjs-default-skin" controls preload="none" width="1600" height="900">
-                <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="video/mp4">
+            <video id="example_video_1" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}' width="1600" height="900">
+                <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="application/x-mpegURL">
             </video>
         </div>
         <!--<div class="videoBody">
@@ -150,6 +150,9 @@ export default {
                             })
                             self.treeData = this.data;
                             video.src = self.treeData.url;
+                            player.src({
+                                src:self.treeData.url
+                            });
                             console.log("change");
                             console.log(video.src);
                             self.showMask = false;

@@ -22,6 +22,7 @@
                 </el-option>
             </el-select>
             <el-button @click="addNode()">添加子节点</el-button>
+            <el-button @click="deleteNode()">删除节点</el-button>
         </el-dialog>
         <!--<div class='chapterNest'>
             第
@@ -240,11 +241,11 @@ export default {
             )
             let tot = 0;
             idVideoIDMap.forEach(
-                (value, index) => {
-                    tot += 1;
+                (value, key) => {
+                    if(key>tot) tot=key;
                 }
             )
-            this.totNode = tot;
+            this.totNode = tot+1;
             console.log(this.totNode);
             this.edge.forEach(
                 Edge => {
@@ -309,6 +310,28 @@ export default {
             this.showPanel = false;
             this.setMyCharts();
         },
+        getFatherNode: function(root){
+            console.log(root.id);
+            let ans;
+            if(root.children != undefined && root.children.length != 0){
+                root.children.forEach(child => {
+                    if(child.id == this.nodeID){
+                        console.log("!")
+                        console.log(root.id)
+                        ans = root;
+                    }
+                    else if(ans == undefined){
+                        let node = this.getFatherNode(child);
+                        if(node != undefined){
+                            ans=node;
+                        }
+                    }
+                    
+                })
+            }
+            console.log(ans);
+            return ans;
+        },
         getNodeByID: function(root){
             let ans;
             if(root.id == this.nodeID) {
@@ -354,10 +377,13 @@ export default {
             this.setMyCharts();
         },
         deleteNode: function(){
-            let node = this.getNodeByID(this.treeData);
-            if(node.children != undefined && node.children.length != 0){
-
-            }
+            let node = this.getFatherNode(this.treeData);
+            node.children.forEach((element, index) => {
+                if(element.id == this.nodeID){
+                    console.log(element.id);
+                    node.children.splice(index, 1);
+                }
+            });
             this.setMyCharts();
         },
         getPartList: async function(){
