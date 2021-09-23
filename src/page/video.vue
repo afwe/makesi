@@ -1,5 +1,6 @@
 <template>
     <div class="mainContainer">
+        <!--
         <div class="title">
             {{videoName}}
         </div>
@@ -12,6 +13,20 @@
             <video id="example_video_1" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}' width="1600" height="900">
                 <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="application/x-mpegURL">
             </video>
+        </div>
+        <div class="discussion">
+            <textarea>
+
+
+                <el-button>
+                    
+                </el-button>
+                <el-button>
+                </el-button>
+            </textarea>
+            <div v-for="(index,item) in discussions">
+
+            </div>
         </div>
         <!--<div class="videoBody">
             </div>
@@ -32,18 +47,31 @@
                 </div>
             </figure>
         </div>
-        -->
+
         <div class="discussNav">
             点击进入讨论区
         </div>
-        
+        -->
+        <div class="videoTitle-p">
+        </div>
+        <div class="video-video">
+        </div>
+        <div class="videoList-div">
+        </div>
+
+        <div class="functionNest-div">
+        </div>
+        <div class="disscussion-div">
+        </div>
     </div>
 </template>
 <script>
+import {get_all_courses} from '../fetch/course'
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
 import {getPartByID} from '../fetch/video';
 import {logVisit, logTime, get_time_status, logPick, get_pick_status} from '../fetch/status';
+import { getVideoListByCourseID } from '../fetch/video'
 export default {
     data(){
         return{
@@ -55,6 +83,7 @@ export default {
             videoID: "",
             showMask: false,
             clock: "",
+            courses: []
             /*treeData:{
                 id: 0,
                 url: "http://www.w3school.com.cn/i/movie.mp4",
@@ -84,6 +113,8 @@ export default {
         }
     },
     mounted(){
+        this.courseID = this.$route.query.id;
+        this.render();
         let statusResponse;
         
         this.courseID = this.$route.query.id;
@@ -191,6 +222,50 @@ export default {
         doLogTime(){
 
         },
+                toVideo: async function(id){
+            console.log()
+            let index = 0;
+
+            this.videoes.forEach(
+                (element, i) => {
+                    if(element.id == id) index = i; 
+                }
+            )
+            console.log(id);
+            console.log(index);
+            localStorage.setItem("edge", JSON.stringify(this.videoes[index].edge));
+            this.$router.push({
+                path: `/video/?id=${this.courseID}&vid=${this.videoes[index].id}`
+            });
+        },
+        render: async function(){
+            let response = await getVideoListByCourseID(this.courseID);
+            console.log(response);
+            if(response.code == 200){
+                let array = response.data;
+                array.forEach(element => {
+                    let videoName = element.title;
+                    let sPosition = videoName.indexOf('S');
+                    element.c = parseInt(videoName.substr(1,sPosition - 1));
+                    element.s = parseInt(videoName.substr(sPosition + 1, videoName.length - sPosition));
+                    element.title = "第" + element.c + "章" + "第" + element.s + "节";
+                });
+                let Sort = function(val1, val2){
+                    if(val1.c == val2.c) return val1.s - val2.s;
+                    else return val1.c - val2.c;
+                }
+                array.sort(Sort);
+                for(let i = 1; i <= array[array.length-1].c; i++){
+                    this.chapter.push([]);
+                }
+                array.forEach(
+                    element => {
+                        this.chapter[element.c-1].push(element);
+                    }
+                )
+                this.videoes = array;
+            }
+        },
         connectEdge(node){
             let self = this;
             this.getVideoByID(node.videoID).then(url =>{
@@ -274,6 +349,7 @@ export default {
 </script>
 
 <style scoped>
+
 .choice{
     opacity: 10;
     outline: none;
@@ -289,94 +365,7 @@ figcaption{
     font-family: "Microsoft Yahei";
     font-size:24px;
 }
-
-/* 播放器*/
-.palyer{
-    width: 720px;
-    height: 360px;
-    margin:10px auto;
-    border: 1px solid #000;
-    background: url(../assets/logo.png) center no-repeat #000;
-    background-size:auto 100%;
-    position: relative;
-    border-radius: 20px;
-
-}
-
-.palyer video{
-    height:100%;
-    display: block;
-    margin:0 auto;
-    /*display: none;*/
-}
-
-/* 控制条*/
-
-.controls{
-    width: 700px;
-    height:40px;
-    background-color: rgba(255, 255, 0, 0.3);
-    position: absolute;
-    bottom:10px;
-    left:10px;
-    border-radius: 10px;
-}
-/*开关*/
-.switch{
-    position: absolute;
-    width: 20px;
-    height: 20px;
-    left:10px;
-    top:10px;
-
-    text-align: center;
-    line-height: 20px;
-    color:yellow;
-
-}
-/*进度条*/
-.progress{
-    width: 432px;
-    height: 10px;
-    position: absolute;
-    background-color: rgba(255,255,255,0.4);
-    left:40px;
-    top:15px;
-    border-radius: 4px;
-    overflow: hidden;
-}
-/* 当前进度*/
-.curr-progress{
-    width: 0%;
-    height: 10px;
-    background-color: #fff;
-}
-/* 时间模块*/
-.time{
-    width: 120px;
-    height: 20px;
-    text-align: center;
-    line-height: 20px;
-    color:#fff;
-    position: absolute;
-    left:510px;
-    top:10px;
-    font-size:12px;
-
-}
-/*全屏*/
-.extend{
-    position: absolute;
-    width: 20px;
-    height: 20px;
-
-    right:20px;
-    top:10px;
-
-    text-align: center;
-    line-height: 20px;
-    color:yellow;
-}
+/*
 .icon-play{
     background: url(../assets/logo.png);
 }
@@ -411,5 +400,50 @@ figcaption{
     width: 100%;
     height: 100%;
     object-fit: fill;
+}*/
+.videoTitle-p{
+    left: 360px;
+    top: 189px;
+    width: 535px;
+    height: 35px;
+    color: rgba(16, 16, 16, 100);
+    font-size: 24px;
+    text-align: left;
+    font-family: SourceHanSansSC-medium;
+}
+.video-video{
+    left: 360px;
+    top: 236px;
+    width: 985px;
+    height: 554px;
+}
+.videoList-div{
+    left: 1345px;
+    top: 236px;
+    width: 216px;
+    height: 554px;
+    line-height: 20px;
+    background-color: rgba(66, 66, 66, 100);
+    text-align: center;
+}
+.functionNest-div{
+    left: 360px;
+    top: 826px;
+    width: 1200px;
+    height: 165px;
+    line-height: 20px;
+    border-radius: 26px;
+    background-color: rgba(255, 255, 255, 100);
+    text-align: center;
+}
+.disscussion-div{
+    left: 360px;
+    top: 1027px;
+    width: 1200px;
+    height: 3481px;
+    line-height: 20px;
+    border-radius: 26px;
+    background-color: rgba(255, 255, 255, 100);
+    text-align: center;
 }
 </style>

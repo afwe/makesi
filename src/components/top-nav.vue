@@ -1,12 +1,9 @@
 <template>
     <div class='navContainer'>
-    <el-menu default-active="1" mode="horizontal" class='navContainer'>
+    <!--<el-menu default-active="1" mode="horizontal" class='navContainer'>
         <el-menu-item class="item" index="1" @click="$router.push('/main')">
             主页
         </el-menu-item>
-        <!--<el-menu-item class="item" index="2" @click="$router.push('/course')">
-            课程
-        </el-menu-item>-->
         <el-menu-item class="item" index="3">
             <div class="item" @click="$router.push('/class')" v-show='isLogin'>
                 班级
@@ -72,6 +69,20 @@
         </el-radio-button>
     </div>
     </el-card>-->
+        <div class="logo-img">
+        </div>
+        <div class="name-p">
+        </div>
+        <div class="mainpage-div">
+        </div>
+        <div class="course-button">
+        </div>
+        <div class="wordBase-button">
+        </div>
+        <div class="search-input">
+        </div>
+        <div class="avator-img">
+        </div>
     </div>
 </template>
 <script>
@@ -250,16 +261,82 @@ export default{
 </script>
 
 <style scoped>
-.loginPosition{
+/*.loginPosition{
     position: fixed;
     z-index: 1000;
-}
-.navContainer{
-    height: 64px;
-    width: 100%;
 }
 .loginPosition{
     height: 300px;
     width: 600px;
+}*/
+.navContainer{
+    height: 117px;
+    width: 1920px;
+}
+.logo-img{
+    left: 360px;
+    top: 15px;
+    width: 87px;
+    height: 87px;
+}
+.name-p{
+    left: 465px;
+    top: 24px;
+    width: 48px;
+    height: 69px;
+    color: rgba(66, 66, 66, 100);
+    font-size: 36px;
+    text-align: left;
+    font-family: SourceHanSansSC-regular;
+}
+.mainpage-div{
+    left: 753px;
+    top: 15px;
+    width: 133px;
+    height: 87px;
+    line-height: 29px;
+    background-color: rgba(255, 255, 255, 100);
+    color: rgba(66, 66, 66, 100);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+}
+.course-button{
+    left: 893px;
+    top: 15px;
+    width: 133px;
+    height: 87px;
+    line-height: 29px;
+    background-color: rgba(255, 255, 255, 100);
+    color: rgba(61, 90, 254, 100);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+}
+.wordBase-button{
+    left: 1034px;
+    top: 15px;
+    width: 133px;
+    height: 87px;
+    line-height: 29px;
+    background-color: rgba(255, 255, 255, 100);
+    color: rgba(66, 66, 66, 100);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+}
+.search-input{
+    left: 1464px;
+    top: 41px;
+    width: 34px;
+    height: 34px;
+    background-color: rgba(66, 66, 66, 100);
+}
+.avator-img{
+    left: 1506px;
+    top: 31px;
+    width: 54px;
+    height: 54px;
+    background-color: rgba(66, 66, 66, 100);
 }
 </style>
