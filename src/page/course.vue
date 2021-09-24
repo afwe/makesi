@@ -37,15 +37,30 @@
         </div>
 
         <div class="class-classify">
+            课程分类
         </div>
-
+        <div class="buttonContainer-div">
         <div class="sizhengclass-p">
+            思政课程:
         </div>
-
+        <div class="buttonNest-div">
+            <button class="classifyButton-button" v-for="(item,index) in sizhengCoursesClassify">
+                {{item}}
+            </button>
+        </div>
+        </div>
+        <div class="buttonContainer-div">
         <div class="classsizheng-p">
+            课程思政:
         </div>
-
+        <div class="buttonNest-div">
+            <button class="classifyButton-button" v-for="(item,index) in kechengsizhengClassify">
+                {{item}}
+            </button>
+        </div>
+        </div>
         <div class="classList-p">
+            课程列表
         </div>
 
         <div class="classContainer-div">
@@ -65,8 +80,8 @@ import {get_all_courses} from '../fetch/course'
 export default {
     data(){
         return{
-            sizhengCoursesClassify: [],
-            kechengsizhengClassify: [],
+            sizhengCoursesClassify: ['思想道德修养与法律基础','中国近代史纲要','马克思主义基本原理概述','毛泽东思想和中国特色社会主义理论体系概论'],
+            kechengsizhengClassify: ['计算机','外语','理学','艺术设计','法学'],
             courseID: "1",
             courseName: "test",
             courseIntro: "test",
@@ -198,6 +213,7 @@ export default {
     box-shadow: 0 0 25px aquamarine;
 }
 */
+/*
 .crusol-div{
     left: 360px;
     top: 167px;
@@ -267,5 +283,75 @@ export default {
     width: 279px;
     height: 158px;
     border-radius: 26px 26px 0px 0px;
+}*/
+.mainContainer{
+    margin: auto;
+    margin-top: 50px;
+    display: flex;
+    flex-flow: column;
+}
+.crusol-div{
+    margin-left: 360px;
+    width: 1200px;
+    height: 400px;
+}
+.class-classify{
+    margin-left: 360px;
+    margin-top: 60px;
+    line-height: 52px;
+    color: rgba(16, 16, 16, 100);
+    font-size: 36px;
+    text-align: left;
+    font-family: SourceHanSansSC-light;
+}
+.buttonContainer-div{
+    margin-top: 27px;
+    margin-left: 360px;
+    display: flex;
+    flex-flow: row;
+}
+.buttonNest-div{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    margin-top: -21px;
+}
+.sizhengclass-p{
+    line-height: 41px;
+    min-width: 140px;
+    color: rgba(16, 16, 16, 100);
+    font-size: 28px;
+    text-align: left;
+    font-family: SourceHanSansSC-regular;
+}
+.classsizheng-p{
+    line-height: 41px;
+    min-width: 140px;
+    color: rgba(16, 16, 16, 100);
+    font-size: 28px;
+    text-align: left;
+    font-family: SourceHanSansSC-regular;
+}
+.classifyButton-button{
+    height: 54px;
+    margin-left: 28px;
+    margin-top: 21px;
+    min-width: 148px;
+    line-height: 29px;
+    border-radius: 68px;
+    background-color: rgba(255, 255, 255, 100);
+    color: rgba(117, 117, 117, 100);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+}
+.classList-p{
+    margin-left: 360px;
+    margin-top: 68px;
+    line-height: 52px;
+    color: rgba(16, 16, 16, 100);
+    font-size: 36px;
+    text-align: left;
+    font-family: SourceHanSansSC-light;
 }
 </style>

@@ -70,18 +70,25 @@
     </div>
     </el-card>-->
         <div class="logo-img">
+            logo
         </div>
-        <div class="name-p">
+        <div class="name-p">name
+
         </div>
         <div class="mainpage-div">
+            主页
         </div>
         <div class="course-button">
+            课程
         </div>
         <div class="wordBase-button">
+            词库
         </div>
         <div class="search-input">
+            搜索
         </div>
         <div class="avator-img">
+            头像
         </div>
     </div>
 </template>
@@ -269,9 +276,12 @@ export default{
     height: 300px;
     width: 600px;
 }*/
+/*
 .navContainer{
     height: 117px;
     width: 1920px;
+    display: flex;
+    flex-flow: row;
 }
 .logo-img{
     left: 360px;
@@ -338,5 +348,64 @@ export default{
     width: 54px;
     height: 54px;
     background-color: rgba(66, 66, 66, 100);
+}*/
+.navContainer{height:68px;
+width:1120px;
+display:flex;
+flex-flow:row;
+margin:auto;
+background:rgba(0,0,0,0);
+}.logo-img{left:210px;
+top:8px;
+width:50px;
+height:50px;
+}.name-p{left:271px;
+top:14px;
+width:28px;
+height:40px;
+color:rgba(66,66,66,100);
+font-size:21px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.mainpage-div{left:439px;
+top:8px;
+width:77px;
+height:50px;
+line-height:16px;
+background-color:rgba(255,255,255,100);
+color:rgba(66,66,66,100);
+font-size:11px;
+text-align:center;
+font-family:Roboto;
+}.course-button{left:520px;
+top:8px;
+width:77px;
+height:50px;
+line-height:16px;
+background-color:rgba(255,255,255,100);
+color:rgba(61,90,254,100);
+font-size:11px;
+text-align:center;
+font-family:Roboto;
+}.wordBase-button{left:603px;
+top:8px;
+width:77px;
+height:50px;
+line-height:16px;
+background-color:rgba(255,255,255,100);
+color:rgba(66,66,66,100);
+font-size:11px;
+text-align:center;
+font-family:Roboto;
+}.search-input{left:854px;
+top:23px;
+width:19px;
+height:19px;
+background-color:rgba(66,66,66,100);
+}.avator-img{left:878px;
+top:18px;
+width:31px;
+height:31px;
+background-color:rgba(66,66,66,100);
 }
 </style>

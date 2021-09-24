@@ -1,32 +1,25 @@
 <template>
     <div class="mainContainer">
-        <!--
         <div class="title">
             {{videoName}}
         </div>
-        <div class="videoLayer">
-            <div class="mask" v-show="showMask==true">
-                <div class="layerNest">
-                <div class='btnLayer'></div>
+        <div class="videoBody-div">
+            <div class="videoLayer">
+                <div class="mask" v-show="showMask==true">
+                    <div class="layerNest">
+                    <div class='btnLayer'></div>
+                    </div>
                 </div>
+                <video id="example_video_1" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}' width="985" height="554">
+                    <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="application/x-mpegURL">
+                </video>
             </div>
-            <video id="example_video_1" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}' width="1600" height="900">
-                <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="application/x-mpegURL">
-            </video>
+            <div class="videoes">
+            </div>
+        </div>
+        <div class="funcBar-div">
         </div>
         <div class="discussion">
-            <textarea>
-
-
-                <el-button>
-                    
-                </el-button>
-                <el-button>
-                </el-button>
-            </textarea>
-            <div v-for="(index,item) in discussions">
-
-            </div>
         </div>
         <!--<div class="videoBody">
             </div>
@@ -47,21 +40,10 @@
                 </div>
             </figure>
         </div>
+        -->
 
         <div class="discussNav">
             点击进入讨论区
-        </div>
-        -->
-        <div class="videoTitle-p">
-        </div>
-        <div class="video-video">
-        </div>
-        <div class="videoList-div">
-        </div>
-
-        <div class="functionNest-div">
-        </div>
-        <div class="disscussion-div">
         </div>
     </div>
 </template>
@@ -148,8 +130,8 @@ export default {
         let self = this;
         let options = {
             controls : true,      
-                height:630, 
-                width:1120,
+                height:554, 
+                width:985,
         }
         var player = videojs('example_video_1', options, function onPlayerReady() {
             videojs.log('播放器已经准备好了!');
@@ -349,15 +331,59 @@ export default {
 </script>
 
 <style scoped>
-
+.mainContainer{
+    display: flex;
+    flex-flow: column;
+    margin: auto;
+}
+.title{
+    margin-top: 36px;
+    margin-left: 360px;
+    line-height: 35px;
+    color: rgba(16, 16, 16, 100);
+    font-size: 24px;
+    text-align: left;
+    font-family: SourceHanSansSC-medium;
+}
 .choice{
     opacity: 10;
     outline: none;
 }
-.videoBody{
-    width: 1000px;
-    height: 600px;
+.videoBody-div{
+    margin-left: 360px;
+    margin-top: 12px;
+    display: flex;
+    flex-flow: row;
+}
+.videoLayer{
+    width: 985px;
+    height: 554px;
     background-color: aqua;
+}
+.videoes{
+    width: 216px;
+    height: 554px;
+    line-height: 20px;
+    background-color: rgba(66, 66, 66, 100);
+    text-align: center;
+}
+.funcBar-div {
+    margin-top: 36px;
+    width: 1200px;
+    height: 165px;
+    line-height: 20px;
+    border-radius: 26px;
+    background-color: rgba(255, 255, 255, 100);
+    text-align: center;
+}
+.disscussion{
+    margin-top: 36px;
+    width: 1200px;
+    height: 3481px;
+    line-height: 20px;
+    border-radius: 26px;
+    background-color: rgba(255, 255, 255, 100);
+    text-align: center;
 }
 figcaption{
     text-align: center;
@@ -401,6 +427,7 @@ figcaption{
     height: 100%;
     object-fit: fill;
 }*/
+/*
 .videoTitle-p{
     left: 360px;
     top: 189px;
@@ -445,5 +472,5 @@ figcaption{
     border-radius: 26px;
     background-color: rgba(255, 255, 255, 100);
     text-align: center;
-}
+}*/
 </style>

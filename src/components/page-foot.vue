@@ -12,8 +12,10 @@ export default {
 </script>
 <style scoped>
 .mainContainer{
-    width: 1980px;
-    height: 1080px;
+    width: 1120px;
+    height: 480px;
+    margin:auto;
+    background-color: black;
 }
 .undoneText{
     margin: auto;

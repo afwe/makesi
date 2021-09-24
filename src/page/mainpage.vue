@@ -39,90 +39,133 @@
     </div>-->
 <div class="mainContainer">
     <div class="mainPic-img">
-        <p class="proLog-p">
-            红色育人，精准施教
-        </p>
+        <div class="proLog-p">
+            红色育人,精准施教
+        </div>
         <button onClick="toCourseList()" class="start-button">
             开启学习之旅
         </button>
     </div>
 
 
-    <p class="chossenClass-p">
+    <div class="chossenClass-p">
         精选课程
-    </p>
-
-
-    <div class="classDiv-div1">
-        <div class="faceImg-img1">
-        </div>
-        <div class="classInfo-div">
-        </div>
-    </div>
-    <div class="classDiv-div2">
-        <div class="faceImg-img2">
-        </div>
-        <div class="classInfo-div">
-        </div>
-    </div>
-    <div class="classDiv-div3">
-        <div class="faceImg-img3">
-        </div>
-        <div class="classInfo-div">
-        </div>
-    </div>
-    <div class="classDiv-div4">
-        <div class="faceImg-img4">
-        </div>
-        <div class="classInfo-div">
-        </div>
     </div>
 
+    <div class="classContainer-div">
+    
+        <div class="classDiv-div1">
+            <div class="faceImg-img" :style="background">
+            </div>
+            <div class="className-p">
+                中国近代史
+            </div>
+            <div class="schoolName-p">
+                北京大学
+            </div>
+            <div class="joins-p">
+                114514人参加
+            </div>
+            <div class="into-p">
+                北大名师精讲"中国近代史"
+            </div>
+        </div>
+        <div class="classDiv-div2">
+            <div class="faceImg-img" :style="background">
+            </div>
+            <div class="className-p">
+                中国近代史
+            </div>
+            <div class="schoolName-p">
+                北京大学
+            </div>
+            <div class="joins-p">
+                114514人参加
+            </div>
+            <div class="into-p">
+                北大名师精讲"中国近代史"
+            </div>
+        </div>
+        <div class="classDiv-div3">
+            <div class="faceImg-img" :style="background">
+            </div>
+            <div class="className-p">
+                中国近代史
+            </div>
+            <div class="schoolName-p">
+                北京大学
+            </div>
+            <div class="joins-p">
+                114514人参加
+            </div>
+            <div class="into-p">
+                北大名师精讲"中国近代史"
+            </div>
+        </div>
+        <div class="classDiv-div4" >
+            <div class="faceImg-img" :style="background">
+            </div>
+            <div class="className-p">
+                中国近代史
+            </div>
+            <div class="schoolName-p">
+                北京大学
+            </div>
+            <div class="joins-p">
+                114514人参加
+            </div>
+            <div class="into-p">
+                北大名师精讲"中国近代史"
+            </div>
+        </div>
+    </div>
     <div class="classRanking-p">
         课程排行
     </div>
-
-    <div class="ranking-div1">
-        <div class="rankingTitle-div">
-            热门排行
-        </div>
-        <div v-for="(index,item) in courseList" class="classRankingCard-div">
-            <div class="rankingFace-img">
+    <div class="rankingContainer-div">
+        <div class="ranking-div1">
+            <div class="rankingTitle-div">
+                热门排行
             </div>
-            <div class="infoContainer-div">
-                <p class="courseTitle-p">{{item.title}}</p>
-                <p class="courseJoins-p">{{item.joing}}</p>
-            </div>
-        </div>
-    </div>
-    <div class="ranking-div2">
-        <div class="rankingTitle-div">
-            最新排行
-        </div>
-        <div v-for="(index,item) in courseList" class="classRankingCard-div">
-            <div class="rankingFace-img">
-            </div>
-            <div class="infoContainer-div">
-                <p class="courseTitle-p">{{item.title}}</p>
-                <p class="courseJoins-p">{{item.joing}}</p>
+            <div v-for="(index,item) in courseList" class="classRankingCard-div">
+                <div class="rankingFace-img">
+                </div>
+                <div class="infoContainer-div">
+                    <p class="courseTitle-p">{{item.title}}</p>
+                    <p class="courseJoins-p">{{item.joing}}</p>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="ranking-div3">
-        <div class="rankingTitle-div">
-            推荐排行
-        </div>
-        <div v-for="(index,item) in courseList" class="classRankingCard-div">
-            <div class="rankingFace-img">
+        <div class="ranking-div2">
+            <div class="rankingTitle-div">
+                最新排行
             </div>
-            <div class="infoContainer-div">
-                <p class="courseTitle-p">{{item.title}}</p>
-                <p class="courseJoins-p">{{item.joing}}</p>
+            <div v-for="(index,item) in courseList" class="classRankingCard-div">
+                <div class="rankingFace-img">
+                </div>
+                <div class="infoContainer-div">
+                    <p class="courseTitle-p">{{item.title}}</p>
+                    <p class="courseJoins-p">{{item.joing}}</p>
+                </div>
+            </div>
+        </div>
+        <div class="ranking-div3">
+            <div class="rankingTitle-div">
+                推荐排行
+            </div>
+            <div v-for="(index,item) in courseList" class="classRankingCard-div">
+                <div class="rankingFace-img">
+                </div>
+                <div class="infoContainer-div">
+                    <p class="courseTitle-p">{{item.title}}</p>
+                    <p class="courseJoins-p">{{item.joing}}</p>
+                </div>
             </div>
         </div>
     </div>
 
     <div class="classJudge-p">
+        课程评价
     </div>
     
     <div class="judgeContainer-div">
@@ -138,6 +181,9 @@ import {get_all_courses} from '../fetch/course'
 export default {
     data(){
         return{
+            background: {
+                backgroundImage: 'url('+require('../assets/classface.png')+')'
+            },
             courses:[
                 {
                     id:1,
@@ -147,6 +193,9 @@ export default {
                     name:"k1"
                 },
             ],
+            hotRanking: [],
+            releaseRanking: [],
+            comRanking: [],
             pagesize: 4,
             currentPage: 1,
             totCourse: 2,
@@ -218,6 +267,7 @@ ol{
     height: 500px;
     width: 600px;
 }*/
+/*
 .mainContainer{
     left: 0px;
     top: 0px;
@@ -385,5 +435,212 @@ ol{
     line-height: 20px;
     border-radius: 26px;
     text-align: center;
+}*/
+.mainContainer{
+    position: flex;
+    width:1120px;
+    height:2916px;
+    line-height:11px;
+    background-color:rgba(242,242,247,100);
+    text-align:center;
+    margin:auto;
+}
+.mainPic-img{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    left:0px;
+    top:0px;
+    width:1120px;
+    height:466px;
+    line-height:11px;
+    background-color:rgba(0,0,0,0.49);
+    color:rgba(16,16,16,100);
+    font-size:8px;
+    text-align:center;
+    font-family:Roboto;
+}
+.proLog-p{
+    left:391px;
+    margin-top:168px;
+    width:370px;
+    line-height: 81px;
+    color:rgba(242,242,247,100);
+    font-size:42px;
+    text-align:center;
+/*font-family:SourceHanSansSC-light;*/
+}
+.start-button{
+    margin-top: 33px;
+    width:179px;
+    height:50px;
+    line-height:20px;
+    border-radius:35px;
+    background-color:rgba(255,23,68,100);
+    color:rgba(250,250,250,100);
+    font-size:14px;
+    text-align:center;
+    font-family:Roboto;
+}
+.chossenClass-p{
+    margin-top:60px;
+    margin-left: 360px;
+    line-height: 52px;
+    width: 144px;
+    font-size:36px;
+    text-align: center;
+    color: rgba(16, 16, 16, 100);
+}
+.classContainer-div{
+    margin-top: 34px; 
+    margin-left: 360px;
+    display: flex;
+    flex-flow: row;
+}
+.classDiv-div1{
+    width: 279px;
+    height: 320px;
+    display: flex;
+    flex-flow: column;
+    border-radius: 26px;
+    background-color: #ffffff;
+}
+.faceImg-img{
+    width: 279px;
+    height: 158px;
+    background-color: black;
+    border-radius: 26px 26px 0px 0px;
+    background: no-repeat center top;
+    background-size:100% 100%;
+}
+.className-p{
+    margin-left:12px;
+    margin-top:13px;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(16, 16, 16, 100);
+    text-align: left;
+}
+.schoolName-p{
+    margin-left: 12px;
+    line-height: 18px;
+    color: rgba(142, 142, 147, 100);
+    font-size: 12px;
+    text-align: left;
+    font-family: SourceHanSansSC-light;
+}
+.joins-p{
+    margin-left: 12px;
+    margin-top: 47px;
+    line-height: 21px;
+    color: rgba(199, 199, 204, 100);
+    font-size: 14px;
+    text-align: left;
+    font-family: SourceHanSansSC-light;
+}
+.into-p{
+    margin-left: 12px;
+    line-height: 21px;
+    color: rgba(97, 97, 97, 100);
+    font-size: 14px;
+    text-align: left;
+    font-family: SourceHanSansSC-regular;
+}
+.classDiv-div2{
+    margin-left: 28px;
+    width: 279px;
+    height: 320px;
+    display: flex;
+    flex-flow: column;
+    border-radius: 26px;
+    background-color: #ffffff;
+}
+.classDiv-div3{
+    margin-left: 28px;
+    width: 279px;
+    height: 320px;
+    display: flex;
+    flex-flow: column;
+    border-radius: 26px;
+    background-color: #ffffff;
+}
+.classDiv-div4{
+    margin-left: 28px;
+    width: 279px;
+    height: 320px;
+    display: flex;
+    flex-flow: column;
+    border-radius: 26px;
+    background-color: #ffffff;
+}
+.classRanking-p{
+    margin-top: 60px;
+    margin-left: 360px;
+    line-height: 52px;
+    color: rgba(16, 16, 16, 100);
+    font-size: 36px;
+    text-align: left;
+    font-family: SourceHanSansSC-light;
+}
+.rankingContainer-div{
+    margin-top:37px;
+    margin-left: 360px;
+    display: flex;
+    flex-flow: row;
+
+}
+.ranking-div1{
+    display: flex;
+    flex-flow: column;
+    width: 382px;
+    height: 486px;
+    border-radius: 26px;
+    background-color: #ffffff;
+}
+.ranking-div2{
+    display: flex;
+    flex-flow: column;
+    margin-left: 27px;
+    width: 382px;
+    height: 486px;
+    border-radius: 26px;
+    background-color: #ffffff;
+}
+.ranking-div3{
+    display: flex;
+    flex-flow: column;
+    margin-left: 27px;
+    width: 382px;
+    height: 486px;
+    border-radius: 26px;
+    background-color: #ffffff;
+}
+.rankingTitle-div{
+    line-height: 50px;
+}
+.classRankingCard-div{
+    
+}
+.infoContainer-div{
+    
+}
+.classJudge-p{
+    margin-top: 60px;
+    margin-left: 360px;
+    line-height: 52px;
+    color: rgba(16, 16, 16, 100);
+    font-size: 36px;
+    text-align: left;
+    font-family: SourceHanSansSC-light;
+}
+.judgeContainer-div{
+    margin-top: 37px;
+    margin-left: 360px;
+    width: 1200px;
+    height: 500px;
+    line-height: 20px;
+    border-radius: 26px;
+    text-align: center;
+    background-color: #ffffff;
 }
 </style>

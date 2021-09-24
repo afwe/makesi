@@ -11,6 +11,8 @@ import uploadtest from '@/page/uploadtest'
 import courseManage from '@/page/courseManage'
 import videoManage from '@/page/videoManage'
 import status from '@/page/status'
+import courseDetail from '@/page/courseDetail'
+import courseInfo from '@/page/courseInfo'
 Vue.use(Router)
 
 export default new Router({
@@ -28,7 +30,14 @@ export default new Router({
     {
       path: '/course',
       component: course,
-
+    },
+    {
+      path: '/courseInfo',
+      component: courseInfo
+    },
+    {
+      path: '/courseDetail',
+      component: courseDetail
     },
     {
       path: '/manage',
