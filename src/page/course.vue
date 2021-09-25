@@ -64,10 +64,69 @@
         </div>
 
         <div class="classContainer-div">
-            <div class="classCard-div" v-for="(index,item) in courses">
-                <div class="classFace-img">
+    
+            <div class="classDiv-div1">
+                <div class="faceImg-img" :style="background">
                 </div>
-                <div class="classInfo-div">
+                <div class="className-p">
+                    中国近代史
+                </div>
+                <div class="schoolName-p">
+                    北京大学
+                </div>
+                <div class="joins-p">
+                    114514人参加
+                </div>
+                <div class="into-p">
+                    北大名师精讲"中国近代史"
+                </div>
+            </div>
+            <div class="classDiv-div2" @click="">
+                <div class="faceImg-img" :style="background">
+                </div>
+                <div class="className-p">
+                    中国近代史
+                </div>
+                <div class="schoolName-p">
+                    北京大学
+                </div>
+                <div class="joins-p">
+                    114514人参加
+                </div>
+                <div class="into-p">
+                    北大名师精讲"中国近代史"
+                </div>
+            </div>
+            <div class="classDiv-div3" @click="">
+                <div class="faceImg-img" :style="background">
+                </div>
+                <div class="className-p">
+                    中国近代史
+                </div>
+                <div class="schoolName-p">
+                    北京大学
+                </div>
+                <div class="joins-p">
+                    114514人参加
+                </div>
+                <div class="into-p">
+                    北大名师精讲"中国近代史"
+                </div>
+            </div>
+            <div class="classDiv-div4" @click="">
+                <div class="faceImg-img" :style="background">
+                </div>
+                <div class="className-p">
+                    中国近代史
+                </div>
+                <div class="schoolName-p">
+                    北京大学
+                </div>
+                <div class="joins-p">
+                    114514人参加
+                </div>
+                <div class="into-p">
+                    北大名师精讲"中国近代史"
                 </div>
             </div>
         </div>
@@ -284,6 +343,7 @@ export default {
     height: 158px;
     border-radius: 26px 26px 0px 0px;
 }*/
+/*
 .mainContainer{
     margin: auto;
     margin-top: 50px;
@@ -353,5 +413,122 @@ export default {
     font-size: 36px;
     text-align: left;
     font-family: SourceHanSansSC-light;
+}*/
+.mainContainer{margin:0auto;
+width:1400px;
+height:3645px;
+margin-top:36px;
+display:flex;
+flex-flow:column;
+}.crusol-div{margin-left:262px;
+width:875px;
+height:291px;
+}.class-classify{margin-left:262px;
+margin-top:43px;
+line-height:37px;
+color:rgba(16,16,16,100);
+font-size:26px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.buttonContainer-div{margin-top:18px;
+margin-left:262px;
+display:flex;
+flex-flow:row;
+}.buttonNest-div{display:flex;
+flex-flow:row;
+flex-wrap:wrap;
+margin-top:-15px;
+}.sizhengclass-p{line-height:28px;
+min-width:101px;
+color:rgba(16,16,16,100);
+font-size:20px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.classsizheng-p{line-height:28px;
+min-width:101px;
+color:rgba(16,16,16,100);
+font-size:20px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.classifyButton-button{height:38px;
+margin-left:20px;
+margin-top:15px;
+min-width:107px;
+line-height:20px;
+border-radius:48px;
+background-color:rgba(255,255,255,100);
+color:rgba(117,117,117,100);
+font-size:13px;
+text-align:center;
+font-family:Roboto;
+}.classList-p{margin-left:262px;
+margin-top:48px;
+line-height:37px;
+color:rgba(16,16,16,100);
+font-size:26px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.classContainer-div{margin-top:23px;
+margin-left:262px;
+display:flex;
+flex-flow:row;
+}.classDiv-div1{width:202px;
+height:232px;
+display:flex;
+flex-flow:column;
+border-radius:18px;
+background-color:#ffffff;
+}.faceImg-img{width:202px;
+height:115px;
+background-color:black;
+border-radius:20px 20px 0px 0px;
+background:no-repeat center top;
+background-size:100% 100%;
+}.className-p{margin-left:8px;
+margin-top:8px;
+font-size:11px;
+line-height:17px;
+color:rgba(16,16,16,100);
+text-align:left;
+}.schoolName-p{margin-left:8px;
+line-height:12px;
+color:rgba(142,142,147,100);
+font-size:8px;
+text-align:left;
+font-family:Source HanSansSC-light;
+}.joins-p{margin-left:8px;
+margin-top:33px;
+line-height:15px;
+color:rgba(199,199,204,100);
+font-size:10px;
+text-align:left;
+font-family:Source HanSansSC-light;
+}.into-p{margin-left:8px;
+line-height:15px;
+color:rgba(97,97,97,100);
+font-size:10px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.classDiv-div2{margin-left:20px;
+width:202px;
+height:232px;
+display:flex;
+flex-flow:column;
+border-radius:18px;
+background-color:#ffffff;
+}.classDiv-div3{margin-left:20px;
+width:202px;
+height:232px;
+display:flex;
+flex-flow:column;
+border-radius:18px;
+background-color:#ffffff;
+}.classDiv-div4{margin-left:20px;
+width:202px;
+height:232px;
+display:flex;
+flex-flow:column;
+border-radius:18px;
+background-color:#ffffff;
 }
 </style>

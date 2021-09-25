@@ -11,13 +11,17 @@ export default {
 }
 </script>
 <style scoped>
-.mainContainer{
-    width: 1120px;
-    height: 480px;
-    margin:auto;
-    background-color: black;
-}
-.undoneText{
-    margin: auto;
+.mainContainer{margin:0 auto;
+left:0px;
+top:3353px;
+width:1400px;
+height:291px;
+line-height:37px;
+background-color:rgba(60,61,66,100);
+color:rgba(53,54,59,100);
+font-size:26px;
+text-align:center;
+font-family:Roboto;
+}.undoneText{margin:auto;
 }
 </style>

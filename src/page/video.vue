@@ -1,49 +1,41 @@
 <template>
-    <div class="mainContainer">
-        <div class="title">
+ <div class="mainContainer">
+        <div class="video-title">
             {{videoName}}
         </div>
-        <div class="videoBody-div">
-            <div class="videoLayer">
+        <div class="videoPanContainer-div">
+            <div class="input_video">
                 <div class="mask" v-show="showMask==true">
-                    <div class="layerNest">
-                    <div class='btnLayer'></div>
-                    </div>
+                        <div class="layerNest">
+                        <div class='btnLayer'></div>
+                        </div>
                 </div>
-                <video id="example_video_1" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}' width="985" height="554">
-                    <source id="videoSrc" src="http://vjs.zencdn.net/v/oceans.mp4" type="application/x-mpegURL">
-                </video>
+                <video-player  class="video-player vjs-custom-skin"
+                            ref="videoPlayer"
+                            @ended="onPlayerEnded($event)"
+                            :playsinline="true"
+                            :options="playerOptions"
+                ></video-player>
             </div>
             <div class="videoes">
+                <div class="kejian-p">
+                    视频列表
+                </div>
+                <el-collapse class="videoList">
+                    <el-collapse-item v-for="(item,cindex) in chapter" class="title">
+                        <template slot="title">
+                            第{{cindex+1}}章
+                        </template>
+                        <div v-for="(item,sindex) in chapter[cindex]" class="videoItem" @click="toVideo(item.id)">
+                            {{item.title}}
+                        </div>
+                    </el-collapse-item>
+                </el-collapse>
             </div>
         </div>
         <div class="funcBar-div">
         </div>
         <div class="discussion">
-        </div>
-        <!--<div class="videoBody">
-            </div>
-            <figure>
-                <figcaption>视频案例</figcaption>
-                <div class="palyer">
-                    <video id="playwindow" src=""></video>
-                    <div class="controls">
-                        <a href="#" class="switch  icon-play"></a>
-                        <div class="progress">
-                            <div class="curr-progress"></div>
-                        </div>
-                        <div class="time">
-                            <span class="curr-time">00:00:00</span>/<span class="total-time">00:00:00</span>
-                        </div>
-                        <a href="#" class="extend  icon-resize-full"></a>
-                    </div>
-                </div>
-            </figure>
-        </div>
-        -->
-
-        <div class="discussNav">
-            点击进入讨论区
         </div>
     </div>
 </template>
@@ -65,33 +57,41 @@ export default {
             videoID: "",
             showMask: false,
             clock: "",
-            courses: []
-            /*treeData:{
-                id: 0,
-                url: "http://www.w3school.com.cn/i/movie.mp4",
-                name: "根节点",
-                videoID: "",
-                children: [
-                    {
-                        id: 1,
-                        url: "http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4",
-                        name: "选项1",
-                        videoID: "",
-                        children: [
+            courses: [],
+            videoes: [
+                {
+                    id: 1,
+                    title: 2
+                }
+            ],
+            chapter: [
 
-                        ]
-                    },
-                    {
-                        id: 2,
-                        url: "http://vjs.zencdn.net/v/oceans.mp4",
-                        name: "选项2",
-                        videoID: "",
-                        children: [
-
-                        ]
-                    }
-                ]
-            }*/
+            ],
+            events: ['end'],
+            playerOptions : {
+                playbackRates : [ 0.5, 1.0, 1.5, 2.0 ], //可选择的播放速度
+                autoplay : false, //如果true,浏览器准备好时开始回放。
+                muted : false, // 默认情况下将会消除任何音频。
+                loop : false, // 视频一结束就重新开始。
+                preload : 'auto', // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+                language : 'zh-CN',
+                width: 718,
+                height: 403, // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+                 // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+                sources : [ {
+                    type : "",
+                    src : ''//url地址
+                } ],
+                poster : "", //你的封面地址
+                // width: document.documentElement.clientWidth,
+                notSupportedMessage : '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
+                controlBar : {
+                    timeDivider : true,//当前时间和持续时间的分隔符
+                    durationDisplay : true,//显示持续时间
+                    remainingTimeDisplay : false,//是否显示剩余时间功能
+                    fullscreenToggle : true  //全屏按钮
+                }
+            }
         }
     },
     mounted(){
@@ -115,86 +115,65 @@ export default {
             }).then(data => {
                 console.log(data);
             });
-            /*get_time_status({
-                videoId: this.videoID,
-                courseId: this.courseID
-            }).then(data => {
-                console.log(data);
-            });*/
-            get_pick_status({videoId: 7,courseId:5}).then(data=>{
-                console.log(data)
-            })
         }, 5000);
-        this.render();
+        this.renderv();
         this.buildTreeData();
-        let self = this;
-        let options = {
-            controls : true,      
-                height:554, 
-                width:985,
-        }
-        var player = videojs('example_video_1', options, function onPlayerReady() {
-            videojs.log('播放器已经准备好了!');
-            let video = document.getElementById('videoSrc');
-            video.src = self.treeData.url;
-            // In this context, `this` is the player that was created by Video.js.<br>  // 注意，这个地方的上下文， `this` 指向的是Video.js的实例对像player
-            this.play();
-            let videoBody = this;
-            // How about an event listener?<br>  // 如何使用事件监听？
-            this.on('ended', function() {
-                if(self.treeData.children != undefined && self.treeData.children != []){
-                    self.treeData.children.forEach(element => {
-                        let newButton = document.createElement("button");
-                        newButton.className = 'choice';
-                        newButton.style.background="rgba(255, 0, 0, 0.5)";
-                        newButton.style.color="yellow";
-                        newButton.style.height="50px";
-                        newButton.style.width="200px";
-                        newButton.innerText = element.name;
-                        newButton.data = element;
-                        
-                        newButton.onclick = function(){
-                            logPick({
-                                courseId: self.courseID,
-                                videoId: this.data.videoID,
-                            }).then(data => {
-                                console.log('!');
-                                console.log(data);
-                            })
-                            self.treeData = this.data;
-                            video.src = self.treeData.url;
-                            player.src({
-                                src:self.treeData.url
-                            });
-                            console.log("change");
-                            console.log(video.src);
-                            self.showMask = false;
-                            videoBody.play();
-                            let btnArray = Array.from(document.getElementsByClassName('choice'));
-                            console.log(btnArray);
-                            btnArray.forEach(
-                                btn => {
-                                    document.querySelector('.btnLayer').removeChild(btn);
-                                }
-                            )
-                        };
-                        document.querySelector('.btnLayer').appendChild(newButton);
-                    });
-                    self.showMask = true;
-                }
-                else{
-                    self.$message({
-                        message: "恭喜你完成了视频学习",
-                        type: "success"
-                    })
-                }
-            });
-        });
+        //this.loadVideo();
+        this.playerOptions['sources'][0]['src'] = this.treeData.url;
+        console.log("!");
+        console.log(this.playerOptions['sources'][0]['src']);
     },
     beforeDestroy(){
         clearInterval(this.clock);
     },
     methods:{
+        onPlayerEnded: function(){
+            console.log('end');
+            let self = this;
+            if(self.treeData.children != undefined && self.treeData.children != []){
+                self.treeData.children.forEach(element => {
+                    let newButton = document.createElement("button");
+                    newButton.className = 'choice';
+                    newButton.style.background="rgba(255, 0, 0, 0.5)";
+                    newButton.style.color="yellow";
+                    newButton.style.height="50px";
+                    newButton.style.width="200px";
+                    newButton.innerText = element.name;
+                    newButton.data = element;
+                    newButton.onclick = function(){
+                        logPick({
+                            courseId: self.courseID,
+                            videoId: this.data.videoID,
+                        }).then(data => {
+                            console.log('!');
+                            console.log(data);
+                        })
+                        self.treeData = this.data;
+                        
+                        self.playerOptions['sources'][0]['src'] = self.treeData.url;
+                        self.$refs.videoPlayer.player.reset();
+                        console.log(self.playerOptions['sources'][0]['src']);
+                        self.showMask = false;
+                        self.$refs.videoPlayer.player.play();
+                        let btnArray = Array.from(document.getElementsByClassName('choice'));
+                        console.log(btnArray);
+                        btnArray.forEach(
+                            btn => {
+                                document.querySelector('.btnLayer').removeChild(btn);
+                            }
+                        )
+                    };
+                    document.querySelector('.btnLayer').appendChild(newButton);
+                }
+            );
+            self.showMask = true;
+            } else{
+                this.$message({
+                    message:'已完成视频观看',
+                    type: 'success'
+                })
+            }
+        },
         doLogVisit(){
 
         },
@@ -204,7 +183,8 @@ export default {
         doLogTime(){
 
         },
-                toVideo: async function(id){
+        toVideo: async function(id){
+            console.log("toVideo")
             console.log()
             let index = 0;
 
@@ -220,7 +200,8 @@ export default {
                 path: `/video/?id=${this.courseID}&vid=${this.videoes[index].id}`
             });
         },
-        render: async function(){
+        renderv: async function(){
+            console.log("renderv")
             let response = await getVideoListByCourseID(this.courseID);
             console.log(response);
             if(response.code == 200){
@@ -249,10 +230,15 @@ export default {
             }
         },
         connectEdge(node){
+            console.log("connectEdge");
             let self = this;
             this.getVideoByID(node.videoID).then(url =>{
                 console.log(url);
                 node.url = url;
+                if(node.id==0) {
+                    this.playerOptions['sources'][0]['src'] = node.url;
+                    this.$refs.videoPlayer.player.play();
+                }
                 this.edge.forEach(
                     Edge => {
                         if(Edge.fatherID == node.id){
@@ -282,6 +268,7 @@ export default {
             });
         },
         buildTreeData: function(){
+            console.log("buildTree")
             let Data = {};
             let idVideoIDMap = new Map();
             this.edge.forEach(
@@ -305,7 +292,9 @@ export default {
             this.treeData = Data;
         },
         getVideoByID: async function(id){
+            console.log("getvideoByid")
             console.log(id);
+            if(id==undefined) return undefined;
             let response = await getPartByID({
                 courseID: this.courseID,
                 videoID:id
@@ -323,6 +312,7 @@ export default {
             }*/
         },
         render: function(){
+            console.log("render")
             this.edge = JSON.parse(localStorage.getItem('edge'));
             this.edge = JSON.parse(this.edge);
         }
@@ -331,146 +321,67 @@ export default {
 </script>
 
 <style scoped>
-.mainContainer{
-    display: flex;
-    flex-flow: column;
-    margin: auto;
+.videoPanContainer-div{margin-left:262px;
+display:flex;
+flex-flow:row;
+}.input_video{width:718px;
+height:403px;
+background-color:aqua;
+position:relative;
+}.mask{position:absolute;
+width:100%;
+height:100%;
+z-index:1005;
+}.mainContainer{display:flex;
+flex-flow:column;
+margin:auto;
+}.title{margin-top:26px;
+margin-left:262px;
+line-height:25px;
+color:rgba(16,16,16,100);
+font-size:17px;
+text-align:left;
+font-family:SourceHanSansSC-medium;
+}.videoes{width:157px;
+height:403px;
+line-height:14px;
+background-color:rgba(66,66,66,100);
+text-align:center;
+display:flex;
+flex-flow:column;
+}.funcBar-div{margin-left:262px;
+margin-top:26px;
+width:875px;
+height:120px;
+line-height:14px;
+border-radius:18px;
+background-color:rgba(255,255,255,100);
+text-align:center;
+}.disscussion{margin-top:26px;
+width:875px;
+height:2538px;
+line-height:14px;
+border-radius:18px;
+background-color:rgba(255,255,255,100);
+text-align:center;
+}.kejian-p{margin-left:10px;
+width:46px;
+height:17px;
+color:rgba(250,250,250,100);
+font-size:11px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.videoItem{background-color:#fe0000;
+color:#ffff01;
+}.title{background-color:#fe0000;
+color:#ffff01;
+}.videoList{width:157px;
+min-height:218px;
+display:flex;
+flex-flow:column;
+}.title{width:137px;
+height:21px;
+margin-left:10px;
+margin-top:7px;
 }
-.title{
-    margin-top: 36px;
-    margin-left: 360px;
-    line-height: 35px;
-    color: rgba(16, 16, 16, 100);
-    font-size: 24px;
-    text-align: left;
-    font-family: SourceHanSansSC-medium;
-}
-.choice{
-    opacity: 10;
-    outline: none;
-}
-.videoBody-div{
-    margin-left: 360px;
-    margin-top: 12px;
-    display: flex;
-    flex-flow: row;
-}
-.videoLayer{
-    width: 985px;
-    height: 554px;
-    background-color: aqua;
-}
-.videoes{
-    width: 216px;
-    height: 554px;
-    line-height: 20px;
-    background-color: rgba(66, 66, 66, 100);
-    text-align: center;
-}
-.funcBar-div {
-    margin-top: 36px;
-    width: 1200px;
-    height: 165px;
-    line-height: 20px;
-    border-radius: 26px;
-    background-color: rgba(255, 255, 255, 100);
-    text-align: center;
-}
-.disscussion{
-    margin-top: 36px;
-    width: 1200px;
-    height: 3481px;
-    line-height: 20px;
-    border-radius: 26px;
-    background-color: rgba(255, 255, 255, 100);
-    text-align: center;
-}
-figcaption{
-    text-align: center;
-    line-height: 150px;
-    font-family: "Microsoft Yahei";
-    font-size:24px;
-}
-/*
-.icon-play{
-    background: url(../assets/logo.png);
-}
-.icon-resize-full{
-    background: url(../assets/logo.png);
-}
-.mask{
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 1005;
-}
-.layerNest{
-    height: 50%;
-    width: 100%;
-    margin-top: 20%;
-}
-.btnLayer{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-flow: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-.videoLayer{
-    position: relative;
-    width: 800px;
-    height: 600px;
-}
-.video-js{
-    width: 100%;
-    height: 100%;
-    object-fit: fill;
-}*/
-/*
-.videoTitle-p{
-    left: 360px;
-    top: 189px;
-    width: 535px;
-    height: 35px;
-    color: rgba(16, 16, 16, 100);
-    font-size: 24px;
-    text-align: left;
-    font-family: SourceHanSansSC-medium;
-}
-.video-video{
-    left: 360px;
-    top: 236px;
-    width: 985px;
-    height: 554px;
-}
-.videoList-div{
-    left: 1345px;
-    top: 236px;
-    width: 216px;
-    height: 554px;
-    line-height: 20px;
-    background-color: rgba(66, 66, 66, 100);
-    text-align: center;
-}
-.functionNest-div{
-    left: 360px;
-    top: 826px;
-    width: 1200px;
-    height: 165px;
-    line-height: 20px;
-    border-radius: 26px;
-    background-color: rgba(255, 255, 255, 100);
-    text-align: center;
-}
-.disscussion-div{
-    left: 360px;
-    top: 1027px;
-    width: 1200px;
-    height: 3481px;
-    line-height: 20px;
-    border-radius: 26px;
-    background-color: rgba(255, 255, 255, 100);
-    text-align: center;
-}*/
 </style>

@@ -5,17 +5,23 @@
         </div>
         <div class="infoCard-div">
             <div class="classTitle-p">
-                中国近代史纲要
+                {{courseName}}
             </div>
             <div class="school-p">
                 武汉理工大学
             </div>
             <div class="class-Info">
-                本课程介绍C++11~20标准的程序设计方法。由网易云课堂计算机课程体系《C++程序设计》全面改版。 课件中英文对照，便于学习计算机术语。 学过C、Java或者Python，想要了解新标准C++，可以参加本课程学习。
+                {{courseIntro}}
             </div>
-            <div class="join-button">
-                立即参加
+            <div class="buttonNest-div">
+                <div class="join-button" @click="joinCourse()">
+                    立即参加
+                </div>
+                <div class="jump-button" @click="toCourseDetail(courseID)">
+                    进入课程
+                </div>
             </div>
+            
         </div>
     </div>
     <div class="detailContainer-div">
@@ -68,6 +74,10 @@ export default{
         joinCourse: async function(){
             console.log(typeof(parseInt(this.courseID)))
             let response = await join_course(parseInt(this.courseID));
+            this.$message({
+                message: response.msg,
+                type: response.code == 200 ? 'success':'error'
+            })
             console.log(response)
         },
         toVideo: async function(id){
@@ -84,8 +94,8 @@ export default{
             }
             return false;
         },
-        toCourse: async function(id){
-            this.$router.push(`course/?id=${id}`);
+        toCourseDetail: async function(id){
+            this.$router.push(`/courseDetail?id=${id}`);
         },
         getCourses: async function(){
             let response = await get_all_courses();
@@ -165,6 +175,7 @@ export default{
     border-radius: 26px;
     text-align: center;
 }*/
+/*
 .mainContainer{
     margin:0;
     display: flex;
@@ -257,5 +268,92 @@ export default{
     font-size: 24px;
     text-align: left;
     font-family: SourceHanSansSC-medium;
+}*/
+.mainContainer{margin:0auto;
+width:1400px;
+height:3645px;
+display:flex;
+flex-flow:column;
+}.classInfo-div{width:1400px;
+height:308px;
+display:flex;
+flex-flow:row;
+}.classFace-img{margin-left:262px;
+width:376px;
+height:231px;
+background-color:black;
+border-radius:18px 18px 18px 18px;
+background:no-repeatcentertop;
+background-size:100%100%;
+}.infoCard-div{margin-left:43px;
+display:flex;
+flex-flow:column;
+}.classTitle-p{line-height:28px;
+color:rgba(66,66,66,100);
+font-size:20px;
+text-align:left;
+font-family:SourceHanSansSC-medium;
+}.school-p{line-height:18px;
+color:rgba(158,158,158,100);
+font-size:12px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.class-Info{margin-top:20px;
+width:456px;
+height:78px;
+color:rgba(97,97,97,100);
+font-size:12px;
+text-align:justify;
+font-family:SourceHanSansSC-regular;
+}
+.buttonNest-div{
+    margin-top:36px;
+    display: flex;
+    flex-flow: row;
+}
+.join-button{
+width:140px;
+line-height:35px;
+border-radius:35px;
+background-color:rgba(61,90,254,100);
+color:rgba(255,255,255,100);
+font-size:13px;
+text-align:center;
+font-family:MicrosoftYahei;
+}
+.jump-button{
+    margin-left: 20px;
+width:140px;
+line-height:35px;
+border-radius:35px;
+background-color:rgba(61,90,254,100);
+color:rgba(255,255,255,100);
+font-size:13px;
+text-align:center;
+font-family:MicrosoftYahei;
+}.detailContainer-div{margin-left:262px;
+margin-top:27px;
+width:875px;
+height:2872px;
+display:flex;
+flex-flow:column;
+background-color:#ffffff;
+}.selectContainer-div{margin-top:23px;
+margin-left:16px;
+display:flex;
+flex-flow:row;
+}.select{margin-left:16px;
+font-size:17px;
+line-height:25px;
+}.xiangqing-div{line-height:25px;
+color:rgba(61,90,254,100);
+font-size:17px;
+text-align:left;
+font-family:SourceHanSansSC-medium;
+}.pingjia-div{line-height:25px;
+color:rgba(33,33,33,100);
+font-size:17px;
+text-align:left;
+font-family:SourceHanSansSC-medium;
 }
 </style>

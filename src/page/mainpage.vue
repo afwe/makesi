@@ -40,9 +40,9 @@
 <div class="mainContainer">
     <div class="mainPic-img">
         <div class="proLog-p">
-            红色育人,精准施教
+            打通专业教育与思政教育紧密融合“最后一公里”
         </div>
-        <button onClick="toCourseList()" class="start-button">
+        <button @click="toCourseList()" class="start-button">
             开启学习之旅
         </button>
     </div>
@@ -70,7 +70,7 @@
                 北大名师精讲"中国近代史"
             </div>
         </div>
-        <div class="classDiv-div2">
+        <div class="classDiv-div2" @click="">
             <div class="faceImg-img" :style="background">
             </div>
             <div class="className-p">
@@ -86,7 +86,7 @@
                 北大名师精讲"中国近代史"
             </div>
         </div>
-        <div class="classDiv-div3">
+        <div class="classDiv-div3" @click="">
             <div class="faceImg-img" :style="background">
             </div>
             <div class="className-p">
@@ -102,7 +102,7 @@
                 北大名师精讲"中国近代史"
             </div>
         </div>
-        <div class="classDiv-div4" >
+        <div class="classDiv-div4" @click="">
             <div class="faceImg-img" :style="background">
             </div>
             <div class="className-p">
@@ -127,12 +127,13 @@
             <div class="rankingTitle-div">
                 热门排行
             </div>
-            <div v-for="(index,item) in courseList" class="classRankingCard-div">
+            <div v-for="(item,index) in courses" class="classRankingCard-div" @click="toCourse(item.courseId)">
+                <div class="courseRanking-p">{{index}}</div>
                 <div class="rankingFace-img">
                 </div>
                 <div class="infoContainer-div">
-                    <p class="courseTitle-p">{{item.title}}</p>
-                    <p class="courseJoins-p">{{item.joing}}</p>
+                    <div class="courseTitle-p">{{item.courseName}}</div>
+                    <div class="courseJoins-p">{{item.joins}}</div>
                 </div>
             </div>
         </div>
@@ -140,12 +141,13 @@
             <div class="rankingTitle-div">
                 最新排行
             </div>
-            <div v-for="(index,item) in courseList" class="classRankingCard-div">
+            <div v-for="(item,index) in courses" class="classRankingCard-div" @click="toCourse(item.courseId)">
+                <div class="courseRanking-p">{{index}}</div>
                 <div class="rankingFace-img">
                 </div>
                 <div class="infoContainer-div">
-                    <p class="courseTitle-p">{{item.title}}</p>
-                    <p class="courseJoins-p">{{item.joing}}</p>
+                    <div class="courseTitle-p">{{item.courseName}}</div>
+                    <div class="courseJoins-p">{{item.joins}}</div>
                 </div>
             </div>
         </div>
@@ -153,12 +155,13 @@
             <div class="rankingTitle-div">
                 推荐排行
             </div>
-            <div v-for="(index,item) in courseList" class="classRankingCard-div">
+            <div v-for="(item,index) in courses" class="classRankingCard-div" @click="toCourse(item.courseId)">
+                <div class="courseRanking-p">{{index}}</div>
                 <div class="rankingFace-img">
                 </div>
                 <div class="infoContainer-div">
-                    <p class="courseTitle-p">{{item.title}}</p>
-                    <p class="courseJoins-p">{{item.joing}}</p>
+                    <div class="courseTitle-p">{{item.courseName}}</div>
+                    <div class="courseJoins-p">{{item.joins}}</div>
                 </div>
             </div>
         </div>
@@ -217,6 +220,7 @@ export default {
         this.getCourses().then(
             (data) => {
                 if(data){
+                    console.log("??");
                     console.log(data);
                     this.courses = data.data;
                 }
@@ -226,8 +230,11 @@ export default {
         page_change(page){
             this.currentPage = page;
         },
+        toCourseList: async function(){
+            this.$router.push(`course`);
+        },
         toCourse: async function(id){
-            this.$router.push(`course/?id=${id}`);
+            this.$router.push(`courseInfo/?id=${id}`);
         },
         getCourses: async function(){
             let response = await get_all_courses();
@@ -436,6 +443,7 @@ ol{
     border-radius: 26px;
     text-align: center;
 }*/
+/*
 .mainContainer{
     position: flex;
     width:1120px;
@@ -468,7 +476,7 @@ ol{
     color:rgba(242,242,247,100);
     font-size:42px;
     text-align:center;
-/*font-family:SourceHanSansSC-light;*/
+font-family:SourceHanSansSC-light;
 }
 .start-button{
     margin-top: 33px;
@@ -481,7 +489,8 @@ ol{
     font-size:14px;
     text-align:center;
     font-family:Roboto;
-}
+}*/
+/*
 .chossenClass-p{
     margin-top:60px;
     margin-left: 360px;
@@ -642,5 +651,174 @@ ol{
     border-radius: 26px;
     text-align: center;
     background-color: #ffffff;
+}*/
+.mainContainer{position:flex;
+width:1400px;
+height:3645px;
+line-height:13px;
+background-color:rgba(242,242,247,100);
+text-align:center;
+margin:auto;
+}.mainPic-img{display:flex;
+flex-flow:column;
+align-items:center;
+left:0px;
+top:0px;
+width:1400px;
+height:582px;
+line-height:13px;
+background-color:rgba(0,0,0,0.49);
+color:rgba(16,16,16,100);
+font-size:10px;
+text-align:center;
+font-family:Roboto;
+}.proLog-p{margin-left:100px;
+margin-top:200px;
+line-height:37px;
+color:rgba(255,255,255,100);
+font-size:37px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.start-button{margin-top:41px;
+width:223px;
+height:62px;
+line-height:25px;
+border-radius:43px;
+background-color:rgba(255,23,68,100);
+color:rgba(250,250,250,100);
+font-size:17px;
+text-align:center;
+font-family:Roboto;
+}.chossenClass-p{margin-top:43px;
+margin-left:262px;
+line-height:37px;
+width:105px;
+font-size:26px;
+text-align:center;
+color:rgba(16,16,16,100);
+}.classContainer-div{margin-top:23px;
+margin-left:262px;
+display:flex;
+flex-flow:row;
+}.classDiv-div1{width:202px;
+height:232px;
+display:flex;
+flex-flow:column;
+border-radius:18px;
+background-color:#ffffff;
+}.faceImg-img{width:202px;
+height:115px;
+background-color:black;
+border-radius:20px 20px 0px 0px;
+background:no-repeat center top;
+background-size:100% 100%;
+}.className-p{margin-left:8px;
+margin-top:8px;
+font-size:11px;
+line-height:17px;
+color:rgba(16,16,16,100);
+text-align:left;
+}.schoolName-p{margin-left:8px;
+line-height:12px;
+color:rgba(142,142,147,100);
+font-size:8px;
+text-align:left;
+font-family:Source HanSansSC-light;
+}.joins-p{margin-left:8px;
+margin-top:33px;
+line-height:15px;
+color:rgba(199,199,204,100);
+font-size:10px;
+text-align:left;
+font-family:Source HanSansSC-light;
+}.into-p{margin-left:8px;
+line-height:15px;
+color:rgba(97,97,97,100);
+font-size:10px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.classDiv-div2{margin-left:20px;
+width:202px;
+height:232px;
+display:flex;
+flex-flow:column;
+border-radius:18px;
+background-color:#ffffff;
+}.classDiv-div3{margin-left:20px;
+width:202px;
+height:232px;
+display:flex;
+flex-flow:column;
+border-radius:18px;
+background-color:#ffffff;
+}.classDiv-div4{margin-left:20px;
+width:202px;
+height:232px;
+display:flex;
+flex-flow:column;
+border-radius:18px;
+background-color:#ffffff;
+}.classRanking-p{margin-top:43px;
+margin-left:262px;
+line-height:37px;
+color:rgba(16,16,16,100);
+font-size:26px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.rankingContainer-div{margin-top:26px;
+margin-left:262px;
+display:flex;
+flex-flow:row;
+}.ranking-div1{display:flex;
+flex-flow:column;
+width:277px;
+height:353px;
+border-radius:18px;
+background-color:#ffffff;
+}.ranking-div2{display:flex;
+flex-flow:column;
+margin-left:18px;
+width:277px;
+height:353px;
+border-radius:18px;
+background-color:#ffffff;
+}.ranking-div3{display:flex;
+flex-flow:column;
+margin-left:18px;
+width:277px;
+height:353px;
+border-radius:18px;
+background-color:#ffffff;
+}.rankingTitle-div{line-height:36px;
+}
+.classRankingCard-div{
+    height: 65px;
+    background-color: aqua;
+    display: flex;
+    flex-flow: row;
+}
+.rankingFace-img{
+    width: 120px;
+    height: 65px;
+}
+.infoContainer-div{
+    height: 65px;
+    background-color: aqua;
+}
+.classJudge-p{margin-top:43px;
+margin-left:262px;
+line-height:37px;
+color:rgba(16,16,16,100);
+font-size:26px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.judgeContainer-div{margin-top:26px;
+margin-left:262px;
+width:875px;
+height:363px;
+line-height:13px;
+border-radius:18px;
+text-align:center;
+background-color:#ffffff;
 }
 </style>

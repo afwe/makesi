@@ -4,10 +4,10 @@
             <div class="courseFace-img" :style="background">
             </div>
             <div class="btnNest-div">
-                <button class="selectButton-button topButton">
+                <button class="selectButton-button topButton" @click="showMode='notify'">
                     公告
                 </button>
-                <button class="selectButton-button">
+                <button class="selectButton-button" @click="showMode='videoes'">
                     课件
                 </button>
                 <button class="selectButton-button">
@@ -29,22 +29,22 @@
                     课件
                 </div>
                 <el-collapse class="videoList">
-                <el-collapse-item v-for="(item,cindex) in chapter" class="title">
-                    <template slot="title">
-                        第{{cindex+1}}章
-                    </template>
-                    <el-card v-for="(item,sindex) in chapter[cindex]" class="videoItem" @click.native="toVideo(item.id)">
-                        {{item.title}}
-                    </el-card>
-                </el-collapse-item>
-            </el-collapse>
+                    <el-collapse-item v-for="(item,cindex) in chapter" class="title">
+                        <template slot="title">
+                            第{{cindex+1}}章
+                        </template>
+                        <div v-for="(item,sindex) in chapter[cindex]" class="videoItem" @click="toVideo(item.id)">
+                            {{item.title}}
+                        </div>
+                    </el-collapse-item>
+                </el-collapse>
             </div>
         </div>
     </div>
 </template>
 <script>
 import { join_course , get_course_by_id} from '../fetch/course'
-
+import { getVideoListByCourseID } from '../fetch/video'
 export default {
     data(){
         return{
@@ -77,14 +77,15 @@ export default {
             this.courseID = this.$route.query.id;
         }
         
-        this.render().then(
+        this.renderc().then(
             (data) => {
                 if(data){
                     this.courseName = data.data.courseName;
                     this.courseIntro = data.data.courseIntro;
                 }
             }
-        )
+        ),
+        this.render();
     },
     methods:{
         joinCourse: async function(){
@@ -92,12 +93,7 @@ export default {
             let response = await join_course(parseInt(this.courseID));
             console.log(response)
         },
-        toVideo: async function(id){
-            this.$router.push({
-                path: `/videoes/?id=${id}`
-            });
-        },
-        render:async function(){
+        renderc:async function(){
             let response = await get_course_by_id(this.courseID);
             console.log(response)
             if(response.code == 200){
@@ -257,6 +253,7 @@ export default {
     font-family: Roboto;
     border: 1px solid rgba(238, 238, 238, 100);
 }*/
+/*
 .mainContainer{
     margin: auto;
     display: flex;
@@ -316,5 +313,65 @@ export default {
     height: 213px;
     border-radius: 12px;
     background-color: rgba(255, 255, 255, 100);
+}
+*/
+.videoList{
+    background-color: #f7f7f7;
+    height: 100%;
+    text-align: center;
+    width: 100%;
+}
+.title{
+    background-color: #f7f7f7;
+    border-radius: 8px;
+
+    height: 40px;
+    margin-left: 10px;
+    text-align: center;
+    width: 600px;
+}
+.videoItem{
+}
+.mainContainer{margin:auto;
+display:flex;
+width:1400px;
+height:3645px;
+flex-flow:row;
+}.selectContainer-div{margin-left:262px;
+display:flex;
+flex-flow:column;
+}.courseFace-img{width:217px;
+height:116px;
+border-radius:8px;
+background-color:rgba(250,250,250,100);
+background-color:black;
+border-radius:18px18px0px0px;
+background:no-repeatcentertop;
+background-size:100%100%;
+}.btnNest-div{display:flex;
+flex-flow:column;
+}.selectButton-button{width:218px;
+height:41px;
+line-height:20px;
+background-color:rgba(255,255,255,100);
+color:rgba(66,66,66,100);
+font-size:13px;
+text-align:center;
+font-family:Roboto;
+border:0pxsolidrgba(238,238,238,100);
+}.topButton{border-radius:8px 8px 0px 0px;
+}.buttomButton{border-radius:0px 0px 8px 8px;
+}.container-div{margin-left:43px;
+display:flex;
+flex-flow:column;
+}.notification-div{width:645px;
+height:318px;
+border-radius:8px;
+background:no-repeatcentertop;
+background-size:100%100%;
+}.videoList-div{width:645px;
+min-height: 300px;
+border-radius:8px;
+background-color:rgba(255,255,255,100);
 }
 </style>

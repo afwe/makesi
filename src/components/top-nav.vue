@@ -69,11 +69,10 @@
         </el-radio-button>
     </div>
     </el-card>-->
-        <div class="logo-img">
-            logo
+        <div class="logo-img" :style="backgroundL">
         </div>
-        <div class="name-p">name
-
+        <div class="name-p">
+            互动课程
         </div>
         <div class="mainpage-div">
             主页
@@ -84,12 +83,29 @@
         <div class="wordBase-button">
             词库
         </div>
-        <div class="search-input">
-            搜索
+        <div class="manage-button" @click="$router.push('/manage')" v-show='isLogin == true && monitor == true'>
+            管理中心
         </div>
-        <div class="avator-img">
-            头像
+        <div class="search-input" :style="backgroundS">
         </div>
+        <div class="avator-img" :style="backgroundA" @click="showLogin=true">
+        </div>
+        <el-dialog title="大国工业" :visible.sync="showLogin" @close="closePanel" :modal-append-to-body="false">
+            <div>
+            <input class="info-input" type="text" v-model="userID" placeholder="用户名">
+            </div>
+            <div>
+            <input class="info-input" type="text" v-model="userPassword" placeholder="密码">
+            </div>
+            <el-radio v-model="teacherLogin" label="false">学生</el-radio>
+            <el-radio v-model="teacherLogin" label="true">教师</el-radio>
+            <el-radio-button class="loginButton" @click.native="doLogin()">
+                登录
+            </el-radio-button>
+            <el-radio-button class="loginButton" v-on:click.native="doRegister()">
+                注册
+            </el-radio-button>
+        </el-dialog>
     </div>
 </template>
 <script>
@@ -98,6 +114,15 @@ import {teacher_login, teacher_register, checkLogin_Teacher} from '../fetch/teac
 export default{
     data(){
         return{
+            backgroundL: {
+                backgroundImage: 'url('+require('../assets/logo1.png')+')'
+            },
+            backgroundS: {
+                backgroundImage: 'url('+require('../assets/mb-search.svg')+')'
+            },
+            backgroundA: {
+                backgroundImage: 'url('+require('../assets/avator.svg')+')'
+            },
             teacherRegister: "false",
             teacherLogin: "false",
             isLogin: false,
@@ -176,11 +201,11 @@ export default{
             this.btnAva = false;
             if(this.teacherLogin == "true" ){
                 let response = await teacher_login({email: this.userID,pwd: this.userPassword});
+                console.log(response);
                 if(response.code== 200){
                     localStorage.setItem("token", response.data);
                     this.isLogin = true;
                     this.monitor = true;
-                    console.log(response);
                     this.$message({
                         message:"登录成功",
                         type:"success"
@@ -349,63 +374,166 @@ export default{
     height: 54px;
     background-color: rgba(66, 66, 66, 100);
 }*/
-.navContainer{height:68px;
-width:1120px;
+/*
+.navContainer{
+    width: 1920px;
+    height: 117px;
+    display: flex;
+    flex-flow: row;
+    background-color: rgba(255, 255, 255, 100);
+    color: rgba(16, 16, 16, 100);
+    font-size: 14px;
+    text-align: center;
+    font-family: Roboto;
+}
+.logo-img{
+    color: rgba(255, 5, 47, 100);
+    margin-left: 360px;
+    margin-top: 24px;
+    width: 137px;
+    height: 61px;
+    background: no-repeat center top;
+    background-size:100% 100%;
+}
+.name-p{
+    margin-top: 57px;
+    width: 222px;
+    line-height: 28px;
+    color: rgba(66, 66, 66, 100);
+    font-size: 20px;
+    text-align: left;
+    font-family: SourceHanSansSC-light;
+}
+.mainpage-div{
+    margin-left: 34px;
+    margin-top: 15px;
+    width: 133px;
+    height: 87px;
+    line-height: 87px;
+    background-color: rgba(255, 255, 255, 100);
+    color: rgba(66, 66, 66, 100);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+}
+.course-button{
+    margin-left: 7px;
+    margin-top: 15px;
+    width: 133px;
+    height: 87px;
+    line-height: 87px;
+    background-color: rgba(255, 255, 255, 100);
+    color: rgba(66, 66, 66, 100);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+}
+.wordBase-button{
+    margin-left: 7px;
+    margin-top: 15px;
+    line-height: 87px;
+    width: 133px;
+    height: 87px;
+    background-color: rgba(255, 255, 255, 100);
+    color: rgba(66, 66, 66, 100);
+    font-size: 20px;
+    text-align: center;
+    font-family: Roboto;
+}
+.search-input{
+    margin-left: 279px;
+    margin-top: 41px;
+    width: 34px;
+    height: 34px;
+    background-color: rgba(66, 66, 66, 100);
+    background: no-repeat center top;
+    background-size:100% 100%;
+}
+.avator-img{
+    margin-left: 8px;
+    margin-top: 31px;
+    width: 54px;
+    height: 54px;
+    background-color: rgba(66, 66, 66, 100);
+    background: no-repeat center top;
+    background-size:100% 100%;
+}*/
+.navContainer{margin:0 auto;
+width:1400px;
+height:85px;
 display:flex;
 flex-flow:row;
-margin:auto;
-background:rgba(0,0,0,0);
-}.logo-img{left:210px;
-top:8px;
-width:50px;
-height:50px;
-}.name-p{left:271px;
-top:14px;
-width:28px;
-height:40px;
+background-color:rgba(255,255,255,100);
+color:rgba(16,16,16,100);
+font-size:10px;
+text-align:center;
+font-family:Roboto;
+}.logo-img{color:rgba(255,5,47,100);
+margin-left:262px;
+margin-top:17px;
+width:98px;
+height:43px;
+background:no-repeatcentertop;
+background-size:100%100%;
+}.name-p{margin-top:41px;
+width:161px;
+line-height:20px;
 color:rgba(66,66,66,100);
-font-size:21px;
+font-size:13px;
 text-align:left;
-font-family:SourceHanSansSC-regular;
-}.mainpage-div{left:439px;
-top:8px;
-width:77px;
-height:50px;
-line-height:16px;
+font-family:SourceHanSansSC-light;
+}.mainpage-div{margin-left:23px;
+margin-top:10px;
+width:96px;
+height:62px;
+line-height:62px;
 background-color:rgba(255,255,255,100);
 color:rgba(66,66,66,100);
-font-size:11px;
+font-size:13px;
 text-align:center;
 font-family:Roboto;
-}.course-button{left:520px;
-top:8px;
-width:77px;
-height:50px;
-line-height:16px;
-background-color:rgba(255,255,255,100);
-color:rgba(61,90,254,100);
-font-size:11px;
-text-align:center;
-font-family:Roboto;
-}.wordBase-button{left:603px;
-top:8px;
-width:77px;
-height:50px;
-line-height:16px;
+}.course-button{margin-left:5px;
+margin-top:10px;
+width:96px;
+height:62px;
+line-height:62px;
 background-color:rgba(255,255,255,100);
 color:rgba(66,66,66,100);
-font-size:11px;
+font-size:13px;
 text-align:center;
 font-family:Roboto;
-}.search-input{left:854px;
-top:23px;
-width:19px;
-height:19px;
-background-color:rgba(66,66,66,100);
-}.avator-img{left:878px;
-top:18px;
-width:31px;
-height:31px;
-background-color:rgba(66,66,66,100);
+}.wordBase-button{margin-left:5px;
+margin-top:10px;
+line-height:62px;
+width:96px;
+height:62px;
+background-color:rgba(255,255,255,100);
+color:rgba(66,66,66,100);
+font-size:13px;
+text-align:center;
+font-family:Roboto;
+}.manage-button{margin-left:5px;
+margin-top:10px;
+line-height:62px;
+width:96px;
+height:62px;
+background-color:rgba(255,255,255,100);
+color:rgba(66,66,66,100);
+font-size:13px;
+text-align:center;
+font-family:Roboto;
+}
+.search-input{margin-left:202px;
+margin-top:28px;
+width:23px;
+height:23px;
+background:no-repeatcentertop;
+background-size:100%100%;
+}.avator-img{margin-left:5px;
+margin-top:22px;
+width:38px;
+height:38px;
+background:no-repeatcentertop;
+background-size:100%100%;
 }
 </style>

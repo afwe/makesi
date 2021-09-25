@@ -19,7 +19,8 @@
     "video.js": "^7.14.3",
     "vod-js-sdk-v6": "^1.4.12",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vue-video-player": "^5.0.2"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

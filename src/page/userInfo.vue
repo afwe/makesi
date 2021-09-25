@@ -54,7 +54,7 @@ export default {
             if(response == 200 ){
                 this.name=response.data.name;
                 this.gender=response.data.gender;
-                thiss
+                this
             }
             
         }).catch( err => {
