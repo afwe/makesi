@@ -130,7 +130,8 @@ export default {
         onPlayerEnded: function(){
             console.log('end');
             let self = this;
-            if(self.treeData.children != undefined && self.treeData.children != []){
+            console.log(self.treeData);
+            if(self.treeData.children != undefined && self.treeData.children.length!=0){
                 self.treeData.children.forEach(element => {
                     let newButton = document.createElement("button");
                     newButton.className = 'choice';

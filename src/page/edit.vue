@@ -1,21 +1,7 @@
 <template>
     <div class="mainContainer">
-        <!--<div class="VideoSelect" v-show="showVideoSelect == true">
-            <input type="text" v-model="selectedNode.videoID" placeholder="视频id">
-            <el-button @click="showVideoSelect=false">关闭</el-button>
-        </div>
-        <div class="videoList" v-show="showVideoSelect == true">
-            <div class="list-item" v-for="(item,index) in partList">
-                <span>{{item.videoId}}</span>-
-                <span>{{item.name}}</span>
-            </div>
-        </div>-->
         <el-dialog title="编辑节点" :visible.sync="showPanel" @close="closePanel" :modal-append-to-body="false">
-            <!--<div class="editPannel" v-show="showPanel == true">
-                <el-button @click="closePanel">关闭</el-button>
-            </div>-->
             <el-input v-model="selectedNode.name" placeholder="选项名称"></el-input>
-            <!--<el-button @click="showVideoSelect=true">编辑视频段</el-button>-->
             <el-select v-model="selectedNode.videoID" >
                 <el-option label="选择视频" value=""></el-option>
                 <el-option v-for="item in partList" :key="item.id" :label="item.name" :value="item.videoId">
@@ -24,21 +10,6 @@
             <el-button @click="addNode()">添加子节点</el-button>
             <el-button @click="deleteNode()">删除节点</el-button>
         </el-dialog>
-        <!--<div class='chapterNest'>
-            第
-            <el-select v-model="chapterID" >
-                <el-option label="选择视频" value=""></el-option>
-                <el-option v-for="(item, index) in chapterArray" :key="index" :label="item" :value="item">
-                </el-option>
-            </el-select>
-            章第
-              <el-select v-model="sessionID" >
-                <el-option label="选择视频" value=""></el-option>
-                <el-option v-for="(item, index) in sessionArray" :key="index" :label="item" :value="item">
-                </el-option>
-            </el-select>
-            节
-        </div>-->
         <div id="tree" :style="{width: '1700px', height: '800px'}">
         </div>
         <div class='btnNest'>
@@ -70,9 +41,6 @@ export default {
                 url: "",
                 name: "",
                 videoID: 2,
-                children: [
-
-                ]
             },
             chapterArray: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
             sessionArray: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
@@ -93,6 +61,8 @@ export default {
                                 node.children = [];
                             }
                             if(Edge.childID != undefined){
+                                console.log("!?")
+                                console.log(Edge.childID)
                                 node.children.push({
                                     id: Edge.childID,
                                     videoID: Edge.childVideoID,
@@ -111,39 +81,6 @@ export default {
                 }
             });
         },
-        /*buildTreeData: function(){
-            console.log("??")
-            let Data = {};
-            let idVideoIDMap = new Map();
-            this.edge.forEach(
-                Edge => {
-                    idVideoIDMap.set(Edge.fatherID, Edge.fatherVideoID);
-                    idVideoIDMap.set(Edge.childID, Edge.childVideoID);
-                }
-            )
-            let tot = 0;
-            idVideoIDMap.forEach(
-                (value, key) => {
-                    tot+=1;
-                }
-            )
-            console.log("{}");
-            this.totNode = tot;
-            console.log(this.totNode);
-            this.edge.forEach(
-                Edge => {
-                    idVideoIDMap.delete(Edge.childID);
-                }
-            )
-            idVideoIDMap.forEach(
-                (value, key) => {
-                    Data.id = key;
-                    Data.videoID = value;
-                }
-            )
-            this.connectEdge(Data);
-            this.treeData = Data;
-        },*/
         undo: function(){
             this.treeData = {
                 id: 0,
@@ -210,6 +147,7 @@ export default {
                 Edge => {
                     if(Edge.fatherID == node.id){
                         if(node.children == undefined) node.children = [];
+                        if(Edge.childID != undefined)
                         node.children.push({
                             id: Edge.childID,
                             videoID: Edge.childVideoID,
@@ -245,6 +183,8 @@ export default {
                     if(key>tot) tot=key;
                 }
             )
+            console.log("??!");
+            console.log(tot);
             this.totNode = tot+1;
             console.log(this.totNode);
             this.edge.forEach(
@@ -260,7 +200,6 @@ export default {
                 }
             )
             this.connectEdge(treeData);
-            
         },
         convertGraph: function(node, father){
             if(father.id != node.id){
@@ -294,6 +233,8 @@ export default {
                     name: this.treeData.name
                     })
             }
+            console.log("!");
+            console.log(this.edge);
             let response = await updateTreeByID({
                 courseId: this.courseID,
                 title: this.treeData.name,
@@ -455,6 +396,8 @@ export default {
     mounted(){
         this.edge = JSON.parse(localStorage.getItem('edge'));
         this.edge = JSON.parse(this.edge);
+        console.log("//");
+        console.log(this.treeData)
         if(localStorage.getItem("curCourseID") != undefined){
             this.courseID = localStorage.getItem("curCourseID");
         }

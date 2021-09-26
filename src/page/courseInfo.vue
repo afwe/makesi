@@ -14,10 +14,10 @@
                 {{courseIntro}}
             </div>
             <div class="buttonNest-div">
-                <div class="join-button" @click="joinCourse()">
+                <div class="join-button pointer" @click="joinCourse()">
                     立即参加
                 </div>
-                <div class="jump-button" @click="toCourseDetail(courseID)">
+                <div class="jump-button pointer" @click="toCourseDetail(courseID)">
                     进入课程
                 </div>
             </div>
@@ -355,5 +355,12 @@ color:rgba(33,33,33,100);
 font-size:17px;
 text-align:left;
 font-family:SourceHanSansSC-medium;
+}
+.pointer{
+
+}
+.pointer:hover{
+      cursor:pointer;
+      /*光标呈现为指示链接的指针（一只手）*/
 }
 </style>

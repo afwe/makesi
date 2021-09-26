@@ -4,19 +4,19 @@
             <div class="courseFace-img" :style="background">
             </div>
             <div class="btnNest-div">
-                <button class="selectButton-button topButton" @click="showMode='notify'">
+                <button class="selectButton-button topButton pointer" :class="{selectedColor: showMode=='notify'}" @click="showMode='notify'">
                     公告
                 </button>
-                <button class="selectButton-button" @click="showMode='videoes'">
+                <button class="selectButton-button pointer" :class="{selectedColor: showMode=='videoes'}" @click="showMode='videoes'">
                     课件
                 </button>
-                <button class="selectButton-button">
+                <button class="selectButton-button pointer">
                     测验与作业
                 </button>
-                <button class="selectButton-button">
+                <button class="selectButton-button pointer">
                     考试
                 </button>
-                <button class="selectButton-button bottomButton">
+                <button class="selectButton-button bottomButton pointer">
                     讨论区
                 </button>
             </div>
@@ -56,7 +56,7 @@ export default {
             },
             courseName: "test",
             courseIntro: "test",
-            showMode: 'videoes',
+            showMode: 'notify',
             courseID: 3,
             totVideo: 4,
             videoPage: 1,
@@ -315,6 +315,10 @@ export default {
     background-color: rgba(255, 255, 255, 100);
 }
 */
+button{
+    outline:none;
+    border:none;
+}
 .videoList{
     background-color: #f7f7f7;
     height: 100%;
@@ -360,7 +364,7 @@ text-align:center;
 font-family:Roboto;
 border:0pxsolidrgba(238,238,238,100);
 }.topButton{border-radius:8px 8px 0px 0px;
-}.buttomButton{border-radius:0px 0px 8px 8px;
+}.bottomButton{border-radius:0px 0px 8px 8px;
 }.container-div{margin-left:43px;
 display:flex;
 flex-flow:column;
@@ -373,5 +377,16 @@ background-size:100%100%;
 min-height: 300px;
 border-radius:8px;
 background-color:rgba(255,255,255,100);
+}
+.selectedColor{
+    background-color: rgba(255, 5, 47, 100);
+    color: rgba(250, 250, 250, 100);
+}
+.pointer{
+
+}
+.pointer:hover{
+      cursor:pointer;
+      /*光标呈现为指示链接的指针（一只手）*/
 }
 </style>

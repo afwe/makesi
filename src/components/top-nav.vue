@@ -1,94 +1,28 @@
 <template>
     <div class='navContainer'>
-    <!--<el-menu default-active="1" mode="horizontal" class='navContainer'>
-        <el-menu-item class="item" index="1" @click="$router.push('/main')">
-            主页
-        </el-menu-item>
-        <el-menu-item class="item" index="3">
-            <div class="item" @click="$router.push('/class')" v-show='isLogin'>
-                班级
-            </div>
-        </el-menu-item>
-        <el-menu-item class="item" index="4">
-            <div class="item" @click="$router.push('/user')" v-show='isLogin == true && monitor == false'> 
-                个人中心
-            </div>
-            <div class="item" @click="$router.push('/manage')" v-show='isLogin == true && monitor == true'>
-                 管理中心
-            </div>
-            <div class="item" @click="showLogin=true" v-show='!isLogin'>
-                登录/注册
-            </div>
-        </el-menu-item>
-        <el-menu-item class="item">
-            <el-dropdown class="item" @command="dropDownListener">
-                <el-avatar>
-                    <img :src="avatorSrc" style="height: 40px;border-radius: 50%"/>
-                </el-avatar>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item command="personal" >{{userNick}}</el-dropdown-item>
-                    <el-dropdown-item v-if="isLogin==false" command="login">登录</el-dropdown-item>
-                    <el-dropdown-item v-if="isLogin==false" command="register">注册</el-dropdown-item>
-                    <el-dropdown-item v-if="isLogin==true" command="logout">登出</el-dropdown-item>
-                </el-dropdown-menu>
-            </el-dropdown>
-        </el-menu-item>
-    </el-menu>
-    <el-dialog title="大国工业" :visible.sync="showLogin" @close="closePanel" :modal-append-to-body="false">
-        <div>
-        <input class="info-input" type="text" v-model="userID" placeholder="用户名">
-        </div>
-        <div>
-        <input class="info-input" type="text" v-model="userPassword" placeholder="密码">
-        </div>
-        <el-radio v-model="teacherLogin" label="false">学生</el-radio>
-        <el-radio v-model="teacherLogin" label="true">教师</el-radio>
-        <el-radio-button class="loginButton" @click.native="doLogin()">
-            登录
-        </el-radio-button>
-        <el-radio-button class="loginButton" v-on:click.native="doRegister()">
-            注册
-        </el-radio-button>
-    </el-dialog>
-    <!--
-    <el-card class="loginPosition" v-show="showRegister">
-    <div class="loginForm" v-show="showRegister">
-        <div>
-        <input class="info-input" type="text" v-model="userID" placeholder="用户名">
-        </div>
-        <div>
-        <input class="info-input" type="text" v-model="userPassword" placeholder="密码">
-        </div>
-        <el-radio v-model="teacherRegister" label="false">学生</el-radio>
-        <el-radio v-model="teacherRegister" label="true">教师</el-radio>
-        <el-radio-button class="loginButton" v-on:click.native="doRegister()">
-            注册
-        </el-radio-button>
-        <el-radio-button class="closeButton" v-on:click.native="showRegister=false">
-            关闭
-        </el-radio-button>
-    </div>
-    </el-card>-->
         <div class="logo-img" :style="backgroundL">
         </div>
         <div class="name-p">
             互动课程
         </div>
-        <div class="mainpage-div">
+        <div class="mainpage-div texiao pointer" @click="$router.push('/main')">
             主页
         </div>
-        <div class="course-button">
+        <div class="course-button texiao pointer" @click="$router.push('/course')">
             课程
         </div>
-        <div class="wordBase-button">
+        <div class="wordBase-button texiao pointer" @click="$router.push('/wordBase')">
             词库
         </div>
-        <div class="manage-button" @click="$router.push('/manage')" v-show='isLogin == true && monitor == true'>
+        <div class="manage-button texiao pointer" @click="$router.push('/manage')" v-show='isLogin == true && monitor == true'>
             管理中心
         </div>
-        <div class="search-input" :style="backgroundS">
+        <div class="manage-button texiao pointer" @click="$router.push('/manage')" v-show='isLogin == true && monitor == false'>
+            个人资料
         </div>
-        <div class="avator-img" :style="backgroundA" @click="showLogin=true">
+        <div class="search-input pointer" :style="backgroundS">
+        </div>
+        <div class="avator-img pointer" :style="backgroundA" @click="showLogin=!isLogin">
         </div>
         <el-dialog title="大国工业" :visible.sync="showLogin" @close="closePanel" :modal-append-to-body="false">
             <div>
@@ -535,5 +469,57 @@ width:38px;
 height:38px;
 background:no-repeatcentertop;
 background-size:100%100%;
+}
+.texiao{
+ filter: hue-rotate(115deg);
+}
+.texiao:hover{
+  background: #21ebff;
+  color: #111;
+  box-shadow: 0 0 50px #21ebff;
+  transition-delay: 0.5s;
+}
+
+.texiao::before{
+  content: '';
+  position: absolute;
+  top:0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  border-top:2px solid #21ebff;
+  border-left:2px solid #21ebff;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+.texiao:hover::before{
+  width: 100%;
+  height: 100%;
+  transition-delay: 0s;
+}
+.texiao::after{
+  content: '';
+  position: absolute;
+  right:0;
+  bottom: 0;
+  width: 10px;
+  height: 10px;
+  border-bottom:2px solid #21ebff;
+  border-right:2px solid #21ebff;
+  transition: 0.5s;
+  transition-delay: 0.5s;
+}
+
+.texiao:hover::after{
+  width: 100%;
+  height: 100%;
+  transition-delay: 0s;
+}
+.pointer{
+
+}
+.pointer:hover{
+      cursor:pointer;
+      /*光标呈现为指示链接的指针（一只手）*/
 }
 </style>
