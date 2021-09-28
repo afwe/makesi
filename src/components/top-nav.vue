@@ -22,30 +22,67 @@
         </div>
         <div class="search-input pointer" :style="backgroundS">
         </div>
-        <div class="avator-img pointer" :style="backgroundA" @click="showLogin=!isLogin">
+        <div class="avator-img pointer" :style="backgroundA" @click="showLogin=true">
+        
+            <div class="Dialog" v-show="showLogin===true">
+                <!--<div>
+                <input class="info-input" type="text" v-model="userID" placeholder="用户名">
+                </div>
+                <div>
+                <input class="info-input" type="text" v-model="userPassword" placeholder="密码">
+                </div>
+                <el-radio v-model="teacherLogin" label="false">学生</el-radio>
+                <el-radio v-model="teacherLogin" label="true">教师</el-radio>
+                <el-radio-button class="loginButton" @click.native="doLogin()">
+                    登录
+                </el-radio-button>
+                <el-radio-button class="loginButton" v-on:click.native="doRegister()">
+                    注册
+                </el-radio-button>-->
+                <div class="loginContainer">
+                    
+                    <div class="login-img">
+                    </div>
+                    <div class="loginContainer-div">
+                        <div class="close-button" @click="closepanel()">
+                        </div>
+                        <div class="productName-p">
+                            红育
+                        </div>
+                        <div class="productQuote-p">
+                            打通专业教育与思政教育紧密融合“最后一公里”
+                        </div>
+                        <input class="userCount-input" type="text" v-model="userID" placeholder="输入账号">
+                            <div class="count-img">
+                            </div>
+                        </input>
+                        <input class="userPassword-input"   type="text" v-model="userPassword" placeholder="输入密码">
+                            <div class="password-img">
+                            </div>
+                        </input>
+                        <el-radio v-model="teacherLogin" label="false">学生</el-radio>
+                        <el-radio v-model="teacherLogin" label="true">教师</el-radio>
+                        <button class="loginButton-button" @click="doLogin()">
+                            登录
+                        </button>
+                        <div class="register-p">
+                            还没有账号?
+                            <a href="">
+                                立即注册
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <el-dialog title="大国工业" :visible.sync="showLogin" @close="closePanel" :modal-append-to-body="false">
-            <div>
-            <input class="info-input" type="text" v-model="userID" placeholder="用户名">
-            </div>
-            <div>
-            <input class="info-input" type="text" v-model="userPassword" placeholder="密码">
-            </div>
-            <el-radio v-model="teacherLogin" label="false">学生</el-radio>
-            <el-radio v-model="teacherLogin" label="true">教师</el-radio>
-            <el-radio-button class="loginButton" @click.native="doLogin()">
-                登录
-            </el-radio-button>
-            <el-radio-button class="loginButton" v-on:click.native="doRegister()">
-                注册
-            </el-radio-button>
-        </el-dialog>
     </div>
 </template>
 <script>
 import {student_login, student_register, checkLogin_Student} from '../fetch/student_data'
 import {teacher_login, teacher_register, checkLogin_Teacher} from '../fetch/teacher_data'
-export default{
+import { loginPanel } from '../page/loginPanel.vue'
+export default {
+    components: [loginPanel],
     data(){
         return{
             backgroundL: {
@@ -98,7 +135,9 @@ export default{
     },
     methods:{
         closepanel: function(){
+            console.log(this.showLogin)
             this.showLogin = false;
+            console.log(this.showLogin)
         },
         checkLogin_Student: async function(){
             let response;
@@ -210,7 +249,7 @@ export default{
         doLogout:async function(){
             localStorage.clear();
         },
-        dropDownListener: function(type){
+        /*dropDownListener: function(type){
 
             if(type == "login"){
                 this.showLogin = true;
@@ -220,178 +259,13 @@ export default{
                 this.isLogin = false;
                 this.doLogout();
             }
-        }
+        }*/
 
     }
 }
 </script>
 
 <style scoped>
-/*.loginPosition{
-    position: fixed;
-    z-index: 1000;
-}
-.loginPosition{
-    height: 300px;
-    width: 600px;
-}*/
-/*
-.navContainer{
-    height: 117px;
-    width: 1920px;
-    display: flex;
-    flex-flow: row;
-}
-.logo-img{
-    left: 360px;
-    top: 15px;
-    width: 87px;
-    height: 87px;
-}
-.name-p{
-    left: 465px;
-    top: 24px;
-    width: 48px;
-    height: 69px;
-    color: rgba(66, 66, 66, 100);
-    font-size: 36px;
-    text-align: left;
-    font-family: SourceHanSansSC-regular;
-}
-.mainpage-div{
-    left: 753px;
-    top: 15px;
-    width: 133px;
-    height: 87px;
-    line-height: 29px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-}
-.course-button{
-    left: 893px;
-    top: 15px;
-    width: 133px;
-    height: 87px;
-    line-height: 29px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(61, 90, 254, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-}
-.wordBase-button{
-    left: 1034px;
-    top: 15px;
-    width: 133px;
-    height: 87px;
-    line-height: 29px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-}
-.search-input{
-    left: 1464px;
-    top: 41px;
-    width: 34px;
-    height: 34px;
-    background-color: rgba(66, 66, 66, 100);
-}
-.avator-img{
-    left: 1506px;
-    top: 31px;
-    width: 54px;
-    height: 54px;
-    background-color: rgba(66, 66, 66, 100);
-}*/
-/*
-.navContainer{
-    width: 1920px;
-    height: 117px;
-    display: flex;
-    flex-flow: row;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(16, 16, 16, 100);
-    font-size: 14px;
-    text-align: center;
-    font-family: Roboto;
-}
-.logo-img{
-    color: rgba(255, 5, 47, 100);
-    margin-left: 360px;
-    margin-top: 24px;
-    width: 137px;
-    height: 61px;
-    background: no-repeat center top;
-    background-size:100% 100%;
-}
-.name-p{
-    margin-top: 57px;
-    width: 222px;
-    line-height: 28px;
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: left;
-    font-family: SourceHanSansSC-light;
-}
-.mainpage-div{
-    margin-left: 34px;
-    margin-top: 15px;
-    width: 133px;
-    height: 87px;
-    line-height: 87px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-}
-.course-button{
-    margin-left: 7px;
-    margin-top: 15px;
-    width: 133px;
-    height: 87px;
-    line-height: 87px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-}
-.wordBase-button{
-    margin-left: 7px;
-    margin-top: 15px;
-    line-height: 87px;
-    width: 133px;
-    height: 87px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-}
-.search-input{
-    margin-left: 279px;
-    margin-top: 41px;
-    width: 34px;
-    height: 34px;
-    background-color: rgba(66, 66, 66, 100);
-    background: no-repeat center top;
-    background-size:100% 100%;
-}
-.avator-img{
-    margin-left: 8px;
-    margin-top: 31px;
-    width: 54px;
-    height: 54px;
-    background-color: rgba(66, 66, 66, 100);
-    background: no-repeat center top;
-    background-size:100% 100%;
-}*/
 .navContainer{margin:0 auto;
 width:1400px;
 height:85px;
@@ -463,7 +337,9 @@ width:23px;
 height:23px;
 background:no-repeatcentertop;
 background-size:100%100%;
-}.avator-img{margin-left:5px;
+}.avator-img{
+    position: relative;
+    margin-left:5px;
 margin-top:22px;
 width:38px;
 height:38px;
@@ -521,5 +397,113 @@ background-size:100%100%;
 .pointer:hover{
       cursor:pointer;
       /*光标呈现为指示链接的指针（一只手）*/
+}
+.Dialog{
+    position: absolute;
+    top: 200px;
+    left:-729px;
+}
+.loginContainer{
+    background-color: white;
+width: 918px;
+height: 524px;
+line-height: 20px;
+border-radius: 60px;
+text-align: center;
+border: 1px solid rgba(187, 187, 187, 100);
+display: flex;
+flex-flow: row;
+}
+.login-img{
+width: 560px;
+height: 420px;
+}
+.loginContainer-div{
+    display: flex;
+    flex-flow: column;
+}
+.close-button{
+    background-color: red;
+    height: 56px;
+    width: 56px;
+    margin-left: 200px;
+}
+.productName-p{
+line-height: 70px;
+color: rgba(16, 16, 16, 100);
+font-size: 48px;
+text-align: left;
+font-family: SourceHanSansSC-medium;
+}
+.productQuote-p{
+line-height: 26px;
+color: rgba(158, 158, 158, 100);
+font-size: 16px;
+text-align: left;
+font-family: SourceHanSansSC-light;
+}
+.userCount-input{
+    margin-top:44px;
+    height: 48px;
+    width: 312px;
+line-height: 20px;
+background-color: rgba(255, 255, 255, 100);
+color: rgba(189, 189, 189, 100);
+font-size: 14px;
+text-align: left;
+font-family: Roboto;
+border: 1px solid rgba(224, 224, 224, 100);
+}
+
+.count-img{
+    margin-top: 9px;
+    margin-left: 12px;
+width: 24px;
+height: 24px;
+background-color: rgba(189, 189, 189, 100);
+}
+.userPassword-input{
+    margin-top: 20px;
+    width: 312px;
+    height: 48px;
+line-height: 20px;
+background-color: rgba(255, 255, 255, 100);
+color: rgba(189, 189, 189, 100);
+font-size: 14px;
+text-align: left;
+font-family: Roboto;
+border: 1px solid rgba(224, 224, 224, 100);
+}
+.password-img{
+margin-top: 9px;
+    margin-left: 12px;
+width: 24px;
+height: 24px;
+background-color: rgba(189, 189, 189, 100);
+}
+.loginButton-button{
+margin-top: 36px;
+margin-left: 23px;
+width: 260px;
+height: 50px;
+line-height: 32px;
+border: none;
+border-radius: 40px;
+background-color: rgba(255, 5, 47, 100);
+color: white;
+font-size: 22px;
+text-align: center;
+font-family: Roboto;
+}
+.register-p{
+    margin-top: 17px;
+    line-height: 21px;
+color: rgba(158, 158, 158, 100);
+font-size: 14px;
+text-align: left;
+font-family: SourceHanSansSC-light;
+}
+.el-input__inner{
+    height: 48px;
 }
 </style>

@@ -13,6 +13,8 @@ import videoManage from '@/page/videoManage'
 import status from '@/page/status'
 import courseDetail from '@/page/courseDetail'
 import courseInfo from '@/page/courseInfo'
+import loginPanel from '@/page/loginPanel'
+import searchPanel from '@/page/searchPanel'
 Vue.use(Router)
 
 export default new Router({
@@ -75,6 +77,14 @@ export default new Router({
     {
       path: "/status",
       component: status
+    },
+    {
+      path: "/login",
+      component: loginPanel
+    },
+    {
+      path: "/search",
+      component: searchPanel
     }
   ]
 })
