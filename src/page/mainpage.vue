@@ -265,6 +265,7 @@ color:rgba(250,250,250,100);
 font-size:17px;
 text-align:center;
 font-family:Roboto;
+border: none;
 }.chossenClass-p{margin-top:43px;
 margin-left:262px;
 line-height:37px;

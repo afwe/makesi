@@ -229,8 +229,7 @@ export default {
 }
 </script>
 <style scoped>
-
-.mainContainer{margin:0auto;
+.mainContainer{margin:auto;
 width:1400px;
 height:3645px;
 margin-top:36px;

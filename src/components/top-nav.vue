@@ -20,7 +20,7 @@
         <div class="manage-button texiao pointer" @click="$router.push('/manage')" v-show='isLogin == true && monitor == false'>
             个人资料
         </div>
-        <div class="search-input pointer" :style="backgroundS" @click="showSearch=true">
+        <div class="search-input pointer" :style="backgroundS" @click="showSearch=!showSearch">
         </div>
         <div class="avator-img pointer" :style="backgroundA" @click="avatorClick">
         </div>
@@ -28,26 +28,12 @@
             <searchpanel v-show="showSearch == true">
             </searchpanel>
             <div class="Dialog" v-show="showLogin===true">
-                <!--<div>
-                <input class="info-input" type="text" v-model="userID" placeholder="用户名">
-                </div>
-                <div>
-                <input class="info-input" type="text" v-model="userPassword" placeholder="密码">
-                </div>
-                <el-radio v-model="teacherLogin" label="false">学生</el-radio>
-                <el-radio v-model="teacherLogin" label="true">教师</el-radio>
-                <el-radio-button class="loginButton" @click.native="doLogin()">
-                    登录
-                </el-radio-button>
-                <el-radio-button class="loginButton" v-on:click.native="doRegister()">
-                    注册
-                </el-radio-button>-->
                 <div class="loginContainer">
                     
                     <div class="login-img" :style="backgroundLogin">
                     </div>
                     <div class="loginContainer-div">
-                        <div class="close-button" :style="backgroundC" @click="closepanel()">
+                        <div class="close-button pointer" :style="backgroundC" @click="closepanel()">
                         </div>
                         <div class="productName-p">
                             红育
@@ -63,7 +49,7 @@
                             <el-radio v-model="teacherLogin" label="false">学生</el-radio>
                             <el-radio v-model="teacherLogin" label="true">教师</el-radio>
                         </div>
-                        <button class="loginButton-button" @click="doLogin()">
+                        <button class="loginButton-button pointer" @click="doLogin()">
                             登录
                         </button>
                         <div class="register-p">
@@ -97,21 +83,23 @@ export default {
                 backgroundImage: 'url('+require('../assets/avator.svg')+')'
             },
             backgroundLogin: {
-                backgroundImage: 'url('+require('../assets/loginBackg.png')+')'
+                backgroundImage: 'url('+require('../assets/loginBackg.png')+')',
+                backgroundRepeat:'no-repeat',
+                backgroundSize:'100% 100%'
             },
             backgroundC: {
                 backgroundImage: 'url(' + require('../assets/close.svg')+')'
             },
             backgroundU: {
                 backgroundImage: 'url('+require('../assets/user.svg')+')',
-                backgroundSize:"24px 24px",
-                backgroundPosition: '9px 12px',
+                backgroundSize:"20px 20px",
+                backgroundPosition: '7px 9px',
                 backgroundRepeat:'no-repeat'
             },
             backgroundP: {
                 backgroundImage: 'url('+require('../assets/password.svg') +')',
-                backgroundSize:"24px 24px",
-                backgroundPosition: '9px 12px',
+                backgroundSize:"20px 20px",
+                backgroundPosition: '7px 9px',
                 backgroundRepeat:'no-repeat'
             },
             teacherRegister: "false",
@@ -426,121 +414,94 @@ background-size:100%100%;
 .pointer:hover{
       cursor:pointer;
       /*光标呈现为指示链接的指针（一只手）*/
-}
-.Dialog{
-    position: absolute;
-    top: 200px;
-    left:-729px;
-}
-.loginContainer{
-    background-color: white;
-width: 918px;
-height: 524px;
-line-height: 20px;
-border-radius: 60px;
-text-align: center;
-border: 1px solid rgba(187, 187, 187, 100);
-display: flex;
-flex-flow: row;
-}
-.login-img{
-width: 560px;
-height: 420px;
-}
-.loginContainer-div{
-    display: flex;
-    flex-flow: column;
-}
-.close-button{
-    background-color: white;
-    height: 36px;
-    width: 36px;
-    margin-left: 290px;
-    margin-top: 20px;
-    background-size:100%100%;
-}
-.productName-p{
-line-height: 70px;
-color: rgba(16, 16, 16, 100);
-font-size: 48px;
-text-align: left;
-font-family: SourceHanSansSC-medium;
-}
-.productQuote-p{
-line-height: 26px;
-color: rgba(158, 158, 158, 100);
-font-size: 16px;
-text-align: left;
-font-family: SourceHanSansSC-light;
-}
-.userCount-input{
-    margin-top:44px;
-    height: 48px;
-    width: 312px;
-line-height: 20px;
-background-color: rgba(255, 255, 255, 100);
-color: rgba(189, 189, 189, 100);
-font-size: 14px;
-text-align: left;
-font-family: Roboto;
-border: 1px solid rgba(224, 224, 224, 100);
-                padding-left: 48px;
-}
-
-.count-img{
-    margin-top: 9px;
-    margin-left: 12px;
-width: 24px;
-height: 24px;
-background-color: rgba(189, 189, 189, 100);
-}
-.userPassword-input{
-    margin-top: 20px;
-    width: 312px;
-    height: 48px;
-line-height: 20px;
-background-color: rgba(255, 255, 255, 100);
-color: rgba(189, 189, 189, 100);
-font-size: 14px;
-text-align: left;
-font-family: Roboto;
-border: 1px solid rgba(224, 224, 224, 100);
-                padding-left: 48px;
-}
-.password-img{
-margin-top: 9px;
-    margin-left: 12px;
-width: 24px;
-height: 24px;
-background-color: rgba(189, 189, 189, 100);
-}
-.radioNest-div{
-    margin-top: 18px;
-    display: flex;
-    flex-flow:row;
-}
-.loginButton-button{
-margin-top: 18px;
-margin-left: 23px;
-width: 260px;
-height: 50px;
-line-height: 32px;
-border: none;
-border-radius: 40px;
-background-color: rgba(255, 5, 47, 100);
-color: white;
-font-size: 22px;
-text-align: center;
-font-family: Roboto;
-}
-.register-p{
-    margin-top: 17px;
-    margin-left: 140px;
-    line-height: 21px;
-color: rgba(158, 158, 158, 100);
-font-size: 14px;
-text-align: left;
-font-family: SourceHanSansSC-light;
+}.Dialog{position:absolute;
+margin: auto;
+    top: 85px;
+    left: -830px;
+z-index: 1001;
+}.loginContainer{background-color:white;
+width:669px;
+height:382px;
+line-height:14px;
+border-radius:43px;
+text-align:center;
+border:0pxsolidrgba(187,187,187,100);
+display:flex;
+flex-flow:row;
+}.login-img{width:408px;
+height:306px;
+}.loginContainer-div{display:flex;
+flex-flow:column;
+}.close-button{background-color:white;
+height:26px;
+width:26px;
+margin-left:211px;
+margin-top:14px;
+background-size:100%100%;
+}.productName-p{line-height:51px;
+color:rgba(16,16,16,100);
+font-size:35px;
+text-align:left;
+font-family:SourceHanSansSC-medium;
+}.productQuote-p{line-height:18px;
+color:rgba(158,158,158,100);
+font-size:11px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.userCount-input{margin-top:32px;
+height:35px;
+width:207px;
+line-height:14px;
+background-color:rgba(255,255,255,100);
+color:rgba(189,189,189,100);
+font-size:10px;
+text-align:left;
+font-family:Roboto;
+border:0pxsolidrgba(224,224,224,100);
+padding-left:35px;
+}.count-img{margin-top:6px;
+margin-left:8px;
+width:17px;
+height:17px;
+background-color:rgba(189,189,189,100);
+}.userPassword-input{margin-top:14px;
+width:207px;
+height:35px;
+line-height:14px;
+background-color:rgba(255,255,255,100);
+color:rgba(189,189,189,100);
+font-size:10px;
+text-align:left;
+font-family:Roboto;
+border:0pxsolidrgba(224,224,224,100);
+padding-left:35px;
+}.password-img{margin-top:6px;
+margin-left:8px;
+width:17px;
+height:17px;
+background-color:rgba(189,189,189,100);
+}.radioNest-div{margin-top:13px;
+display:flex;
+flex-flow:row;
+}.loginButton-button{margin-top:13px;
+margin-left:16px;
+width:189px;
+height:36px;
+line-height:23px;
+border:none;
+border-radius:29px;
+background-color:rgba(255,5,47,100);
+color:white;
+font-size:16px;
+text-align:center;
+font-family:Roboto;
+}.register-p{margin-top:12px;
+margin-left:102px;
+line-height:15px;
+color:rgba(158,158,158,100);
+font-size:10px;
+text-align:left;
+font-family:SourceHanSansSC-light;
 }
 .el-input__inner{
     height: 48px;

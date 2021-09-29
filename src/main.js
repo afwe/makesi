@@ -23,3 +23,6 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+router.afterEach(() => {
+  window.scrollTo(0,0);
+})

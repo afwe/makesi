@@ -46,86 +46,67 @@ export default {
 </script>
 <style scoped>
 .searchContainer{
-    width: 1200px;
-    height: 604px;
-    background-color: white;
-    position: absolute;
-    display: flex;
-    flex-flow: column;
-}
-.searchTitle-p{
-    margin-left: 144px;
-    margin-top: 44px;
-width: 76px;
-height: 55px;
-color: rgba(16, 16, 16, 100);
-font-size: 38px;
-text-align: left;
-font-family: SourceHanSansSC-medium;
-
-}
-.searchContainer-div{
-    margin-left: 145px;
-    margin-top: 20px;
-    display: flex;
-    flex-flow: row;
-}
-.searchInput-input{
-    width: 712px;
-height: 74px;
-border-radius: 8px;
-background-color: rgba(255, 255, 255, 100);
-color: rgba(199, 199, 204, 100);
-font-size: 18px;
-text-align: left;
-font-family: Microsoft Yahei;
-border: 1px solid rgba(199, 199, 204, 100);
-}
-.searchButton-button{
-    width: 200px;
-height: 74px;
-line-height: 20px;
-border-radius: 0px 8px 8px 0px;
-background-color: rgba(255, 5, 47, 100);
-display: flex;
-flex-flow: row;
-}
-.search-img{
-    margin-top: 20px;
-    margin-left:46px;
-    width: 34px;
-height: 34px;
-background-size: 100% 100%;
-}
-.search-p{
-    margin-left: 8px;
-    margin-top: 16px;
-    line-height: 41px;
-color: rgba(255, 255, 255, 100);
-font-size: 28px;
-text-align: left;
-font-family: SourceHanSansSC-regular;
-}
-.recWordContainer-div{
-    margin-top: 20px;
-    margin-left: 145px;
-    display: flex;
-    flex-flow: row;
-}
-.recWord-p{
-    line-height: 24px;
-    color: rgba(174, 174, 178, 100);
-    font-size: 16px;
-}   
-.recWord-p:nth-child(n+2){
-    margin-left: 15px;
-}
-.resentHot-p{
-    margin-left: 145px;
-    line-height: 35px;
-color: rgba(16, 16, 16, 100);
-font-size: 24px;
-text-align: left;
-font-family: SourceHanSansSC-regular;
+    top: 85px;
+    left: -830px;
+width:875px;
+height:440px;
+background-color:white;
+position:absolute;
+display:flex;
+flex-flow:column;
+}.searchTitle-p{margin-left:105px;
+margin-top:32px;
+width:55px;
+height:40px;
+color:rgba(16,16,16,100);
+font-size:27px;
+text-align:left;
+font-family:SourceHanSansSC-medium;
+}.searchContainer-div{margin-left:105px;
+margin-top:14px;
+display:flex;
+flex-flow:row;
+}.searchInput-input{width:519px;
+height:53px;
+border-radius:5px;
+background-color:rgba(255,255,255,100);
+color:rgba(199,199,204,100);
+font-size:13px;
+text-align:left;
+font-family:MicrosoftYahei;
+border:0pxsolidrgba(199,199,204,100);
+}.searchButton-button{width:145px;
+height:53px;
+line-height:14px;
+border-radius:0px5px5px0px;
+background-color:rgba(255,5,47,100);
+display:flex;
+flex-flow:row;
+}.search-img{margin-top:14px;
+margin-left:33px;
+width:24px;
+height:24px;
+background-size:100%100%;
+}.search-p{margin-left:5px;
+margin-top:11px;
+line-height:29px;
+color:rgba(255,255,255,100);
+font-size:20px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.recWordContainer-div{margin-top:14px;
+margin-left:105px;
+display:flex;
+flex-flow:row;
+}.recWord-p{line-height:17px;
+color:rgba(174,174,178,100);
+font-size:11px;
+}.recWord-p:nth-child(n+2){margin-left:10px;
+}.resentHot-p{margin-left:105px;
+line-height:25px;
+color:rgba(16,16,16,100);
+font-size:17px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
 }
 </style>

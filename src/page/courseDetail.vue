@@ -28,16 +28,16 @@
                 <div class="kejian-p">
                     课件
                 </div>
-                <el-collapse class="videoList">
-                    <el-collapse-item v-for="(item,cindex) in chapter" class="title">
-                        <template slot="title">
-                            第{{cindex+1}}章
-                        </template>
-                        <div v-for="(item,sindex) in chapter[cindex]" class="videoItem" @click="toVideo(item.id)">
+                <el-dropdown v-for="(item,cindex) in chapter" trigger="click" @command="handleCommand">
+                    <div class="el-dropdown-link btn send time-send small-hand collapsTitle-div pointer">
+                        第{{cindex+1}}章
+                    </div>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item class="videoItem-div pointer" v-for="(item,sindex) in chapter[cindex]" :command="item.id">
                             {{item.title}}
-                        </div>
-                    </el-collapse-item>
-                </el-collapse>
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
             </div>
         </div>
     </div>
@@ -88,6 +88,10 @@ export default {
         this.render();
     },
     methods:{
+        handleCommand(command){
+            console.log(command)
+            this.toVideo(command);
+        },
         joinCourse: async function(){
             console.log(typeof(parseInt(this.courseID)))
             let response = await join_course(parseInt(this.courseID));
@@ -160,161 +164,6 @@ export default {
 }
 </script>
 <style scoped>
-/*
-.courseFace-img{
-    left: 360px;
-    top: 168px;
-    width: 299px;
-    height: 160px;
-    border-radius: 12px;
-    background-color: rgba(250, 250, 250, 100);
-}
-.btnNest-div{
-    
-}
-.notification-div{
-    left: 675px;
-    top: 168px;
-    width: 885px;
-    height: 438px;
-    border-radius: 12px;
-}
-.videoList-div{
-    left: 675px;
-    top: 168px;
-    width: 885px;
-    height: 213px;
-    border-radius: 12px;
-    background-color: rgba(255, 255, 255, 100);
-}
-.notification-button{
-    left: 360px;
-    top: 344px;
-    width: 299px;
-    height: 56px;
-    line-height: 29px;
-    border-radius: 12px 12px 0px 0px;
-    background-color: rgba(61, 90, 254, 100);
-    color: rgba(16, 16, 16, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-}
-.videoes-button{
-    left: 359px;
-    top: 399px;
-    width: 301px;
-    height: 57px;
-    line-height: 29px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-    border: 1px solid rgba(238, 238, 238, 100);
-}
-.training-button{
-    left: 359px;
-    top: 455px;
-    width: 301px;
-    height: 57px;
-    line-height: 29px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-    border: 1px solid rgba(238, 238, 238, 100);
-}
-.test-button{
-    left: 359px;
-    top: 511px;
-    width: 301px;
-    height: 57px;
-    line-height: 29px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-    border: 1px solid rgba(238, 238, 238, 100);
-}
-.disscussion-button{
-    left: 359px;
-    top: 567px;
-    width: 301px;
-    height: 57px;
-    line-height: 29px;
-    border-radius: 0px 0px 12px 12px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-    border: 1px solid rgba(238, 238, 238, 100);
-}*/
-/*
-.mainContainer{
-    margin: auto;
-    display: flex;
-    flex-flow: row;
-}
-.selectContainer-div{
-    margin-left: 360px;
-    display: flex;
-    flex-flow: column;
-}
-.courseFace-img{
-    width: 299px;
-    height: 160px;
-    border-radius: 12px;
-    background-color: rgba(250, 250, 250, 100);
-    background-color: black;
-    border-radius: 26px 26px 0px 0px;
-    background: no-repeat center top;
-    background-size:100% 100%;
-}
-.btnNest-div{
-    display: flex;
-    flex-flow: column;
-}
-.selectButton-button{
-    width: 301px;
-    height: 57px;
-    line-height: 29px;
-    background-color: rgba(255, 255, 255, 100);
-    color: rgba(66, 66, 66, 100);
-    font-size: 20px;
-    text-align: center;
-    font-family: Roboto;
-    border: 1px solid rgba(238, 238, 238, 100);
-
-}
-.topButton{
-    border-radius: 12px 12px 0px 0px;
-}
-.buttomButton{
-    border-radius: 0px 0px 12px 12px;
-}
-.container-div{
-    margin-left: 60px;
-    display: flex;
-    flex-flow: column;
-}
-.notification-div{
-    width: 885px;
-    height: 438px;
-    border-radius: 12px;
-    background: no-repeat center top;
-    background-size:100% 100%;
-}
-.videoList-div{
-    width: 885px;
-    height: 213px;
-    border-radius: 12px;
-    background-color: rgba(255, 255, 255, 100);
-}
-*/
 button{
     outline:none;
     border:none;
@@ -336,7 +185,8 @@ button{
 }
 .videoItem{
 }
-.mainContainer{margin:auto;
+.mainContainer{
+    margin: auto;
 display:flex;
 width:1400px;
 height:3645px;
@@ -348,7 +198,6 @@ flex-flow:column;
 height:116px;
 border-radius:8px;
 background-color:rgba(250,250,250,100);
-background-color:black;
 border-radius:18px18px0px0px;
 background:no-repeatcentertop;
 background-size:100%100%;
@@ -388,5 +237,19 @@ background-color:rgba(255,255,255,100);
 .pointer:hover{
       cursor:pointer;
       /*光标呈现为指示链接的指针（一只手）*/
+}
+.collapsTitle-div{margin-top:6px;
+margin-left:10px;
+width:613px;
+height:20px;
+border-radius:3px;
+background-color:rgba(245,245,245,100);
+color:rgba(65,80,88,100);
+font-size:12px;
+text-align:center;
+font-family:MicrosoftYahei;
+}.videoItem-div{width:573px;
+line-height:20px;
+text-align:center;
 }
 </style>

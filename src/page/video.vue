@@ -21,16 +21,16 @@
                 <div class="kejian-p">
                     视频列表
                 </div>
-                <el-collapse class="videoList">
-                    <el-collapse-item v-for="(item,cindex) in chapter" class="title">
-                        <template slot="title">
-                            第{{cindex+1}}章
-                        </template>
-                        <div v-for="(item,sindex) in chapter[cindex]" class="videoItem" @click="toVideo(item.id)">
+                <el-dropdown v-for="(item,cindex) in chapter" trigger="click" @command="handleCommand">
+                    <div class="el-dropdown-link btn send time-send small-hand collapsTitle-div pointer">
+                        第{{cindex+1}}章
+                    </div>
+                    <el-dropdown-menu slot="dropdown">
+                        <el-dropdown-item class="videoItem-div pointer" v-for="(item,sindex) in chapter[cindex]" :command="item.id">
                             {{item.title}}
-                        </div>
-                    </el-collapse-item>
-                </el-collapse>
+                        </el-dropdown-item>
+                    </el-dropdown-menu>
+                </el-dropdown>
             </div>
         </div>
         <div class="funcBar-div">
@@ -127,6 +127,10 @@ export default {
         clearInterval(this.clock);
     },
     methods:{
+        handleCommand(command){
+            console.log(command)
+            this.toVideo(command);
+        },
         onPlayerEnded: function(){
             console.log('end');
             let self = this;
@@ -336,6 +340,7 @@ z-index:1005;
 }.mainContainer{display:flex;
 flex-flow:column;
 margin:auto;
+width: 1400px;
 }.title{margin-top:26px;
 margin-left:262px;
 line-height:25px;
@@ -384,5 +389,27 @@ flex-flow:column;
 height:21px;
 margin-left:10px;
 margin-top:7px;
+}
+.collapsTitle-div{margin-top:7px;
+margin-left:10px;
+width:137px;
+line-height:21px;
+border-radius:2px;
+background-color:rgba(97,97,97,100);
+color:white;
+font-size:12px;
+text-align:center;
+font-family:Roboto;
+}.videoItem-div{width:117px;
+line-height:21px;
+text-align:center;
+
+}
+.pointer{
+
+}
+.pointer:hover{
+      cursor:pointer;
+      /*光标呈现为指示链接的指针（一只手）*/
 }
 </style>
