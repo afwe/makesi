@@ -20,10 +20,13 @@
         <div class="manage-button texiao pointer" @click="$router.push('/manage')" v-show='isLogin == true && monitor == false'>
             个人资料
         </div>
-        <div class="search-input pointer" :style="backgroundS">
+        <div class="search-input pointer" :style="backgroundS" @click="showSearch=true">
         </div>
-        <div class="avator-img pointer" :style="backgroundA" @click="showLogin=true">
-        
+        <div class="avator-img pointer" :style="backgroundA" @click="avatorClick">
+        </div>
+        <div class="loginNest-div">
+            <searchpanel v-show="showSearch == true">
+            </searchpanel>
             <div class="Dialog" v-show="showLogin===true">
                 <!--<div>
                 <input class="info-input" type="text" v-model="userID" placeholder="用户名">
@@ -41,10 +44,10 @@
                 </el-radio-button>-->
                 <div class="loginContainer">
                     
-                    <div class="login-img">
+                    <div class="login-img" :style="backgroundLogin">
                     </div>
                     <div class="loginContainer-div">
-                        <div class="close-button" @click="closepanel()">
+                        <div class="close-button" :style="backgroundC" @click="closepanel()">
                         </div>
                         <div class="productName-p">
                             红育
@@ -52,16 +55,14 @@
                         <div class="productQuote-p">
                             打通专业教育与思政教育紧密融合“最后一公里”
                         </div>
-                        <input class="userCount-input" type="text" v-model="userID" placeholder="输入账号">
-                            <div class="count-img">
-                            </div>
+                        <input class="userCount-input" :style="backgroundU" type="text" v-model="userID" placeholder="输入账号">
                         </input>
-                        <input class="userPassword-input"   type="text" v-model="userPassword" placeholder="输入密码">
-                            <div class="password-img">
-                            </div>
+                        <input class="userPassword-input" :style="backgroundP"  type="text" v-model="userPassword" placeholder="输入密码">
                         </input>
-                        <el-radio v-model="teacherLogin" label="false">学生</el-radio>
-                        <el-radio v-model="teacherLogin" label="true">教师</el-radio>
+                        <div class="radioNest-div">
+                            <el-radio v-model="teacherLogin" label="false">学生</el-radio>
+                            <el-radio v-model="teacherLogin" label="true">教师</el-radio>
+                        </div>
                         <button class="loginButton-button" @click="doLogin()">
                             登录
                         </button>
@@ -78,11 +79,12 @@
     </div>
 </template>
 <script>
-import {student_login, student_register, checkLogin_Student} from '../fetch/student_data'
+import {student_login,student_register, checkLogin_Student} from '../fetch/student_data'
 import {teacher_login, teacher_register, checkLogin_Teacher} from '../fetch/teacher_data'
 import { loginPanel } from '../page/loginPanel.vue'
+import searchpanel from '../page/searchPanel.vue'
 export default {
-    components: [loginPanel],
+    components: {searchpanel},
     data(){
         return{
             backgroundL: {
@@ -94,10 +96,29 @@ export default {
             backgroundA: {
                 backgroundImage: 'url('+require('../assets/avator.svg')+')'
             },
+            backgroundLogin: {
+                backgroundImage: 'url('+require('../assets/loginBackg.png')+')'
+            },
+            backgroundC: {
+                backgroundImage: 'url(' + require('../assets/close.svg')+')'
+            },
+            backgroundU: {
+                backgroundImage: 'url('+require('../assets/user.svg')+')',
+                backgroundSize:"24px 24px",
+                backgroundPosition: '9px 12px',
+                backgroundRepeat:'no-repeat'
+            },
+            backgroundP: {
+                backgroundImage: 'url('+require('../assets/password.svg') +')',
+                backgroundSize:"24px 24px",
+                backgroundPosition: '9px 12px',
+                backgroundRepeat:'no-repeat'
+            },
             teacherRegister: "false",
             teacherLogin: "false",
             isLogin: false,
             showLogin: false,
+            showSearch: false,
             showRegister: false,
             monitor: false,
             loginMode: "login",
@@ -110,6 +131,7 @@ export default {
             userNick: "未登录",
             userMail: "",
             btnAva: true,
+            recWord:['毛泽东思想', '中国近代史纲要', '毛泽东诗集' ,'东方艺术史']
         }
     },
     mounted(){
@@ -134,6 +156,12 @@ export default {
         
     },
     methods:{
+        avatorClick(event){
+            if(this.isLogin==true){
+                this.$router.push('/userInfo');
+            }
+            else this.showLogin=true;
+        },
         closepanel: function(){
             console.log(this.showLogin)
             this.showLogin = false;
@@ -337,6 +365,7 @@ width:23px;
 height:23px;
 background:no-repeatcentertop;
 background-size:100%100%;
+position: relative;
 }.avator-img{
     position: relative;
     margin-left:5px;
@@ -423,10 +452,12 @@ height: 420px;
     flex-flow: column;
 }
 .close-button{
-    background-color: red;
-    height: 56px;
-    width: 56px;
-    margin-left: 200px;
+    background-color: white;
+    height: 36px;
+    width: 36px;
+    margin-left: 290px;
+    margin-top: 20px;
+    background-size:100%100%;
 }
 .productName-p{
 line-height: 70px;
@@ -453,6 +484,7 @@ font-size: 14px;
 text-align: left;
 font-family: Roboto;
 border: 1px solid rgba(224, 224, 224, 100);
+                padding-left: 48px;
 }
 
 .count-img{
@@ -473,6 +505,7 @@ font-size: 14px;
 text-align: left;
 font-family: Roboto;
 border: 1px solid rgba(224, 224, 224, 100);
+                padding-left: 48px;
 }
 .password-img{
 margin-top: 9px;
@@ -481,8 +514,13 @@ width: 24px;
 height: 24px;
 background-color: rgba(189, 189, 189, 100);
 }
+.radioNest-div{
+    margin-top: 18px;
+    display: flex;
+    flex-flow:row;
+}
 .loginButton-button{
-margin-top: 36px;
+margin-top: 18px;
 margin-left: 23px;
 width: 260px;
 height: 50px;
@@ -497,6 +535,7 @@ font-family: Roboto;
 }
 .register-p{
     margin-top: 17px;
+    margin-left: 140px;
     line-height: 21px;
 color: rgba(158, 158, 158, 100);
 font-size: 14px;
@@ -505,5 +544,8 @@ font-family: SourceHanSansSC-light;
 }
 .el-input__inner{
     height: 48px;
+}
+.loginNest-div{
+    position: relative;
 }
 </style>

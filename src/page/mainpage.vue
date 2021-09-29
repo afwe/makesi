@@ -143,7 +143,11 @@
 import { checkLogin_Student } from '../fetch/student_data'
 import { checkLogin_Teacher } from '../fetch/teacher_data'
 import {get_all_courses} from '../fetch/course'
+import searchpanel from '../page/searchPanel.vue'
 export default {
+    components:{
+        
+    },
     data(){
         return{
             background: {

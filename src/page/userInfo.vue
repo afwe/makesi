@@ -14,12 +14,15 @@
             </div>
         </div>
         <div class="bottomSelecter-div">
-        </div>
-        <div class="myCourse-div" v-show="showMode=='course'">
-        </div>
-        <div class="myDisscussion-div" v-show="showMode=='diss'">
-        </div>
-        <div class="achievement-div" v-show="showMode=='achi'">
+            <div class="myCourse-button" @click="showMode='course'">
+                我的课程
+            </div>
+            <div class="myDisscussion-button" @click="showMode='diss'">
+                讨论
+            </div>
+            <div class="achievement-button" @click="showMode='achi'">
+                成就
+            </div>
         </div>
     </div>
 </template>
@@ -72,71 +75,70 @@ export default {
 </script>
 <style scoped>
 .mainContainer{
-    display: flex;
-    flex-flow: column;
-}
-.topHolder-div{
-    width: 1920px;
-height: 468px;
-display: flex;
-flex-flow: row;
-}
-.avator-img{
-    margin-top: 183px;
-    margin-left: 360px;
-    width: 149px;
-height: 149px;
-border-radius: 155px;
-background-color: rgba(255, 255, 255, 100);
-}
-.infoContainer-div{
-    margin-left: 31px;
-    margin-top: 202px;
-    display: flex;
-    flex-flow: column;
-}
-.studentName-p{
-width: 84px;
-height: 41px;
-color: rgba(255, 255, 255, 100);
-font-size: 28px;
-text-align: left;
-font-family: SourceHanSansSC-medium;
-}
-.quote-p{
-width: 96px;
-height: 24px;
-color: rgba(255, 255, 255, 86);
-font-size: 16px;
-text-align: left;
-font-family: SourceHanSansSC-light;
-}
-.foucus-p{
-width: 179px;
-height: 29px;
-color: rgba(255, 255, 255, 100);
-font-size: 20px;
-text-align: left;
-font-family: SourceHanSansSC-regular;
-}
-.bottomSelecter-div{
-left: 0px;
-top: 468px;
-width: 1920px;
-height: 100px;
-line-height: 20px;
-color: rgba(16, 16, 16, 100);
-font-size: 14px;
-text-align: center;
-font-family: Roboto;
-}
-.myCourse-div{
-
-}
-.myDisscussion-div{
-
-}
-.achievement-div{
-
+    width:1400px;
+    margin:auto;
+display:flex;
+flex-flow:column;
+}.topHolder-div{width:1400px;
+height:341px;
+display:flex;
+flex-flow:row;
+background-color:#FF4846;
+}.avator-img{margin-top:133px;
+margin-left:262px;
+width:108px;
+height:108px;
+border-radius:113px;
+background-color:rgba(255,255,255,100);
+}.infoContainer-div{margin-left:22px;
+margin-top:147px;
+display:flex;
+flex-flow:column;
+}.studentName-p{width:61px;
+height:29px;
+color:rgba(255,255,255,100);
+font-size:20px;
+text-align:left;
+font-family:SourceHanSansSC-medium;
+}.quote-p{width:70px;
+height:17px;
+color:rgba(255,255,255,86);
+font-size:11px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.foucus-p{width:130px;
+height:21px;
+color:rgba(255,255,255,100);
+font-size:14px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.bottomSelecter-div{width:1400px;
+height:72px;
+line-height:14px;
+color:rgba(16,16,16,100);
+font-size:10px;
+text-align:center;
+font-family:Roboto;
+display:flex;
+flex-flow:row;
+}.myCourse-button{margin-left:531px;
+width:112px;
+line-height:72px;
+color:rgba(255,5,47,100);
+font-size:14px;
+text-align:center;
+font-family:MicrosoftYahei;
+}.myDisscussion-button{line-height:72px;
+width:112px;
+color:rgba(255,5,47,100);
+font-size:14px;
+text-align:center;
+font-family:MicrosoftYahei;
+}.achievement-button{line-height:72px;
+width:112px;
+color:rgba(255,5,47,100);
+font-size:14px;
+text-align:center;
+font-family:MicrosoftYahei;
 }
 </style>

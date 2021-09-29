@@ -15,6 +15,7 @@ import courseDetail from '@/page/courseDetail'
 import courseInfo from '@/page/courseInfo'
 import loginPanel from '@/page/loginPanel'
 import searchPanel from '@/page/searchPanel'
+import userInfo from '@/page/userInfo'
 Vue.use(Router)
 
 export default new Router({
@@ -85,6 +86,10 @@ export default new Router({
     {
       path: "/search",
       component: searchPanel
+    },
+    {
+      path: '/userInfo',
+      component: userInfo
     }
   ]
 })
