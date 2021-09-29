@@ -6,9 +6,9 @@
         <div class="videoPanContainer-div">
             <div class="input_video">
                 <div class="mask" v-show="showMask==true">
-                        <div class="layerNest">
+                    <div class="btnNest">
                         <div class='btnLayer'></div>
-                        </div>
+                    </div>
                 </div>
                 <video-player  class="video-player vjs-custom-skin"
                             ref="videoPlayer"
@@ -136,42 +136,53 @@ export default {
             let self = this;
             console.log(self.treeData);
             if(self.treeData.children != undefined && self.treeData.children.length!=0){
-                self.treeData.children.forEach(element => {
-                    let newButton = document.createElement("button");
-                    newButton.className = 'choice';
-                    newButton.style.background="rgba(255, 0, 0, 0.5)";
-                    newButton.style.color="yellow";
-                    newButton.style.height="50px";
-                    newButton.style.width="200px";
-                    newButton.innerText = element.name;
-                    newButton.data = element;
-                    newButton.onclick = function(){
-                        logPick({
-                            courseId: self.courseID,
-                            videoId: this.data.videoID,
-                        }).then(data => {
-                            console.log('!');
-                            console.log(data);
-                        })
-                        self.treeData = this.data;
-                        
-                        self.playerOptions['sources'][0]['src'] = self.treeData.url;
-                        self.$refs.videoPlayer.player.reset();
-                        console.log(self.playerOptions['sources'][0]['src']);
-                        self.showMask = false;
-                        self.$refs.videoPlayer.player.play();
-                        let btnArray = Array.from(document.getElementsByClassName('choice'));
-                        console.log(btnArray);
-                        btnArray.forEach(
-                            btn => {
-                                document.querySelector('.btnLayer').removeChild(btn);
-                            }
-                        )
-                    };
-                    document.querySelector('.btnLayer').appendChild(newButton);
+
+                if(self.treeData.children.length==1&&self.treeData.children[0].name=='skip'){
+                    console.log("sk");
+                    self.treeData=self.treeData.children[0];
+                    self.playerOptions['sources'][0]['src'] = self.treeData.url;
+                    console.log(self.playerOptions['sources'][0]['src'])
+                    self.$refs.videoPlayer.player.play();
                 }
-            );
-            self.showMask = true;
+                else{
+                    self.treeData.children.forEach(element => {
+                        let newButton = document.createElement("button");
+                        newButton.className = 'choice';
+                        newButton.style.background="rgba(255, 0, 0, 0.5)";
+                        newButton.style.color="yellow";
+                        newButton.style.height="50px";
+                        newButton.style.width="250px";
+                        newButton.style.fontSize="15px";
+                        newButton.style.lineHeight="25px";
+                        newButton.innerText = element.name;
+                        newButton.data = element;
+                        newButton.onclick = function(){
+                            logPick({
+                                courseId: self.courseID,
+                                videoId: this.data.videoID,
+                            }).then(data => {
+                                console.log('!');
+                                console.log(data);
+                            })
+                            self.treeData = this.data;
+                            self.showMask = false;
+                            self.playerOptions['sources'][0]['src'] = self.treeData.url;
+                            console.log(self.playerOptions['sources'][0]['src'])
+                            self.$refs.videoPlayer.player.play();
+                            let btnArray = Array.from(document.getElementsByClassName('choice'));
+                            console.log(btnArray);
+                            btnArray.forEach(
+                                btn => {
+                                    document.querySelector('.btnLayer').removeChild(btn);
+                                }
+                            )
+                        };
+                        document.querySelector('.btnLayer').appendChild(newButton);
+                    })
+                    self.showMask = true;
+                }
+            
+            
             } else{
                 this.$message({
                     message:'已完成视频观看',
@@ -404,6 +415,20 @@ font-family:Roboto;
 line-height:21px;
 text-align:center;
 
+}
+.btnLayer{
+    display: flex;
+    flex-flow: column;
+    align-items:center;
+    justify-content: end;
+    
+}
+.btnNest{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: column;
+    justify-content: end;
 }
 .pointer{
 

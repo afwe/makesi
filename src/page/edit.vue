@@ -7,8 +7,17 @@
                 <el-option v-for="item in partList" :key="item.id" :label="item.name" :value="item.videoId">
                 </el-option>
             </el-select>
+            <el-button @click="selectedNode.name='skip'">跳过选项</el-button>
             <el-button @click="addNode()">添加子节点</el-button>
             <el-button @click="deleteNode()">删除节点</el-button>
+            <el-button @click="showAdd=true">结尾导向</el-button>
+        </el-dialog>
+        <el-dialog title="编辑节点" :visible.sync="showAdd" @close="closeAdd" :modal-append-to-body="false">
+            <el-input v-model="reqName" placeholder="选项名称">
+            </el-input>
+            <el-button @click="addElementByName">
+                添加
+            </el-button>
         </el-dialog>
         <div id="tree" :style="{width: '1700px', height: '800px'}">
         </div>
@@ -28,10 +37,12 @@ import {updateTreeByID, getTreeByID} from '../fetch/coreTree';
 export default {
     data(){
         return{
+            reqName: '',
             chapterID: 1,
             sessionID: 1,
             showVideoSelect: false,
             showVideoList: false,
+            showAdd: false,
             courseID: 3,
             showPanel: false,
             totNode: 1,
@@ -50,6 +61,23 @@ export default {
         }
     },
     methods:{
+        extendDeep(parent, child) {
+            child = child || {};
+            for(var i in parent) {
+                if(parent.hasOwnProperty(i)) {
+                if(typeof parent[i] === "object") {
+                child[i] = (Object.prototype.toString.call(parent[i]) === "[object Array]") ? [] : {};
+                this.extendDeep(parent[i], child[i]);
+                } else {
+                child[i] = parent[i];
+                }
+                }
+            }
+            return child;
+        },
+        closeAdd(){
+            this.showAdd=false;
+        },
         connectEdge(node){
             let self = this;
             this.getVideoByID(node.videoID).then(url =>{
@@ -271,6 +299,41 @@ export default {
                 })
             }
             console.log(ans);
+            return ans;
+        },
+        idSelfAdd(root){
+            root.id=this.totNode;
+            this.totNode++;
+            if(root.children!=undefined&&root.children.length!=0){
+                root.children.forEach( element => {
+                    this.idSelfAdd(element);
+                })
+            }
+        },
+        addElementByName(){
+            let element = this.getNodeByName(this.treeData);
+            let newElement = {};
+            console.log(element);
+            this.extendDeep(element, newElement);
+            this.idSelfAdd(newElement);
+            if(this.selectedNode.children == undefined) this.selectedNode.children = [];
+            this.selectedNode.children.push(newElement);
+            console.log(this.selectedNode);
+            this.setMyCharts();
+        },
+        getNodeByName: function(root){
+            let ans;
+            if(root.name == this.reqName) {
+                return root;
+            }
+            else{
+                if(root.children != undefined && root.children.length != 0){
+                    root.children.forEach(next => {
+                        let node = this.getNodeByName(next);
+                        if(node != undefined) ans = node;
+                    });
+                }
+            }
             return ans;
         },
         getNodeByID: function(root){
