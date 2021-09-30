@@ -137,7 +137,7 @@ export default {
             console.log(self.treeData);
             if(self.treeData.children != undefined && self.treeData.children.length!=0){
 
-                if(self.treeData.children.length==1&&self.treeData.children[0].name=='skip'){
+                if(self.treeData.children.length==1&&self.treeData.children[0].name.substr(0,4)=='skip'){
                     console.log("sk");
                     self.treeData=self.treeData.children[0];
                     self.playerOptions['sources'][0]['src'] = self.treeData.url;

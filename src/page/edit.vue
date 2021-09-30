@@ -7,7 +7,7 @@
                 <el-option v-for="item in partList" :key="item.id" :label="item.name" :value="item.videoId">
                 </el-option>
             </el-select>
-            <el-button @click="selectedNode.name='skip'">跳过选项</el-button>
+            <el-button @click="selectedNode.name=`skip${selectedNode.id}`">跳过选项</el-button>
             <el-button @click="addNode()">添加子节点</el-button>
             <el-button @click="deleteNode()">删除节点</el-button>
             <el-button @click="showAdd=true">结尾导向</el-button>
@@ -37,6 +37,7 @@ import {updateTreeByID, getTreeByID} from '../fetch/coreTree';
 export default {
     data(){
         return{
+            isDone: true,
             reqName: '',
             chapterID: 1,
             sessionID: 1,
@@ -249,9 +250,10 @@ export default {
             
         },
         uploadTree: async function(){
+            if(this.isDone==false) return;
+            this.isDone=false;
             this.edge = [];
             this.convertGraph(this.treeData, this.treeData);
-            this.buildTreeData();
             if(this.edge.length == 0){
                 this.edge.push({
                     fatherID: 0,
@@ -274,6 +276,7 @@ export default {
                     message:"上传结构成功"
                 })
             };
+            this.isDone=true;
         },
         closePanel: function(){
             this.showPanel = false;
@@ -361,6 +364,8 @@ export default {
             this.setMyCharts();
         },
         addNode: function(){
+            if(this.isDone==false) return;
+            this.isDone=false;
             let node = this.getNodeByID(this.treeData);
             let newID = this.totNode;
             this.totNode++;
@@ -379,6 +384,7 @@ export default {
                 })
             }
             this.setMyCharts();
+            this.isDone=true;
         },
         deleteNode: function(){
             let node = this.getFatherNode(this.treeData);
