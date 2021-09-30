@@ -17,6 +17,9 @@
         <div class="manage-button texiao pointer" @click="$router.push('/manage')" v-show='isLogin == true && monitor == true'>
             管理中心
         </div>
+        <div class="manage-button texiao pointer" @click="doLogout()" v-show='isLogin==true'>
+            登出
+        </div>
         <div class="manage-button texiao pointer" @click="$router.push('/manage')" v-show='isLogin == true && monitor == false'>
             个人资料
         </div>
@@ -144,6 +147,11 @@ export default {
         
     },
     methods:{
+        doLogout(){
+            console.log('1');
+            localStorage.clear();
+            window.location.reload();
+        },
         avatorClick(event){
             if(this.isLogin==true){
                 this.$router.push('/userInfo');
@@ -261,9 +269,6 @@ export default {
             }
             
             this.btnAva=true;
-        },
-        doLogout:async function(){
-            localStorage.clear();
         },
         /*dropDownListener: function(type){
 
