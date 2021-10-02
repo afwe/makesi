@@ -1,18 +1,19 @@
 <template>
-    <div class="mainContainer">
-        <div class="topHolder-div">
-            <div class="avator-img">
+<div class="pageContainer">
+    <div class="topHolder-div">
+        <div class="avator-img">
+        </div>
+        <div class="infoContainer-div">
+            <div class="studentName-p">
             </div>
-            <div class="infoContainer-div">
-                <div class="studentName-p">
-                </div>
-                <div class="quote-p">
-                </div>
-                <div class="foucus-p">
-                    关注 0 人|粉丝 0 人
-                </div>
+            <div class="quote-p">
+            </div>
+            <div class="foucus-p">
+                关注 0 人|粉丝 0 人
             </div>
         </div>
+    </div>
+    <div class="mainContainer">
         <div class="bottomSelecter-div">
             <div class="myCourse-button" @click="showMode='course'">
                 我的课程
@@ -25,6 +26,7 @@
             </div>
         </div>
     </div>
+</div>
 </template>
 <script>
 import { defineComponent } from '@vue/composition-api'
@@ -77,9 +79,10 @@ export default {
 .mainContainer{
     width:1400px;
     margin:auto;
+    height: 2000px;
 display:flex;
 flex-flow:column;
-}.topHolder-div{width:1400px;
+}.topHolder-div{width:100%;
 height:341px;
 display:flex;
 flex-flow:row;

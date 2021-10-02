@@ -14,7 +14,7 @@ export default {
 .mainContainer{margin:0 auto;
 left:0px;
 top:3353px;
-width:1400px;
+width:100%;
 height:291px;
 line-height:37px;
 background-color:rgba(60,61,66,100);

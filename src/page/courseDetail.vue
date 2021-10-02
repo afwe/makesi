@@ -187,9 +187,11 @@ button{
 }
 .mainContainer{
     margin: auto;
+    margin-top:85px;
 display:flex;
 width:1400px;
 height:3645px;
+min-height: 2000px;
 flex-flow:row;
 }.selectContainer-div{margin-left:262px;
 display:flex;

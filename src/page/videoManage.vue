@@ -170,5 +170,7 @@ export default{
 }
 </script>
 <style scoped>
-
+.mainContainer{
+    margin-top:85px;
+}
 </style>

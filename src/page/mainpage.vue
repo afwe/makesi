@@ -1,5 +1,5 @@
 <template>
-<div class="mainContainer">
+<div class="pageContainer">
     <div class="mainPic-img">
         <div class="proLog-p">
             打通专业教育与思政教育紧密融合“最后一公里”
@@ -9,13 +9,12 @@
         </button>
     </div>
 
-
+<div class="mainContainer">
     <div class="chossenClass-p">
         精选课程
     </div>
 
     <div class="classContainer-div">
-    
         <div class="classDiv-div1 pointer">
             <div class="faceImg-img" :style="background">
             </div>
@@ -135,7 +134,7 @@
     
     <div class="judgeContainer-div">
     </div>
-
+</div>
 
 </div>
 </template>
@@ -230,8 +229,9 @@ export default {
 <style scoped>
 .mainContainer{position:flex;
 width:1400px;
-height:3645px;
-line-height:13px;
+height:3644px;
+min-height: 2000px;
+line-height:12px;
 background-color:rgba(242,242,247,100);
 text-align:center;
 margin:auto;
@@ -240,224 +240,193 @@ flex-flow:column;
 align-items:center;
 left:0px;
 top:0px;
-width:1400px;
-height:582px;
-line-height:13px;
+width:100%;
+height:581px;
+line-height:12px;
 background-color:rgba(0,0,0,0.49);
 color:rgba(16,16,16,100);
-font-size:10px;
+font-size:9px;
 text-align:center;
 font-family:Roboto;
-}.proLog-p{margin-left:100px;
-margin-top:200px;
-line-height:37px;
+}.proLog-p{margin-left:99px;
+margin-top:199px;
+line-height:36px;
 color:rgba(255,255,255,100);
-font-size:37px;
+font-size:36px;
 text-align:left;
 font-family:SourceHanSansSC-light;
-}.start-button{margin-top:41px;
-width:223px;
-height:62px;
-line-height:25px;
-border-radius:43px;
+}.start-button{margin-top:40px;
+width:222px;
+height:61px;
+line-height:24px;
+border-radius:42px;
 background-color:rgba(255,23,68,100);
 color:rgba(250,250,250,100);
-font-size:17px;
+font-size:16px;
 text-align:center;
 font-family:Roboto;
-border: none;
-}.chossenClass-p{margin-top:43px;
-margin-left:262px;
-line-height:37px;
+border:none;
+}.chossenClass-p{margin-top:42px;
+margin-left:261px;
+line-height:36px;
 width:105px;
-font-size:26px;
+font-size:25px;
 text-align:center;
 color:rgba(16,16,16,100);
-}.classContainer-div{margin-top:23px;
-margin-left:262px;
+}.classContainer-div{margin-top:22px;
+margin-left:261px;
 display:flex;
 flex-flow:row;
-}.classDiv-div1{width:202px;
-height:232px;
+}.classDiv-div1{width:201px;
+height:231px;
 display:flex;
 flex-flow:column;
-border-radius:18px;
+border-radius:17px;
 background-color:#ffffff;
-}.faceImg-img{width:202px;
-height:115px;
-background-color:black;
-border-radius:20px 20px 0px 0px;
-background:no-repeat center top;
+}.faceImg-img{width:201px;
+height:114px;
+border-radius:19px 19px 0px 0px;
+background:no-repeatcentertop;
 background-size:100% 100%;
-}.className-p{margin-left:8px;
-margin-top:8px;
-font-size:11px;
-line-height:17px;
+}.className-p{margin-left:7px;
+margin-top:7px;
+font-size:10px;
+line-height:16px;
 color:rgba(16,16,16,100);
 text-align:left;
-}.schoolName-p{margin-left:8px;
-line-height:12px;
+}.schoolName-p{margin-left:7px;
+line-height:11px;
 color:rgba(142,142,147,100);
-font-size:8px;
-text-align:left;
-font-family:Source HanSansSC-light;
-}.joins-p{margin-left:8px;
-margin-top:33px;
-line-height:15px;
-color:rgba(199,199,204,100);
-font-size:10px;
-text-align:left;
-font-family:Source HanSansSC-light;
-}.into-p{margin-left:8px;
-line-height:15px;
-color:rgba(97,97,97,100);
-font-size:10px;
-text-align:left;
-font-family:SourceHanSansSC-regular;
-}.classDiv-div2{margin-left:20px;
-width:202px;
-height:232px;
-display:flex;
-flex-flow:column;
-border-radius:18px;
-background-color:#ffffff;
-}.classDiv-div3{margin-left:20px;
-width:202px;
-height:232px;
-display:flex;
-flex-flow:column;
-border-radius:18px;
-background-color:#ffffff;
-}.classDiv-div4{margin-left:20px;
-width:202px;
-height:232px;
-display:flex;
-flex-flow:column;
-border-radius:18px;
-background-color:#ffffff;
-}.classRanking-p{margin-top:43px;
-margin-left:262px;
-line-height:37px;
-color:rgba(16,16,16,100);
-font-size:26px;
+font-size:7px;
 text-align:left;
 font-family:SourceHanSansSC-light;
-}.rankingContainer-div{margin-top:26px;
-margin-left:262px;
+}.joins-p{margin-left:7px;
+margin-top:32px;
+line-height:14px;
+color:rgba(199,199,204,100);
+font-size:9px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.into-p{margin-left:7px;
+line-height:14px;
+color:rgba(97,97,97,100);
+font-size:9px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.classDiv-div2{margin-left:19px;
+width:201px;
+height:231px;
+display:flex;
+flex-flow:column;
+border-radius:17px;
+background-color:#ffffff;
+}.classDiv-div3{margin-left:19px;
+width:201px;
+height:231px;
+display:flex;
+flex-flow:column;
+border-radius:17px;
+background-color:#ffffff;
+}.classDiv-div4{margin-left:19px;
+width:201px;
+height:231px;
+display:flex;
+flex-flow:column;
+border-radius:17px;
+background-color:#ffffff;
+}.classRanking-p{margin-top:42px;
+margin-left:261px;
+line-height:36px;
+color:rgba(16,16,16,100);
+font-size:25px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}.rankingContainer-div{margin-top:25px;
+margin-left:261px;
 display:flex;
 flex-flow:row;
 }.ranking-div1{display:flex;
 flex-flow:column;
-width:277px;
-height:353px;
-border-radius:18px;
+width:276px;
+height:352px;
+border-radius:17px;
 background-color:#ffffff;
 }.ranking-div2{display:flex;
 flex-flow:column;
-margin-left:18px;
-width:277px;
-height:353px;
-border-radius:18px;
+margin-left:17px;
+width:276px;
+height:352px;
+border-radius:17px;
 background-color:#ffffff;
 }.ranking-div3{display:flex;
 flex-flow:column;
-margin-left:18px;
-width:277px;
-height:353px;
-border-radius:18px;
+margin-left:17px;
+width:276px;
+height:352px;
+border-radius:17px;
 background-color:#ffffff;
-}.rankingTitle-div{line-height:36px;
-}
-.classRankingCard-div{
-    margin-top: 5px;
-    height: 65px;
-    display: flex;
-    flex-flow: row;
-}
-.courseRanking-p{
-    text-align: center;
-    margin-left: 10px;
-    line-height: 40px;
-}
-.rankingFace-img{
-    margin-left: 7px;
-    width: 120px;
-    height: 65px;
-    background:no-repeat center top;
-    background-size:100% 100%;
-}
-.infoContainer-div{
-    height: 65px;
-    margin-left: 8px;
-}
-.courseTitle-p{
-    margin-top: 12px;
-}
-.classJudge-p{margin-top:43px;
-margin-left:262px;
-line-height:37px;
+}.rankingTitle-div{line-height:35px;
+}.classRankingCard-div{margin-top:4px;
+height:64px;
+display:flex;
+flex-flow:row;
+}.courseRanking-p{text-align:center;
+margin-left:9px;
+line-height:39px;
+}.rankingFace-img{margin-left:6px;
+width:119px;
+height:64px;
+background:no-repeatcentertop;
+background-size:100% 100%;
+}.infoContainer-div{height:64px;
+margin-left:7px;
+}.courseTitle-p{margin-top:11px;
+}.classJudge-p{margin-top:42px;
+margin-left:261px;
+line-height:36px;
 color:rgba(16,16,16,100);
-font-size:26px;
+font-size:25px;
 text-align:left;
 font-family:SourceHanSansSC-light;
-}.judgeContainer-div{margin-top:26px;
-margin-left:262px;
+}.judgeContainer-div{margin-top:25px;
+margin-left:261px;
 width:875px;
-height:363px;
-line-height:13px;
-border-radius:18px;
+height:362px;
+line-height:12px;
+border-radius:17px;
 text-align:center;
 background-color:#ffffff;
-}.texiao{
- filter: hue-rotate(115deg);
-}
-.texiao:hover{
-  background: #21ebff;
-  color: #111;
-  box-shadow: 0 0 50px #21ebff;
-  transition-delay: 0.5s;
-}
-
-.texiao::before{
-  content: '';
-  position: absolute;
-  top:0;
-  left: 0;
-  width: 10px;
-  height: 10px;
-  border-top:2px solid #21ebff;
-  border-left:2px solid #21ebff;
-  transition: 0.5s;
-  transition-delay: 0.5s;
-}
-.texiao:hover::before{
-  width: 100%;
-  height: 100%;
-  transition-delay: 0s;
-}
-.texiao::after{
-  content: '';
-  position: absolute;
-  right:0;
-  bottom: 0;
-  width: 10px;
-  height: 10px;
-  border-bottom:2px solid #21ebff;
-  border-right:2px solid #21ebff;
-  transition: 0.5s;
-  transition-delay: 0.5s;
-}
-
-.texiao:hover::after{
-  width: 100%;
-  height: 100%;
-  transition-delay: 0s;
-}
-.pointer{
-
-}
-.pointer:hover{
-      cursor:pointer;
-      /*光标呈现为指示链接的指针（一只手）*/
-}
+}.texiao{filter:hue-rotate(115deg);
+}.texiao:hover{background:#21ebff;
+color:#111;
+box-shadow:49px#21ebff;
+transition-delay:0.5s;
+}.texiao::before{content:'';
+position:absolute;
+top:0;
+left:0;
+width:9px;
+height:9px;
+border-top:1px solid#21ebff;
+border-left:1px solid#21ebff;
+transition:0.5s;
+transition-delay:0.5s;
+}.texiao:hover::before{width:100%;
+height:100%;
+transition-delay:0s;
+}.texiao::after{content:'';
+position:absolute;
+right:0;
+bottom:0;
+width:9px;
+height:9px;
+border-bottom:1px solid#21ebff;
+border-right:1px solid#21ebff;
+transition:0.5s;
+transition-delay:0.5s;
+}.texiao:hover::after{width:100%;
+height:100%;
+transition-delay:0s;
+}.pointer{}.pointer:hover{cursor:pointer;
+/*光标呈现为指示链接的指针（一只手）*/}
 </style>

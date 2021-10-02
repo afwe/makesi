@@ -1,8 +1,8 @@
 <template>
-    <div class='navContainer'>
+    <div class='navContainer' :style="navBackGroundColor">
         <div class="logo-img" :style="backgroundL">
         </div>
-        <div class="name-p">
+        <div class="name-p" :style="navBackGroundColor">
             互动课程
         </div>
         <div class="mainpage-div texiao pointer" @click="$router.push('/main')">
@@ -17,16 +17,19 @@
         <div class="manage-button texiao pointer" @click="$router.push('/manage')" v-show='isLogin == true && monitor == true'>
             管理中心
         </div>
-        <div class="manage-button texiao pointer" @click="doLogout()" v-show='isLogin==true'>
-            登出
-        </div>
-        <div class="manage-button texiao pointer" @click="$router.push('/manage')" v-show='isLogin == true && monitor == false'>
-            个人资料
-        </div>
         <div class="search-input pointer" :style="backgroundS" @click="showSearch=!showSearch">
         </div>
-        <div class="avator-img pointer" :style="backgroundA" @click="avatorClick">
-        </div>
+
+        <el-dropdown trigger="click" @command="handleCommand">
+            <div class="avator-img pointer" :style="backgroundA">
+            </div>
+            <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item class="videoItem-div pointer" v-for="(item,index) in avatorOptions" :command="item.title">
+                    {{item.title}}
+                </el-dropdown-item>
+            </el-dropdown-menu>
+        </el-dropdown>
+
         <div class="loginNest-div">
             <searchpanel v-show="showSearch == true">
             </searchpanel>
@@ -48,10 +51,6 @@
                         </input>
                         <input class="userPassword-input" :style="backgroundP"  type="text" v-model="userPassword" placeholder="输入密码">
                         </input>
-                        <div class="radioNest-div">
-                            <el-radio v-model="teacherLogin" label="false">学生</el-radio>
-                            <el-radio v-model="teacherLogin" label="true">教师</el-radio>
-                        </div>
                         <button class="loginButton-button pointer" @click="doLogin()">
                             登录
                         </button>
@@ -105,6 +104,44 @@ export default {
                 backgroundPosition: '7px 9px',
                 backgroundRepeat:'no-repeat'
             },
+            navBackGroundColor: {
+                backgroundColor: 'rgba(255,255,255,0)'
+            },
+            backgroundColorMode:{
+                main:{
+                    backgroundColor: 'rgba(255,255,255,0)',
+                    color:'white',
+                },
+                userInfo:{
+                    backgroundColor: 'rgba(0, 0, 0, 0.1);',
+                    color:'white'
+                },
+                common:{
+                    backgroundColor: 'rgba(255,255,255,100)',
+                    color: 'black'
+                }
+            },
+            avatorOptions:[
+                {
+                    title: '登录',
+                }
+            ],
+            studentOptions:[
+                {
+                    title: '登出',
+                },
+                {
+                    title: '个人主页',
+                }
+            ],
+            teacherOptions: [
+                {
+                    title: '登出',
+                },
+                {
+                    title: '管理中心',
+                }
+            ],
             teacherRegister: "false",
             teacherLogin: "false",
             isLogin: false,
@@ -122,17 +159,49 @@ export default {
             userNick: "未登录",
             userMail: "",
             btnAva: true,
-            recWord:['毛泽东思想', '中国近代史纲要', '毛泽东诗集' ,'东方艺术史']
+            recWord:['毛泽东思想', '中国近代史纲要', '毛泽东诗集' ,'东方艺术史'],
+            colorMode:'main'
         }
     },
+    watch:{
+        $route(to,from){
+            let nowPath=to.path;
+            nowPath=nowPath.substr(1,nowPath.length-1);
+            console.log(nowPath);
+            switch(nowPath){
+                case 'main': 
+                    this.colorMode='main'
+                    break;
+
+                case 'userInfo': 
+                    this.colorMode ='userInfo'
+                    break;
+
+                default: 
+                    this.colorMode = 'common'
+                    console.log("?")
+            }
+            this.navBackGroundColor = this.backgroundColorMode[this.colorMode]
+        }
+    },
+    
     mounted(){
+        this.navBackGroundColor = this.backgroundColorMode['main'];
+        window.addEventListener('scroll', this.positionWatcher, true);
         localStorage.setItem("Login", false);
         localStorage.setItem("monitor", false);
+        let self=this;
         this.checkLogin_Teacher().then(
             (flag) => {
             if(flag){
                 localStorage.setItem("Login", true);
                 localStorage.setItem("monitor", false);
+                if(self.isLogin==true){
+                    self.avatorOptions.length=0;
+                    console.log("]]")
+                    console.log(self.avatorOptions.length);
+                    self.avatorOptions=self.teacherOptions;
+                }
             }
         }).then(()=>{
         if(!this.isLogin){
@@ -141,14 +210,46 @@ export default {
                     if(flag){
                         localStorage.setItem("Login", true);
                         localStorage.setItem("monitor", false);
+                        if(self.isLogin==true){
+                            self.avatorOptions.slice(0, self.avatorOptions.length);
+                            console.log(self.avatorOptions.length);
+                            self.avatorOptions=self.studentOptions;
+                        }
                     }
             })
         }});
         
     },
     methods:{
+        handleCommand(command){
+            switch(command){
+                case '登录':
+                    this.showLogin=true;
+                    break;
+                case '登出':
+                    this.doLogout();
+                    break;
+                case '个人主页':
+                    this.$router.push('/userInfo');
+                    break;
+                case '管理中心':
+                    this.$router.push('/manage');
+                    break;
+                default: 
+                    break;
+            }
+        },
+        positionWatcher(e){
+            let top = document.documentElement.scrollTop || document.body.scrollTop;
+            console.log(top);
+            if(top>581){
+                this.navBackGroundColor = this.backgroundColorMode['common'];
+            } else{
+                this.navBackGroundColor = this.backgroundColorMode[this.colorMode];
+                console.log(this.colorMode);
+            }
+        },
         doLogout(){
-            console.log('1');
             localStorage.clear();
             window.location.reload();
         },
@@ -208,6 +309,7 @@ export default {
                         type:"success"
                     });
                     this.showLogin = false;
+                    window.location.reload();
                 }
                 else{
                     this.$message({
@@ -225,6 +327,7 @@ export default {
                         type:"success"
                     });
                     this.showLogin = false;
+                    window.location.reload();
                 }
                 else{
                     this.$message({
@@ -287,18 +390,20 @@ export default {
 </script>
 
 <style scoped>
-.navContainer{margin:0 auto;
-width:1400px;
+.navContainer{
+    z-index: 1001;
+    top:0;
+    position: fixed;
+width:100%;
 height:85px;
 display:flex;
 flex-flow:row;
 background-color:rgba(255,255,255,100);
-color:rgba(16,16,16,100);
 font-size:10px;
 text-align:center;
 font-family:Roboto;
 }.logo-img{color:rgba(255,5,47,100);
-margin-left:262px;
+margin-left:360px;
 margin-top:17px;
 width:98px;
 height:43px;
@@ -307,7 +412,6 @@ background-size:100%100%;
 }.name-p{margin-top:41px;
 width:161px;
 line-height:20px;
-color:rgba(66,66,66,100);
 font-size:13px;
 text-align:left;
 font-family:SourceHanSansSC-light;
@@ -316,8 +420,6 @@ margin-top:10px;
 width:96px;
 height:62px;
 line-height:62px;
-background-color:rgba(255,255,255,100);
-color:rgba(66,66,66,100);
 font-size:13px;
 text-align:center;
 font-family:Roboto;
@@ -326,8 +428,6 @@ margin-top:10px;
 width:96px;
 height:62px;
 line-height:62px;
-background-color:rgba(255,255,255,100);
-color:rgba(66,66,66,100);
 font-size:13px;
 text-align:center;
 font-family:Roboto;
@@ -336,8 +436,6 @@ margin-top:10px;
 line-height:62px;
 width:96px;
 height:62px;
-background-color:rgba(255,255,255,100);
-color:rgba(66,66,66,100);
 font-size:13px;
 text-align:center;
 font-family:Roboto;
@@ -346,8 +444,6 @@ margin-top:10px;
 line-height:62px;
 width:96px;
 height:62px;
-background-color:rgba(255,255,255,100);
-color:rgba(66,66,66,100);
 font-size:13px;
 text-align:center;
 font-family:Roboto;
@@ -433,15 +529,17 @@ text-align:center;
 border:0pxsolidrgba(187,187,187,100);
 display:flex;
 flex-flow:row;
-}.login-img{width:408px;
+}.login-img{width:360px;
 height:306px;
+margin-top:37px;
+margin-left:22px;
 }.loginContainer-div{display:flex;
 flex-flow:column;
 }.close-button{background-color:white;
 height:26px;
 width:26px;
-margin-left:211px;
-margin-top:14px;
+margin-left:231px;
+margin-top:26px;
 background-size:100%100%;
 }.productName-p{line-height:51px;
 color:rgba(16,16,16,100);
@@ -453,7 +551,8 @@ color:rgba(158,158,158,100);
 font-size:11px;
 text-align:left;
 font-family:SourceHanSansSC-light;
-}.userCount-input{margin-top:32px;
+}.userCount-input{
+    margin-top:32px;
 height:35px;
 width:207px;
 line-height:14px;
@@ -462,7 +561,7 @@ color:rgba(189,189,189,100);
 font-size:10px;
 text-align:left;
 font-family:Roboto;
-border:0pxsolidrgba(224,224,224,100);
+border:0px solid rgba(224,224,224,100);
 padding-left:35px;
 }.count-img{margin-top:6px;
 margin-left:8px;
@@ -478,7 +577,7 @@ color:rgba(189,189,189,100);
 font-size:10px;
 text-align:left;
 font-family:Roboto;
-border:0pxsolidrgba(224,224,224,100);
+border:0px solid rgba(224,224,224,100);
 padding-left:35px;
 }.password-img{margin-top:6px;
 margin-left:8px;

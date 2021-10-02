@@ -489,6 +489,7 @@ export default {
 .mainContainer{
     display: flex;
     flex-flow: column;
+    margin-top:85px;
 }
 #pathContainer{
     margin-top: 200px;

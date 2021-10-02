@@ -109,8 +109,10 @@ export default{
 </script>
 <style scoped>
 .mainContainer{margin: auto;
+margin-top:85px;
 width:1400px;
 height:3645px;
+min-height: 2000px;
 display:flex;
 flex-flow:column;
 }.classInfo-div{width:1400px;
