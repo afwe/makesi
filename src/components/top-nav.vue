@@ -1,5 +1,7 @@
 <template>
     <div class='navContainer' :style="navBackGroundColor">
+        <div class="mask" v-show="showMask">
+        </div>
         <div class="logo-img" :style="backgroundL">
         </div>
         <div class="name-p" :style="navBackGroundColor">
@@ -13,9 +15,6 @@
         </div>
         <div class="wordBase-button texiao pointer" @click="$router.push('/wordBase')">
             词库
-        </div>
-        <div class="manage-button texiao pointer" @click="$router.push('/manage')" v-show='isLogin == true && monitor == true'>
-            管理中心
         </div>
         <div class="search-input pointer" :style="backgroundS" @click="showSearch=!showSearch">
         </div>
@@ -160,7 +159,8 @@ export default {
             userMail: "",
             btnAva: true,
             recWord:['毛泽东思想', '中国近代史纲要', '毛泽东诗集' ,'东方艺术史'],
-            colorMode:'main'
+            colorMode:'main',
+            showMask: false
         }
     },
     watch:{
@@ -224,6 +224,8 @@ export default {
         handleCommand(command){
             switch(command){
                 case '登录':
+                    this.$emit('showM');
+                    this.showMask=true;
                     this.showLogin=true;
                     break;
                 case '登出':
@@ -262,6 +264,8 @@ export default {
         closepanel: function(){
             console.log(this.showLogin)
             this.showLogin = false;
+            this.showMask=false;
+            this.$emit('hideM');
             console.log(this.showLogin)
         },
         checkLogin_Student: async function(){
@@ -372,24 +376,19 @@ export default {
             }
             
             this.btnAva=true;
-        },
-        /*dropDownListener: function(type){
-
-            if(type == "login"){
-                this.showLogin = true;
-            }else if(type == "register"){
-                this.showRegister = true;
-            }else if(type == "logout"){
-                this.isLogin = false;
-                this.doLogout();
-            }
-        }*/
-
+        }
     }
 }
 </script>
 
 <style scoped>
+.mask{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0,0,0,0.2);
+    position: absolute;
+    z-index: 1002;
+}
 .navContainer{
     z-index: 1001;
     top:0;
@@ -401,9 +400,9 @@ flex-flow:row;
 background-color:rgba(255,255,255,100);
 font-size:10px;
 text-align:center;
-font-family:Roboto;
+font-family:'Roboto';
 }.logo-img{color:rgba(255,5,47,100);
-margin-left:360px;
+margin-left:25%;
 margin-top:17px;
 width:98px;
 height:43px;
@@ -414,7 +413,7 @@ width:161px;
 line-height:20px;
 font-size:13px;
 text-align:left;
-font-family:SourceHanSansSC-light;
+font-family:'SourceHanSansSC-light';
 }.mainpage-div{margin-left:23px;
 margin-top:10px;
 width:96px;
@@ -422,7 +421,7 @@ height:62px;
 line-height:62px;
 font-size:13px;
 text-align:center;
-font-family:Roboto;
+font-family:'Roboto';
 }.course-button{margin-left:5px;
 margin-top:10px;
 width:96px;
@@ -430,7 +429,7 @@ height:62px;
 line-height:62px;
 font-size:13px;
 text-align:center;
-font-family:Roboto;
+font-family:'Roboto';
 }.wordBase-button{margin-left:5px;
 margin-top:10px;
 line-height:62px;
@@ -438,7 +437,7 @@ width:96px;
 height:62px;
 font-size:13px;
 text-align:center;
-font-family:Roboto;
+font-family:'Roboto';
 }.manage-button{margin-left:5px;
 margin-top:10px;
 line-height:62px;
@@ -446,7 +445,7 @@ width:96px;
 height:62px;
 font-size:13px;
 text-align:center;
-font-family:Roboto;
+font-family:'Roboto';
 }
 .search-input{margin-left:202px;
 margin-top:28px;
@@ -516,19 +515,19 @@ background-size:100%100%;
       cursor:pointer;
       /*光标呈现为指示链接的指针（一只手）*/
 }.Dialog{position:absolute;
-margin: auto;
-    top: 85px;
-    left: -830px;
-z-index: 1001;
+ left:calc(50% - 335px); 
+ top:calc(300%);
+z-index: 10001;
 }.loginContainer{background-color:white;
 width:669px;
 height:382px;
 line-height:14px;
 border-radius:43px;
 text-align:center;
-border:0pxsolidrgba(187,187,187,100);
+border:0 px solid rgba(187,187,187,100);
 display:flex;
 flex-flow:row;
+z-index: 10001;
 }.login-img{width:360px;
 height:306px;
 margin-top:37px;
@@ -576,7 +575,7 @@ background-color:rgba(255,255,255,100);
 color:rgba(189,189,189,100);
 font-size:10px;
 text-align:left;
-font-family:Roboto;
+font-family:'Roboto';
 border:0px solid rgba(224,224,224,100);
 padding-left:35px;
 }.password-img{margin-top:6px;
@@ -611,6 +610,5 @@ font-family:SourceHanSansSC-light;
     height: 48px;
 }
 .loginNest-div{
-    position: relative;
 }
 </style>

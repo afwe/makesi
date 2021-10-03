@@ -1,7 +1,9 @@
 <template>
 <div class="pageContainer">
-    <div class="mainPic-img">
-        <div class="proLog-p">
+    <div class="mainPic-img" :style="mainBackground">
+        <div class="mainImgMask-div">
+        </div>
+        <div class="proLog-p" >
             打通专业教育与思政教育紧密融合“最后一公里”
         </div>
         <button @click="toCourseList()" class="start-button pointer">
@@ -181,18 +183,10 @@ export default {
             pagesize: 4,
             currentPage: 1,
             totCourse: 2,
-            carousels: [
-                {
-                    url: require('../assets/cr1.jpg'),
-                    alt: 'test',
-                    title: 'test'
-                },
-                {
-                    url: require('../assets/cr2.jpg'),
-                    alt: 'test1',
-                    title: 'test1'
-                }
-            ]
+            mainBackground: {
+                backgroundImage: 'url('+require('../assets/banner.png')+')',
+                backgroundSize:"100% 100%"
+            }
         }
     },
     mounted(){
@@ -235,7 +229,9 @@ line-height:12px;
 background-color:rgba(242,242,247,100);
 text-align:center;
 margin:auto;
-}.mainPic-img{display:flex;
+}.mainPic-img{
+    position: relative;
+    display:flex;
 flex-flow:column;
 align-items:center;
 left:0px;
@@ -247,20 +243,30 @@ background-color:rgba(0,0,0,0.49);
 color:rgba(16,16,16,100);
 font-size:9px;
 text-align:center;
-font-family:Roboto;
-}.proLog-p{margin-left:99px;
+font-family:'Roboto';
+}
+.mainImgMask-div{
+    position: absolute;
+    background-color: rgba(0,0,0,0.49);;
+    height: 100%;
+    width: 100%;
+}.proLog-p{
+    z-index: 100;
+    margin-left:99px;
 margin-top:199px;
 line-height:36px;
 color:rgba(255,255,255,100);
 font-size:36px;
 text-align:left;
-font-family:SourceHanSansSC-light;
-}.start-button{margin-top:40px;
+font-family:'SourceHanSansSC-light';
+}.start-button{
+    z-index: 100;
+    margin-top:40px;
 width:222px;
 height:61px;
 line-height:24px;
 border-radius:42px;
-background-color:rgba(255,23,68,100);
+background-image: linear-gradient(to right, #ff2631, #ff6557);
 color:rgba(250,250,250,100);
 font-size:16px;
 text-align:center;

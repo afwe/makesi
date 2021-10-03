@@ -1,6 +1,11 @@
 <template>
   <div id="app">
-  <topNav ref="topNav"/>
+    <div class="wholeMask" v-show="showMask==true">
+    </div>
+  <topNav ref="topNav"
+    @hideM="hideM"
+    @showM="showM"
+  />
   <router-view />
   <pageFoot ref="pageFoot"/>
   </div>
@@ -15,6 +20,19 @@ export default {
   components:{
     topNav,
     pageFoot
+  },
+  data(){
+    return{
+      showMask: false,
+    }
+  },
+  methods:{
+    showM(){
+      this.showMask=true;
+    },
+    hideM(){
+      this.showMask=false;
+    }
   }
 }
 </script>
@@ -27,5 +45,12 @@ export default {
   text-align: center;
   color: #2c3e50;
   background-color: rgba(242, 242, 247, 100);
+}
+.wholeMask{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  z-index: 1001;
+  background-color: rgb(0,0,0,0.5);
 }
 </style>

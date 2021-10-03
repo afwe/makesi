@@ -1,6 +1,6 @@
 <template>
 <div class="pageContainer">
-    <div class="topHolder-div">
+    <div class="topHolder-div" :style="userBackground">
         <div class="avator-img">
         </div>
         <div class="infoContainer-div">
@@ -41,6 +41,10 @@ export default {
             major:'',
             telephone:'',
             mail:'',
+            userBackground:{
+                backgroundImage: 'url('+require('../assets/userInfo.png')+')',
+                backgroundSize: "100% 100%" 
+            }
         }
     },
     methods:{
@@ -86,7 +90,6 @@ flex-flow:column;
 height:341px;
 display:flex;
 flex-flow:row;
-background-color:#FF4846;
 }.avator-img{margin-top:133px;
 margin-left:262px;
 width:108px;

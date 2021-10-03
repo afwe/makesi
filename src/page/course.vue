@@ -233,7 +233,6 @@ export default {
 margin-top:85px;
 width:1400px;
 height:3645px;
-margin-top:36px;
 display:flex;
 flex-flow:column;
 min-height: 2000px;
