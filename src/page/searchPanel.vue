@@ -46,8 +46,10 @@ export default {
 </script>
 <style scoped>
 .searchContainer{
-    top: 85px;
-    left: -830px;
+    position:absolute;
+ left:calc(50% - 437px); 
+ top:calc(100%);
+z-index: 10001;
 width:875px;
 height:440px;
 background-color:white;
@@ -74,7 +76,7 @@ color:rgba(199,199,204,100);
 font-size:13px;
 text-align:left;
 font-family:MicrosoftYahei;
-border:0pxsolidrgba(199,199,204,100);
+border:0px solid rgba(199,199,204,100);
 }.searchButton-button{width:145px;
 height:53px;
 line-height:14px;

@@ -143,7 +143,7 @@ export default {
                 }
             ],
             teacherRegister: "false",
-            teacherLogin: "true",
+            teacherLogin: "false",
             isLogin: false,
             showLogin: false,
             showSearch: false,

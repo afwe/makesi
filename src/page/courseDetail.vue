@@ -1,5 +1,7 @@
 <template>
     <div class="mainContainer">
+        <breadCrumb>
+        </breadCrumb>
         <div class="selectContainer-div">
             <div class="courseFace-img" :style="background">
             </div>
@@ -45,7 +47,11 @@
 <script>
 import { join_course , get_course_by_id} from '../fetch/course'
 import { getVideoListByCourseID } from '../fetch/video'
+import breadCrumb from '../components/breadCrumb.vue'
 export default {
+    components:{
+        breadCrumb
+    },
     data(){
         return{
             backgroundN: {

@@ -1,5 +1,8 @@
 <template>
     <div class="mainContainer">
+        <span style="color:red;font-size:20px;">
+            注意:根节点名称不可更改
+        </span>
         <el-dialog title="编辑节点" :visible.sync="showPanel" @close="closePanel" :modal-append-to-body="false">
             <el-input v-model="selectedNode.name" placeholder="选项名称"></el-input>
             <el-select v-model="selectedNode.videoID" >
@@ -141,7 +144,7 @@ export default {
                         symbol: 'emptyCircle',
                         symbolSize: 4,
                         expandAndCollapse: true,//默认：true；子树折叠和展开的交互，默认打开 。
-                        initialTreeDepth: 6,//默认：2，树图初始展开的层级（深度）。根节点是第 0 层，然后是第 1 层、第 2 层，... ，直到叶子节点
+                        initialTreeDepth: 20,//默认：2，树图初始展开的层级（深度）。根节点是第 0 层，然后是第 1 层、第 2 层，... ，直到叶子节点
                         throttle:100, //设置触发视图刷新的频率。单位为毫秒（ms）。
                         zoomOnMouseWheel:true, //如何触发缩放。可选值为：true：表示不按任何功能键，鼠标滚轮能触发缩放。false：表示鼠标滚轮不能触发缩放。'shift'：表示按住 shift 和鼠标滚轮能触发缩放。'ctrl'：表示按住 ctrl 和鼠标滚轮能触发缩放。'alt'：表示按住 alt 和鼠标滚轮能触发缩放。
                         moveOnMouseMove:true, //如何触发数据窗口平移。true：表示不按任何功能键，鼠标移动能触发数据窗口平移。false：表示鼠标滚轮不能触发缩放。'shift'：表示按住 shift 和鼠标移动能触发数据窗口平移。'ctrl'：表示按住 ctrl 和鼠标移动能触发数据窗口平移。'alt'：表示按住 alt 和鼠标移动能触发数据窗口平移。
@@ -426,7 +429,7 @@ export default {
                         bottom: '10%',
                         symbol: 'circle',
                         expandAndCollapse: true,//默认：true；子树折叠和展开的交互，默认打开 。
-                        initialTreeDepth:2,//默认：2，树图初始展开的层级（深度）。根节点是第 0 层，然后是第 1 层、第 2 层，... ，直到叶子节点
+                        initialTreeDepth:20,//默认：2，树图初始展开的层级（深度）。根节点是第 0 层，然后是第 1 层、第 2 层，... ，直到叶子节点
                         symbolSize: 100,
                         label: {
                             normal: {

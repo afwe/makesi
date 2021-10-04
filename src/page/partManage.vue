@@ -22,7 +22,7 @@
 import upload from './uploadtest2.vue';
 import {getPartListByCourseID, deletePartByID} from '../fetch/video';
 export default{
-components:{
+    components:{
         upload
     },
     data(){
