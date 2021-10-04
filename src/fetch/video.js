@@ -10,3 +10,4 @@ export const getuploadsignature = () => fetch('api/secret_key', 'POST', '');
 
 export const deleteVideoByID = (data) => fetch(`api/courses/delete/`, "POST", data);
 
+export const deletePartByID = (data) => fetch(`api/courses/delete/${data.partId}`,"POST","");

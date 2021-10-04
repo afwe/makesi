@@ -7,13 +7,13 @@
         <div class="name-p" :style="navBackGroundColor">
             互动课程
         </div>
-        <div class="mainpage-div texiao pointer" @click="$router.push('/main')">
+        <div class="mainpage-div texiao pointer" @click="$router.push('/main');selectedBlock='main'" :class="{selectedColor: selectedBlock=='main'}">
             主页
         </div>
-        <div class="course-button texiao pointer" @click="$router.push('/course')">
+        <div class="course-button texiao pointer" @click="$router.push('/course');selectedBlock='course'" :class="{selectedColor: selectedBlock=='course'}">
             课程
         </div>
-        <div class="wordBase-button texiao pointer" @click="$router.push('/wordBase')">
+        <div class="wordBase-button texiao pointer" @click="$router.push('/wordBase');selectedBlock='word'" :class="{selectedColor: selectedBlock=='word'}">
             词库
         </div>
         <div class="search-input pointer" :style="backgroundS" @click="showSearch=!showSearch">
@@ -74,6 +74,7 @@ export default {
     components: {searchpanel},
     data(){
         return{
+            selectedBlock: 'main',
             backgroundL: {
                 backgroundImage: 'url('+require('../assets/logo1.png')+')'
             },
@@ -142,7 +143,7 @@ export default {
                 }
             ],
             teacherRegister: "false",
-            teacherLogin: "false",
+            teacherLogin: "true",
             isLogin: false,
             showLogin: false,
             showSearch: false,
@@ -243,12 +244,10 @@ export default {
         },
         positionWatcher(e){
             let top = document.documentElement.scrollTop || document.body.scrollTop;
-            console.log(top);
             if(top>581){
                 this.navBackGroundColor = this.backgroundColorMode['common'];
             } else{
                 this.navBackGroundColor = this.backgroundColorMode[this.colorMode];
-                console.log(this.colorMode);
             }
         },
         doLogout(){
@@ -382,6 +381,9 @@ export default {
 </script>
 
 <style scoped>
+.selectedColor{
+    color:#ff6456;
+}
 .mask{
     width: 100%;
     height: 100%;
@@ -400,7 +402,7 @@ flex-flow:row;
 background-color:rgba(255,255,255,100);
 font-size:10px;
 text-align:center;
-font-family:'Roboto';
+font-family:Roboto;
 }.logo-img{color:rgba(255,5,47,100);
 margin-left:25%;
 margin-top:17px;
@@ -413,7 +415,7 @@ width:161px;
 line-height:20px;
 font-size:13px;
 text-align:left;
-font-family:'SourceHanSansSC-light';
+font-family:SourceHanSansSC-light;
 }.mainpage-div{margin-left:23px;
 margin-top:10px;
 width:96px;
@@ -421,7 +423,7 @@ height:62px;
 line-height:62px;
 font-size:13px;
 text-align:center;
-font-family:'Roboto';
+font-family:Roboto;
 }.course-button{margin-left:5px;
 margin-top:10px;
 width:96px;
@@ -429,7 +431,7 @@ height:62px;
 line-height:62px;
 font-size:13px;
 text-align:center;
-font-family:'Roboto';
+font-family:Roboto;
 }.wordBase-button{margin-left:5px;
 margin-top:10px;
 line-height:62px;
@@ -437,7 +439,7 @@ width:96px;
 height:62px;
 font-size:13px;
 text-align:center;
-font-family:'Roboto';
+font-family:Roboto;
 }.manage-button{margin-left:5px;
 margin-top:10px;
 line-height:62px;
@@ -445,7 +447,7 @@ width:96px;
 height:62px;
 font-size:13px;
 text-align:center;
-font-family:'Roboto';
+font-family:Roboto;
 }
 .search-input{margin-left:202px;
 margin-top:28px;
@@ -516,7 +518,7 @@ background-size:100%100%;
       /*光标呈现为指示链接的指针（一只手）*/
 }.Dialog{position:absolute;
  left:calc(50% - 335px); 
- top:calc(300%);
+ top:calc(200%);
 z-index: 10001;
 }.loginContainer{background-color:white;
 width:669px;
@@ -575,7 +577,7 @@ background-color:rgba(255,255,255,100);
 color:rgba(189,189,189,100);
 font-size:10px;
 text-align:left;
-font-family:'Roboto';
+font-family:Roboto;
 border:0px solid rgba(224,224,224,100);
 padding-left:35px;
 }.password-img{margin-top:6px;

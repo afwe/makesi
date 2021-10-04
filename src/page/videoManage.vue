@@ -30,8 +30,8 @@
     <el-button class="createCourse" @click="showCreate=true">
         创建视频
     </el-button>
-    <el-button class="createCourse" @click="showUpload=!showUpload">
-        上传视频
+    <el-button class="createCourse" @click="$router.push('/partManage')">
+        视频片段管理
     </el-button>
     <el-table :data="videoes" stripe border>
         <el-table-column  type="index"></el-table-column>

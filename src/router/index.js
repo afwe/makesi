@@ -10,6 +10,7 @@ import editPage from '@/page/edit'
 import uploadtest from '@/page/uploadtest'
 import courseManage from '@/page/courseManage'
 import videoManage from '@/page/videoManage'
+import partManage from '@/page/partManage'
 import status from '@/page/status'
 import courseDetail from '@/page/courseDetail'
 import courseInfo from '@/page/courseInfo'
@@ -37,6 +38,10 @@ export default new Router({
     {
       path: '/courseInfo',
       component: courseInfo
+    },
+    {
+      path:'/partManage',
+      component: partManage
     },
     {
       path: '/courseDetail',

@@ -243,7 +243,7 @@ background-color:rgba(0,0,0,0.49);
 color:rgba(16,16,16,100);
 font-size:9px;
 text-align:center;
-font-family:'Roboto';
+font-family:Roboto;
 }
 .mainImgMask-div{
     position: absolute;
@@ -258,7 +258,7 @@ line-height:36px;
 color:rgba(255,255,255,100);
 font-size:36px;
 text-align:left;
-font-family:'SourceHanSansSC-light';
+font-family:SourceHanSansSC-light;
 }.start-button{
     z-index: 100;
     margin-top:40px;
