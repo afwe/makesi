@@ -91,7 +91,7 @@ height:341px;
 display:flex;
 flex-flow:row;
 }.avator-img{margin-top:133px;
-margin-left:262px;
+margin-left:calc(50% - 442px);
 width:108px;
 height:108px;
 border-radius:113px;

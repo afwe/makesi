@@ -4,16 +4,16 @@
         </div>
         <div class="logo-img" :style="backgroundL">
         </div>
-        <div class="name-p" :style="navBackGroundColor">
+        <div class="name-p" :style="navBackGroundColor,titleColor">
             互动课程
         </div>
-        <div class="mainpage-div texiao pointer" @click="$router.push('/main');selectedBlock='main'" :class="{selectedColor: selectedBlock=='main'}">
-            主页
+        <div class="mainpage-div texiao pointer" @click="$router.push('/main');selectedBlock='main'"  :class="{ 'selectedColorMain': selectedBlock=='main'&&colorMode=='main','selectedColor': selectedBlock=='main'}" :style="navFontColor">
+            <span id="mainpage" :style="mainpageDivColor">主页</span>
         </div>
-        <div class="course-button texiao pointer" @click="$router.push('/course');selectedBlock='course'" :class="{selectedColor: selectedBlock=='course'}">
+        <div class="course-button texiao pointer" @click="$router.push('/course');selectedBlock='course'" :class="{ 'selectedColorMain': selectedBlock=='course'&&colorMode=='main', 'selectedColor': selectedBlock=='course'}" :style="navFontColor">
             课程
         </div>
-        <div class="wordBase-button texiao pointer" @click="$router.push('/wordBase');selectedBlock='word'" :class="{selectedColor: selectedBlock=='word'}">
+        <div class="wordBase-button texiao pointer" @click="$router.push('/wordBase');selectedBlock='word'" :class="{ 'selectedColorMain': selectedBlock=='word'&&colorMode=='main', 'selectedColor': selectedBlock=='word'}" :style="navFontColor">
             词库
         </div>
         <div class="search-input pointer" :style="backgroundS" @click="showSearch=!showSearch">
@@ -107,17 +107,56 @@ export default {
             navBackGroundColor: {
                 backgroundColor: 'rgba(255,255,255,0)'
             },
-            backgroundColorMode:{
+            navFontColor:{
+                color:'rgb(255,255,255,0.7)',
+            },
+            titleColor:{
+                color:'white'
+            },
+            mainpageDivColor:{
+                color:'white'
+            },
+            mainpageDivColorMode:{
                 main:{
-                    backgroundColor: 'rgba(255,255,255,0)',
-                    color:'white',
+                    color: 'white',
                 },
                 userInfo:{
-                    backgroundColor: 'rgba(0, 0, 0, 0.1);',
                     color:'white'
                 },
                 common:{
+                    color: 'black',
+                }
+            },
+            backgroundColorMode: {
+                main:{
+                    backgroundColor: 'rgba(255,255,255,0)',
+                },
+                userInfo:{
+                    backgroundColor: 'rgba(0, 0, 0, 0.1);',
+                },
+                common:{
                     backgroundColor: 'rgba(255,255,255,100)',
+                }
+            },
+            fontColorMode:{
+                main:{
+                    color:'rgb(255,255,255,0.7)',
+                },
+                userInfo:{
+                    color:'white'
+                },
+                common:{
+                    color: 'black'
+                }
+            },
+            titleColorMode:{
+                main: {
+                    color:'white'
+                },
+                userInfo: {
+                    color: 'white'
+                },
+                common: {
                     color: 'black'
                 }
             },
@@ -183,6 +222,10 @@ export default {
                     console.log("?")
             }
             this.navBackGroundColor = this.backgroundColorMode[this.colorMode]
+            console.log()
+            this.navFontColor = this.fontColorMode[this.colorMode]
+            this.titleColor = this.titleColorMode[this.colorMode]
+            this.mainpageDivColor = this.mainpageDivColorMode[this.colorMode]
         }
     },
     
@@ -246,8 +289,17 @@ export default {
             let top = document.documentElement.scrollTop || document.body.scrollTop;
             if(top>581){
                 this.navBackGroundColor = this.backgroundColorMode['common'];
+                this.navFontColor = this.fontColorMode['common'];
+                this.titleColor = this.titleColorMode['common'];
+                this.mainpageDivColor = this.mainpageDivColorMode['common'];
+                if(this.selectedBlock=='main'){
+                    this.mainpageDivColor = { color : "red"};
+                }
             } else{
                 this.navBackGroundColor = this.backgroundColorMode[this.colorMode];
+                this.navFontColor = this.fontColorMode[this.colorMode];
+                this.titleColor = this.titleColorMode[this.colorMode];
+                this.mainpageDivColor = this.mainpageDivColorMode[this.colorMode];
             }
         },
         doLogout(){
@@ -382,7 +434,12 @@ export default {
 
 <style scoped>
 .selectedColor{
-    color:#ff6456;
+    color:red !important;
+    font-weight:800 !important;
+}
+.selectedColorMain{
+    color:white;
+    font-weight: 800 !important;
 }
 .mask{
     width: 100%;
@@ -399,16 +456,14 @@ width:100%;
 height:85px;
 display:flex;
 flex-flow:row;
-background-color:rgba(255,255,255,100);
 font-size:10px;
 text-align:center;
 font-family:Roboto;
 }.logo-img{color:rgba(255,5,47,100);
-margin-left:25%;
+margin-left:calc(50% - 450px);
 margin-top:17px;
 width:98px;
 height:43px;
-background:no-repeatcentertop;
 background-size:100%100%;
 }.name-p{margin-top:41px;
 width:161px;
@@ -449,7 +504,7 @@ font-size:13px;
 text-align:center;
 font-family:Roboto;
 }
-.search-input{margin-left:202px;
+.search-input{margin-left:235px;
 margin-top:28px;
 width:23px;
 height:23px;
@@ -466,14 +521,13 @@ background:no-repeatcentertop;
 background-size:100%100%;
 }
 .texiao{
- filter: hue-rotate(115deg);
+ filter: hue-rotate(0deg);
 }
-.texiao:hover{
-  background: #21ebff;
-  color: #111;
-  box-shadow: 0 0 50px #21ebff;
+/*.texiao:hover{
+  background: #ff5d52;
+  box-shadow: 0 0 50px #ff5d52;
   transition-delay: 0.5s;
-}
+}*/
 
 .texiao::before{
   content: '';
@@ -482,8 +536,8 @@ background-size:100%100%;
   left: 0;
   width: 10px;
   height: 10px;
-  border-top:2px solid #21ebff;
-  border-left:2px solid #21ebff;
+  border-top:2px solid #ff5d52;
+  border-left:2px solid #ff5d52;
   transition: 0.5s;
   transition-delay: 0.5s;
 }
@@ -499,8 +553,8 @@ background-size:100%100%;
   bottom: 0;
   width: 10px;
   height: 10px;
-  border-bottom:2px solid #21ebff;
-  border-right:2px solid #21ebff;
+  border-bottom:2px solid #ff5d52;
+  border-right:2px solid #ff5d52;
   transition: 0.5s;
   transition-delay: 0.5s;
 }
