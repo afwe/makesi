@@ -16,6 +16,12 @@
 import topNav from './components/top-nav';
 import pageFoot from './components/page-foot.vue'
 export default {
+  provide(){
+    return{
+      hideM:this.hideM,
+      showM:this.showM
+    }
+  },
   name: 'App',
   components:{
     topNav,

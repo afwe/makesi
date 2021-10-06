@@ -236,7 +236,9 @@ height:3645px;
 display:flex;
 flex-flow:column;
 min-height: 2000px;
-}.crusol-div{margin-left:262px;
+}.crusol-div{
+    margin-top: 40px;
+    margin-left:262px;
 width:875px;
 height:291px;
 }.class-classify{margin-left:262px;
@@ -266,7 +268,9 @@ color:rgba(16,16,16,100);
 font-size:20px;
 text-align:left;
 font-family:SourceHanSansSC-regular;
-}.classifyButton-button{height:38px;
+}.classifyButton-button{
+    border: none;
+    height:38px;
 margin-left:20px;
 margin-top:15px;
 min-width:107px;

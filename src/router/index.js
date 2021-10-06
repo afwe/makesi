@@ -29,15 +29,17 @@ export default new Router({
     {
       path: '/main',
       component: mainpage,
-
+      meta: { title: '首页' }
     },
     {
       path: '/course',
       component: course,
+      meta: { title: '课程' }
     },
     {
       path: '/courseInfo',
-      component: courseInfo
+      component: courseInfo,
+      meta: { title: '课程概况' }
     },
     {
       path:'/partManage',
@@ -45,7 +47,8 @@ export default new Router({
     },
     {
       path: '/courseDetail',
-      component: courseDetail
+      component: courseDetail,
+      meta: { title: '课程详情' }
     },
     {
       path: '/manage',

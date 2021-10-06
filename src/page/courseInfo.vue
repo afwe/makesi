@@ -1,5 +1,7 @@
 <template>
 <div class="mainContainer">
+    <breadCrumb class="bread-div">
+    </breadCrumb>
     <div class="classInfo-div">
         <div class="classFace-img" :style="background">
         </div>
@@ -14,11 +16,14 @@
                 {{courseIntro}}
             </div>
             <div class="buttonNest-div">
-                <div class="join-button pointer" @click="joinCourse()">
+                <!--<div class="join-button pointer" @click="joinCourse()">
                     立即参加
                 </div>
                 <div class="jump-button pointer" @click="toCourseDetail(courseID)">
                     进入课程
+                </div>-->
+                <div class="join-button pointer" @click="toCourseDetail(courseID)">
+                    立即参加
                 </div>
             </div>
             
@@ -42,8 +47,12 @@
 </div>
 </template>
 <script>
+import breadCrumb from '../components/breadCrumb.vue'
 import { join_course , get_course_by_id} from '../fetch/course'
 export default{
+    components:{
+        breadCrumb
+    },
     data(){
         return{
             background: {
@@ -108,6 +117,10 @@ export default{
 }
 </script>
 <style scoped>
+.bread-div{
+    margin-top: 12px;
+    margin-left: 262px;
+}
 .mainContainer{margin: auto;
 margin-top:85px;
 width:1400px;
@@ -155,7 +168,7 @@ font-family:SourceHanSansSC-regular;
 width:140px;
 line-height:35px;
 border-radius:35px;
-background-color:rgba(61,90,254,100);
+background-color:red;
 color:rgba(255,255,255,100);
 font-size:13px;
 text-align:center;

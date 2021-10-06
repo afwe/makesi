@@ -3,6 +3,8 @@
         <div class="searchTitle-p">
             搜索
         </div>
+        <div class="close-button pointer" :style="backgroundC" @click="$emit('closeP')">
+        </div>
         <div class="searchContainer-div">
             <input class="searchInput-input" placeholder="请输入想要搜索的内容">
             </input>
@@ -27,9 +29,13 @@
 </template>
 <script>
 export default {
+    inject: ['hideM'],
     name: 'searchPanel',
     data(){
         return{
+            backgroundC: {
+                backgroundImage: 'url(' + require('../assets/close.svg')+')'
+            },
             backgroundS:{
                 backgroundImage: "url("+require('../assets/mb-search.svg')+')'
             },
@@ -45,6 +51,14 @@ export default {
 }
 </script>
 <style scoped>
+.close-button{background-color:white;
+height:26px;
+width:26px;
+position: absolute;
+top: 10px;
+left:839px;
+background-size:100% 100%;
+}
 .searchContainer{
     position:absolute;
  left:calc(50% - 437px); 

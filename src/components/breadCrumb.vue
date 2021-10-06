@@ -28,12 +28,12 @@ export default{
     },
    methods:{
       getBreadList(){
-         let matched=this.$route.matched.filter(item=>item.name)//$route.matched 将会是一个包含从上到下的所有对象 (副本)。
-            //  const first=matched[0]
-            //  if(first && first.name !=='home'){//$route.name当前路由名称；$route.redirectedFrom重定向来源的路由的名字
-            //    matched=[{ path: '/home', meta: { title: '首页' }}].concat(matched)
-            //  }
-             this.levelList=matched
+        let matched=this.$route.matched//$route.matched 将会是一个包含从上到下的所有对象 (副本)。
+        const first=matched[0]
+        if(first && first.name !=='home'){//$route.name当前路由名称；$route.redirectedFrom重定向来源的路由的名字
+          matched=[{ path: '/main', meta: { title: '首页' }}].concat(matched)
+        }
+        this.levelList=matched
       },
       handleLink(item) {
         const { redirect, path } = item
@@ -41,7 +41,7 @@ export default{
           this.$router.push(redirect)
           return
         }
-        this.$router.push(this.pathCompile(path))
+        this.$router.push(path)
       },
       pathCompile(path) {
         const { params } = this.$route
@@ -52,3 +52,10 @@ export default{
    },
 }
 </script>
+<style scoped>
+.breadcrumb{
+  height: 28px;
+  width: 875px;
+  
+}
+</style>

@@ -1,7 +1,8 @@
 <template>
     <div class="mainContainer">
-        <breadCrumb>
+        <breadCrumb class="bread-div">
         </breadCrumb>
+        <div class="contentContainer-div">
         <div class="selectContainer-div">
             <div class="courseFace-img" :style="background">
             </div>
@@ -41,6 +42,7 @@
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
+        </div>
         </div>
     </div>
 </template>
@@ -198,8 +200,17 @@ display:flex;
 width:1400px;
 height:3645px;
 min-height: 2000px;
-flex-flow:row;
-}.selectContainer-div{margin-left:262px;
+flex-flow:column;
+}
+.contentContainer-div{
+    display: flex;
+    flex-flow: row;
+}
+.bread-div{
+    margin-top: 12px;
+    margin-left: 262px;
+}
+.selectContainer-div{margin-left:262px;
 display:flex;
 flex-flow:column;
 }.courseFace-img{width:217px;

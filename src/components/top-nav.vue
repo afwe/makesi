@@ -16,7 +16,7 @@
         <div class="wordBase-button texiao pointer" @click="$router.push('/wordBase');selectedBlock='word'" :class="{ 'selectedColorMain': selectedBlock=='word'&&colorMode=='main', 'selectedColor': selectedBlock=='word'}" :style="navFontColor">
             词库
         </div>
-        <div class="search-input pointer" :style="backgroundS" @click="showSearch=!showSearch">
+        <div class="search-input pointer" :style="backgroundS" @click="showSearch=true;showMask=true;$emit('showM');">
         </div>
 
         <el-dropdown trigger="click" @command="handleCommand">
@@ -30,7 +30,7 @@
         </el-dropdown>
 
         <div class="loginNest-div">
-            <searchpanel v-show="showSearch == true">
+            <searchpanel v-show="showSearch == true" @closeP="closeSearch">
             </searchpanel>
             <div class="Dialog" v-show="showLogin===true">
                 <div class="loginContainer">
@@ -265,6 +265,11 @@ export default {
         
     },
     methods:{
+        closeSearch(){
+            this.showMask = false;
+            this.showSearch = false;
+            this.$emit('hideM');
+       },
         handleCommand(command){
             switch(command){
                 case '登录':
