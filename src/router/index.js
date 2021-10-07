@@ -61,7 +61,8 @@ export default new Router({
     },
     {
       path: '/video',
-      component: videoPage
+      component: videoPage,
+      meta:{ title: '视频播放'}
     },
     {
       path: '/edit',

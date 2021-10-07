@@ -1,5 +1,7 @@
 <template>
  <div class="mainContainer">
+        <breadCrumb class="bread-div">
+        </breadCrumb>
         <div class="video-title">
             {{videoName}}
         </div>
@@ -40,6 +42,7 @@
     </div>
 </template>
 <script>
+import breadCrumb from '../components/breadCrumb.vue';
 import {get_all_courses} from '../fetch/course'
 import videojs from 'video.js'
 import 'video.js/dist/video-js.css'
@@ -47,6 +50,9 @@ import {getPartByID} from '../fetch/video';
 import {logVisit, logTime, get_time_status, logPick, get_pick_status} from '../fetch/status';
 import { getVideoListByCourseID } from '../fetch/video'
 export default {
+    components:{
+        breadCrumb
+    },
     data(){
         return{
             courseID: 3,
@@ -337,6 +343,10 @@ export default {
 </script>
 
 <style scoped>
+.bread-div{
+    margin-top: 97px;
+    margin-left: 262px;
+}
 .videoPanContainer-div{margin-left:262px;
 display:flex;
 flex-flow:row;

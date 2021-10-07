@@ -59,4 +59,20 @@ export default {
   z-index: 1001;
   background-color: rgb(0,0,0,0.5);
 }
+@font-face {
+  font-family: roboto;
+  src: url('./assets/font/Roboto-Regular-14.ttf');
+}
+@font-face {
+  font-family:SourceHanSansSC-light;
+  src: url('./assets/font/SourceHanSansCN-Light.otf');
+}
+@font-face{
+  font-family: SourceHanSansSC-medium;
+  src: url('./assets/font/SourceHanSansCN-Medium.ttf');
+}
+@font-face {
+  font-family:SourceHanSansSC-regular ;
+  src: url('./assets/font/SourceHanSansCN-Regular.otf');
+}
 </style>
