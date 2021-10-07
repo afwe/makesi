@@ -25,7 +25,32 @@
             </div>
         </div>
         <div class="container-div">
-            <div class="notification-div" v-show="showMode=='notify'" :style="backgroundN">
+            <div class="notification-div" v-show="showMode=='notify'">
+                <div class="notifyTitle-p">
+                </div>
+                <button class="deliverNotify-button" v-show="monitor == true">
+                    发布
+                </button>
+                <div class="notificationContent-div" v-for="(item,index) in notifications">
+                    <div class="notificationTitle-p">
+                        {{item.title}}
+                    </div>
+                    <div class="notificationBody-p">
+                        {{item.body}}
+                    </div>
+                    <div class="editNoti-p">
+                        编辑
+                    </div>
+                    <div class="">
+                        /
+                    </div>
+                    <div class="deleteNoti-p">
+                        删除
+                    </div>
+                    <div class="notiDate-p">
+                        {{item.date}}
+                    </div>
+                </div>
             </div>
             <div class="videoList-div" v-show="showMode=='videoes'">
                 <div class="kejian-p">
@@ -76,10 +101,18 @@ export default {
             ],
             chapter: [
 
-            ]
+            ],
+            notifications:[{
+                title:'test',
+                body: 'test',
+                date:'2021/9/11 13:00'
+            }],
+            monitor: false
         }
     },
     mounted(){
+        this.monitor = localStorage.getItem('monitor');
+        console.log(this.monitor)
         this.courseID = "";
         if(this.$route.query.id != "undefined"){
             this.courseID = this.$route.query.id;
