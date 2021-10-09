@@ -26,29 +26,39 @@
         </div>
         <div class="container-div">
             <div class="notification-div" v-show="showMode=='notify'">
-                <div class="notifyTitle-p">
+                <div class="notiManage-div">
+                    <div class="nmTitle-p">
+                        新建公告
+                    </div>
+                    <input class="newNotiTitle-input" placeholder="请输入标题">
+                    </input>
+                    <input class="newNotiBody-input" placeholder="请输入正文">
+                    </input>
+                    <button class="deleverNotiButton-button">
+                        发布
+                    </button>
                 </div>
-                <button class="deliverNotify-button" v-show="monitor == true">
-                    发布
-                </button>
+                <div class="notifyTitle-p">
+                    公告
+                </div>
                 <div class="notificationContent-div" v-for="(item,index) in notifications">
-                    <div class="notificationTitle-p">
-                        {{item.title}}
+                    <div class="notificationHead-div">
+                        <div class="notificationTitle-p">
+                            {{item.title}}
+                        </div>
+                        <div class="editNoti-p">
+                            <span>编辑</span>
+                            <span>/</span>
+                            <span>删除</span>
+                        </div>
                     </div>
                     <div class="notificationBody-p">
                         {{item.body}}
                     </div>
-                    <div class="editNoti-p">
-                        编辑
-                    </div>
-                    <div class="">
-                        /
-                    </div>
-                    <div class="deleteNoti-p">
-                        删除
-                    </div>
                     <div class="notiDate-p">
                         {{item.date}}
+                    </div>
+                    <div class="line">
                     </div>
                 </div>
             </div>
@@ -75,9 +85,11 @@
 import { join_course , get_course_by_id} from '../fetch/course'
 import { getVideoListByCourseID } from '../fetch/video'
 import breadCrumb from '../components/breadCrumb.vue'
+import App from '../App.vue'
 export default {
     components:{
-        breadCrumb
+        breadCrumb,
+        App
     },
     data(){
         return{
@@ -103,6 +115,21 @@ export default {
 
             ],
             notifications:[{
+                title:'test',
+                body: 'test',
+                date:'2021/9/11 13:00'
+            },
+            {
+                title:'test',
+                body: 'test',
+                date:'2021/9/11 13:00'
+            },
+            {
+                title:'test',
+                body: 'test',
+                date:'2021/9/11 13:00'
+            },
+            {
                 title:'test',
                 body: 'test',
                 date:'2021/9/11 13:00'
@@ -205,6 +232,92 @@ export default {
 }
 </script>
 <style scoped>
+.notiManage-div{margin-top:26px;
+margin-left:21px;
+width:601px;
+display:flex;
+flex-flow:column;
+}.nmTitle-p{width:75px;
+line-height:27px;
+color:rgba(16,16,16,100);
+font-size:18px;
+text-align:left;
+font-family:SourceHanSansSC-bold;
+}.newNotiTitle-input{margin-top:14px;
+width:601px;
+height:26px;
+border-radius:2px;
+color:rgba(189,189,189,100);
+font-size:8px;
+text-align:left;
+font-family:MicrosoftYahei;
+border:0px solid rgba(224,224,224,100);
+}.newNotiBody-input{margin-top:5px;
+width:601px;
+height:76px;
+line-height:12px;
+border-radius:2px;
+color:rgba(189,189,189,100);
+font-size:8px;
+text-align:left;
+font-family:MicrosoftYahei;
+border:0px solid rgba(224,224,224,100);
+}.deleverNotiButton-button{margin-left:auto;
+margin-top:14px;
+width:76px;
+height:27px;
+border-radius:4px;
+background-color:rgba(255,5,47,100);
+color:rgba(255,255,255,100);
+font-size:10px;
+text-align:center;
+font-family:MicrosoftYahei;
+}
+.line{width:601px;
+height:0px;
+border-top:solid rgba(158,158,158,100) 0px;
+}.notifyTitle-p{margin-top:23px;
+margin-left:21px;
+line-height:27px;
+color:rgba(16,16,16,100);
+font-size:18px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.notificationContent-div{margin-left:21px;
+height:55px;
+width:601px;
+margin-top:11px;
+display:flex;
+flex-flow:column;
+}.notificationHead-div{display:flex;
+flex-flow:row;
+}.notificationTitle-p{line-height:18px;
+color:rgba(97,97,97,100);
+font-size:13px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.notificationBody-p{margin-top:5px;
+line-height:15px;
+color:rgba(158,158,158,100);
+font-size:10px;
+text-align:left;
+font-family:SourceHanSansSC-regular;
+}.editNoti-p{margin-left:auto;
+line-height:13px;
+color:rgba(199,199,204,100);
+font-size:8px;
+font-family:SourceHanSansSC-regular;
+}.deleteNoti-p{margin-left:auto;
+line-height:13px;
+color:rgba(199,199,204,100);
+font-size:8px;
+font-family:SourceHanSansSC-regular;
+}.notiDate-p{margin-left:auto;
+line-height:13px;
+color:rgba(158,158,158,100);
+font-size:8px;
+font-family:SourceHanSansSC-regular;
+}
 button{
     outline:none;
     border:none;
@@ -263,17 +376,22 @@ color:rgba(66,66,66,100);
 font-size:13px;
 text-align:center;
 font-family:Roboto;
-border:0pxsolidrgba(238,238,238,100);
+border:0px solid rgba(238,238,238,100);
 }.topButton{border-radius:8px 8px 0px 0px;
 }.bottomButton{border-radius:0px 0px 8px 8px;
 }.container-div{margin-left:43px;
 display:flex;
 flex-flow:column;
 }.notification-div{width:645px;
-height:318px;
+min-height:228px;
+line-height:14px;
 border-radius:8px;
-background:no-repeatcentertop;
-background-size:100%100%;
+color:rgba(16,16,16,100);
+background-color:#ffffff;
+font-size:10px;
+text-align:center;
+font-family:Roboto;
+padding-bottom:35px;
 }.videoList-div{width:645px;
 min-height: 300px;
 border-radius:8px;

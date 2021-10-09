@@ -19,7 +19,7 @@
         <div class="search-input pointer" :style="backgroundS" @click="showSearch=true;showMask=true;$emit('showM');">
         </div>
 
-        <el-dropdown trigger="click" @command="handleCommand">
+        <el-dropdown trigger="hover" @command="handleCommand">
             <div class="avator-img pointer" :style="backgroundA">
             </div>
             <el-dropdown-menu slot="dropdown">
@@ -179,6 +179,9 @@ export default {
                 },
                 {
                     title: '管理中心',
+                },
+                {
+                    title: '个人主页',
                 }
             ],
             teacherRegister: "false",
