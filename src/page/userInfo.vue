@@ -25,6 +25,57 @@
                 成就
             </div>
         </div>
+        <div class="courseContainer" @click="showCreate=true">
+            <div class="createCourse-div">
+                <div class="crossSvg" :style="crossBackground">
+                </div>
+                <div class="createCourse-p">
+                    创建新课程
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="createDialog-div" v-show="showCreate==true">
+        <div class="dialogHead-div">
+            <div class="createDialogTitle-p">
+                课程信息
+            </div>
+            <div class="close-img">
+            </div>
+        </div>
+        <div class="line">
+        </div>
+        <div class="titleSet-div">
+            <div class="newTitle-p">
+                名称
+            </div>
+            <input class="newCourseTitle">
+            </input>
+        </div>
+        <div class="descSet-div">
+            <div class="newDesc-p">
+                简介
+            </div>
+            <input class="newCourseDesc">
+            </input>
+        </div>
+        <div class="faceSet-div">
+            <div class="newFace-p">
+                封面
+            </div>
+            <input class="newCourseFace">
+            </input>
+        </div>
+        <div class="line">
+        </div>
+        <div class="btnNest">
+            <button class="cancel-button">
+                取消
+            </button>
+            <button class="create-button">
+                创建
+            </button>
+        </div>
     </div>
 </div>
 </template>
@@ -44,7 +95,12 @@ export default {
             userBackground:{
                 backgroundImage: 'url('+require('../assets/userInfo.png')+')',
                 backgroundSize: "100% 100%" 
-            }
+            },
+            crossBackground:{
+                backgroundImage:  'url(' +require('../assets/if-plus.svg')+')',
+                backgroundSize: "100% 100%" 
+            },
+            showCreate: false
         }
     },
     methods:{
@@ -80,6 +136,87 @@ export default {
 }
 </script>
 <style scoped>
+.createDialog-div{
+
+}
+.dialogHead-div{
+    
+}
+.createDialogTitle-p{
+    
+}
+.close-img{
+    
+}
+.line{
+    
+}
+.titleSet-div{
+    
+}
+.newTitle-p{
+    
+}
+.newCourseTitle{
+    
+}
+.descSet-div{
+    
+}
+.newDesc-p{
+    
+}
+.newCourseDesc{
+    
+}
+.faceSet-div{
+    
+}
+.newFace-p{
+    
+}
+.newCourseFace{
+    
+}
+.line{
+    
+}
+.btnNest{
+    
+}
+.cancel-button{
+    
+}
+.create-button{
+    
+}
+.createCourse-div{
+    margin-left:calc(50% - 442px);
+    width:203px;
+height:233px;
+line-height:14px;
+border-radius:18px;
+background-color:#f5f5f5;
+text-align:center;
+border:1px dashed rgba(199,199,204,100);
+}.crossSvg{margin-top:75px;
+margin-left:78px;
+width:48px;
+height:48px;
+}.createCourse-p{margin-top:10px;
+margin-left:69px;
+line-height:18px;
+color:rgba(142,142,147,100);
+font-size:13px;
+text-align:left;
+font-family:SourceHanSansSC-light;
+}
+.courseContainer{
+    width:1400px;
+    display: flex;
+    flex-flow: row;
+
+}
 .mainContainer{
     width:1400px;
     margin:auto;
