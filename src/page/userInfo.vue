@@ -27,7 +27,7 @@
                 成就
             </div>
         </div>
-        <div class="courseContainer" @click="showCreate=true;showMask=true">
+        <div class="courseContainer" @click="showCreate=true;showMask=true" v-if="monitor==true">
             <div class="createCourse-div">
                 <div class="crossSvg" :style="crossBackground">
                 </div>
@@ -93,6 +93,7 @@ export default {
             major:'',
             telephone:'',
             mail:'',
+            monitor: true,
             userBackground:{
                 backgroundImage: 'url('+require('../assets/userInfo.png')+')',
                 backgroundSize: "100% 100%" 
@@ -146,6 +147,7 @@ export default {
         }
     },
     mounted(){
+        //this.monitor = localStorage.getItem("monitor");
         getInfo(this.studentId).then(response => {
             if(response == 200 ){
                 this.name=response.data.name;

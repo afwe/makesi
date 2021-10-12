@@ -26,7 +26,7 @@
         </div>
         <div class="container-div">
             <div class="notification-div" v-show="showMode=='notify'">
-                <div class="notiManage-div">
+                <div class="notiManage-div" v-if="monitor == true">
                     <div class="nmTitle-p">
                         新建公告
                     </div>
@@ -63,8 +63,13 @@
                 </div>
             </div>
             <div class="videoList-div" v-show="showMode=='videoes'">
-                <div class="kejian-p">
+                <div class="kejian">
+                    <div class="kejian-p">
                     课件
+                    </div>
+                    <button class="manageButton-button" v-if="monitor==true" @click="$router.push('/videoManage')">
+                        管理视频
+                    </button>
                 </div>
                 <el-dropdown v-for="(item,cindex) in chapter" trigger="click" @command="handleCommand">
                     <div class="el-dropdown-link btn send time-send small-hand collapsTitle-div pointer">
@@ -134,15 +139,17 @@ export default {
                 body: 'test',
                 date:'2021/9/11 13:00'
             }],
-            monitor: false
+            monitor: true
         }
     },
     mounted(){
-        this.monitor = localStorage.getItem('monitor');
+        //this.monitor = localStorage.getItem('monitor');
+        console.log(this.monitor);
         console.log(this.monitor)
         this.courseID = "";
         if(this.$route.query.id != "undefined"){
             this.courseID = this.$route.query.id;
+            localStorage.setItem("curCourseID", this.courseID);
         }
         
         this.renderc().then(
@@ -232,6 +239,28 @@ export default {
 }
 </script>
 <style scoped>
+.kejian{
+    display: flex;
+    flex-flow: row;
+}
+.kejian-p{margin-top:23px;
+margin-left:21px;
+line-height:27px;
+color:rgba(16,16,16,100);
+font-size:18px;
+text-align:left;
+font-family:SourceHanSansSC-medium;
+}.manageButton-button{margin-top:23px;
+margin-left:487px;
+width:76px;
+line-height:27px;
+border-radius:4px;
+background-color:rgba(255,5,47,100);
+color:rgba(255,255,255,100);
+font-size:10px;
+text-align:center;
+font-family:MicrosoftYahei;
+}
 .notiManage-div{margin-top:26px;
 margin-left:21px;
 width:601px;

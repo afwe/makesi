@@ -185,7 +185,7 @@ export default {
                 }
             ],
             teacherRegister: "false",
-            teacherLogin: "false",
+            teacherLogin: "true",
             isLogin: false,
             showLogin: false,
             showSearch: false,
@@ -242,7 +242,7 @@ export default {
             (flag) => {
             if(flag){
                 localStorage.setItem("Login", true);
-                localStorage.setItem("monitor", false);
+                localStorage.setItem("monitor", true);
                 if(self.isLogin==true){
                     self.avatorOptions.length=0;
                     console.log("]]")
