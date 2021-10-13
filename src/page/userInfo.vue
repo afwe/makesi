@@ -27,7 +27,7 @@
                 成就
             </div>
         </div>
-        <div class="courseContainer" @click="showCreate=true;showMask=true" v-if="monitor==true">
+        <div class="courseContainer" @click="showCreate=true;showMask=true" v-show="manageMode.is==true">
             <div class="createCourse-div">
                 <div class="crossSvg" :style="crossBackground">
                 </div>
@@ -84,6 +84,11 @@
 <script>
 import {create_course, create_course_identify} from '../fetch/course';
 export default {
+    inject:{
+        manageMode: {
+            default:()=>{}
+        }
+    },
     data(){
         return{
             showMode: 'course',

@@ -26,7 +26,7 @@
         </div>
         <div class="container-div">
             <div class="notification-div" v-show="showMode=='notify'">
-                <div class="notiManage-div" v-if="monitor == true">
+                <div class="notiManage-div" v-show="manageMode.is == true">
                     <div class="nmTitle-p">
                         新建公告
                     </div>
@@ -67,7 +67,7 @@
                     <div class="kejian-p">
                     课件
                     </div>
-                    <button class="manageButton-button" v-if="monitor==true" @click="$router.push('/videoManage')">
+                    <button class="manageButton-button" v-show="manageMode.is==true" @click="$router.push('/videoManage')">
                         管理视频
                     </button>
                 </div>
@@ -92,6 +92,11 @@ import { getVideoListByCourseID } from '../fetch/video'
 import breadCrumb from '../components/breadCrumb.vue'
 import App from '../App.vue'
 export default {
+    inject:{
+        manageMode: {
+            default:()=>{}
+        }
+    },
     components:{
         breadCrumb,
         App
@@ -144,8 +149,10 @@ export default {
     },
     mounted(){
         //this.monitor = localStorage.getItem('monitor');
-        console.log(this.monitor);
-        console.log(this.monitor)
+        console.log(this.manageMode);
+        setInterval(()=>{
+            console.log(this.manageMode.is)
+        },1000)
         this.courseID = "";
         if(this.$route.query.id != "undefined"){
             this.courseID = this.$route.query.id;

@@ -5,6 +5,7 @@
   <topNav ref="topNav"
     @hideM="hideM"
     @showM="showM"
+    @teacherL="teacherLogin"
   />
   <router-view />
   <pageFoot ref="pageFoot"/>
@@ -19,7 +20,8 @@ export default {
   provide(){
     return{
       hideM:this.hideM,
-      showM:this.showM
+      showM:this.showM,
+      manageMode:this.isMonitor
     }
   },
   name: 'App',
@@ -30,6 +32,9 @@ export default {
   data(){
     return{
       showMask: false,
+      isMonitor: {
+        is: false
+      }
     }
   },
   methods:{
@@ -38,6 +43,11 @@ export default {
     },
     hideM(){
       this.showMask=false;
+    },
+    teacherLogin(){
+      console.log(">>>");
+      this.isMonitor.is=true
+      this.manageMode = this.isMonitor
     }
   }
 }

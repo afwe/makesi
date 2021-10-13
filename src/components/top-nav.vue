@@ -72,6 +72,7 @@ import { loginPanel } from '../page/loginPanel.vue'
 import searchpanel from '../page/searchPanel.vue'
 export default {
     components: {searchpanel},
+    inject:['isMonitor'],
     data(){
         return{
             selectedBlock: 'main',
@@ -245,7 +246,9 @@ export default {
                 localStorage.setItem("monitor", true);
                 if(self.isLogin==true){
                     self.avatorOptions.length=0;
-                    console.log("]]")
+                    console.log("]]");
+                    this.isMonitor = true;
+                    console.log(this.isMonitor)
                     console.log(self.avatorOptions.length);
                     self.avatorOptions=self.teacherOptions;
                 }
@@ -348,8 +351,10 @@ export default {
             response = await checkLogin_Teacher({});
             if(response.code == 200){
                 console.log(response)
+                this.isMonitor = true;
                 this.isLogin = true;
                 this.monitor = true;
+                this.$emit("teacherL");
                 return true;
             }
             return false;
