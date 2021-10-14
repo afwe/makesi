@@ -7,6 +7,8 @@
     @showM="showM"
     @teacherL="teacherLogin"
   />
+  <sideNav ref="sideNav"
+  />
   <router-view />
   <pageFoot ref="pageFoot"/>
   </div>
@@ -16,6 +18,7 @@
 <script>
 import topNav from './components/top-nav';
 import pageFoot from './components/page-foot.vue'
+import sideNav from './components/side-nav.vue'
 export default {
   provide(){
     return{
@@ -27,7 +30,8 @@ export default {
   name: 'App',
   components:{
     topNav,
-    pageFoot
+    pageFoot,
+    sideNav
   },
   data(){
     return{
