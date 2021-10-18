@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <div class="wholeMask" v-show="showMask==true">
-    </div>
+  <div class="wholeMask" v-show="showMask==true">
+  </div>
   <topNav ref="topNav"
     @hideM="hideM"
     @showM="showM"
@@ -10,7 +10,9 @@
   <sideNav ref="sideNav"
   />
   <router-view />
+  <!--
   <pageFoot ref="pageFoot"/>
+  -->
   </div>
 
 </template>

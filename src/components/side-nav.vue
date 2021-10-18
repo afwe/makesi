@@ -20,15 +20,15 @@
                     创建
             </el-radio-button>
         </el-dialog>
-        <button class="createCh-div" @click="showCreate=true">
+        <button class="createCh-div" @click="showCreate=true;">
             <div class="createCh-img" :style="createChBackground"></div>
             新建章节
         </button>
-        <div class="chManage-div" @click="$router.push('/videoManage')">
+        <div class="chManage-div" @click="$router.push('/videoManage');selectedMode='chapter'" :class="{selectedColor:selectedMode==='chapter'}">
             <div class="chManage-img" :style="manageChBackground"></div>
             章节管理
         </div>
-        <div class="videoLib-div" @click="$router.push('/partManage')">
+        <div class="videoLib-div" @click="$router.push('/partManage');selectedMode='video'" :class="{selectedColor:selectedMode==='video'}">
             <div class="videoLib-img" :style="videoLibBackground"></div>
             视频库
         </div>
@@ -67,6 +67,7 @@ export default {
             sessionID: 1,
             chapterArray: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
             sessionArray: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],
+            selectedMode:'chapter',
         }
     },
     mounted(){
@@ -98,11 +99,16 @@ export default {
 }
 </script>
 <style scoped>
+.selectedColor{
+    color:red !important;
+}
 .mainContainer{
     z-index:1010;
     position: fixed;
     display:flex;
 flex-flow:column;
+top:85px;
+left: 0;
 width:180px;
 height:702px;
 line-height:14px;
@@ -130,7 +136,7 @@ flex-flow:row;
 width:100%;
 height:46px;
 line-height:46px;
-color:rgba(255,5,47,100);
+color:black;
 font-size:14px;
 text-align:left;
 font-family:SourceHanSansSC-regular;
@@ -138,12 +144,13 @@ font-family:SourceHanSansSC-regular;
         margin-top: 14px;margin-left:29px;
 width:15px;
 height:15px;
+padding-right: 20px;
 }.videoLib-div{display:flex;
 flex-flow:row;
 width:100%;
 height:46px;
 line-height:46px;
-color:rgba(255,5,47,100);
+color:black;
 font-size:14px;
 text-align:left;
 font-family:SourceHanSansSC-regular;
@@ -152,5 +159,6 @@ font-family:SourceHanSansSC-regular;
         margin-left:29px;
 width:15px;
 height:15px;
+padding-right: 20px;
 }
 </style>

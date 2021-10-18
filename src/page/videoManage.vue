@@ -172,5 +172,13 @@ export default{
 <style scoped>
 .mainContainer{
     margin-top:85px;
+    margin-left: 240px;
+    width: 1200px;
+    min-height:800px;
+    display: flex;
+    flex-flow:column;
+}
+.el-button + .el-button{
+    margin-left:0;
 }
 </style>
