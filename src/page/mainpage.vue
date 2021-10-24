@@ -17,70 +17,14 @@
     </div>
 
     <div class="classContainer-div">
-        <div class="classDiv-div1 pointer">
-            <div class="faceImg-img" :style="background">
-            </div>
-            <div class="className-p">
-                中国近代史
-            </div>
-            <div class="schoolName-p">
-                北京大学
-            </div>
-            <div class="joins-p">
-                114514人参加
-            </div>
-            <div class="into-p">
-                北大名师精讲"中国近代史"
-            </div>
-        </div>
-        <div class="classDiv-div2 pointer" @click="">
-            <div class="faceImg-img" :style="background">
-            </div>
-            <div class="className-p">
-                中国近代史
-            </div>
-            <div class="schoolName-p">
-                北京大学
-            </div>
-            <div class="joins-p">
-                114514人参加
-            </div>
-            <div class="into-p">
-                北大名师精讲"中国近代史"
-            </div>
-        </div>
-        <div class="classDiv-div3 pointer" @click="">
-            <div class="faceImg-img" :style="background">
-            </div>
-            <div class="className-p">
-                中国近代史
-            </div>
-            <div class="schoolName-p">
-                北京大学
-            </div>
-            <div class="joins-p">
-                114514人参加
-            </div>
-            <div class="into-p">
-                北大名师精讲"中国近代史"
-            </div>
-        </div>
-        <div class="classDiv-div4 pointer" @click="">
-            <div class="faceImg-img" :style="background">
-            </div>
-            <div class="className-p">
-                中国近代史
-            </div>
-            <div class="schoolName-p">
-                北京大学
-            </div>
-            <div class="joins-p">
-                114514人参加
-            </div>
-            <div class="into-p">
-                北大名师精讲"中国近代史"
-            </div>
-        </div>
+        <courseCard v-for="(item,index) in courses "
+            class="pointer"
+            :key="index"
+            :courseID="item.courseId"
+            :courseName="item.courseName"
+            :courseIntro="item. courseIntro"
+        >
+        </courseCard>
     </div>
     <div class="classRanking-p">
         课程排行
@@ -145,9 +89,10 @@ import { checkLogin_Student } from '../fetch/student_data'
 import { checkLogin_Teacher } from '../fetch/teacher_data'
 import {get_all_courses} from '../fetch/course'
 import searchpanel from '../page/searchPanel.vue'
+import courseCard from '../components/courseCard.vue'
 export default {
     components:{
-        
+        courseCard
     },
     data(){
         return{
@@ -169,13 +114,6 @@ export default {
                 }
             ],
             courses:[
-                {
-                    id:1,
-                    name:"k1"
-                },
-                {
-                    name:"k1"
-                },
             ],
             hotRanking: [],
             releaseRanking: [],
@@ -193,9 +131,10 @@ export default {
         this.getCourses().then(
             (data) => {
                 if(data){
-                    console.log("??");
                     console.log(data);
-                    this.courses = data.data;
+                    data.data.forEach(element => {
+                        this.courses.push(element);
+                    })
                 }
         })
     },
@@ -207,11 +146,12 @@ export default {
             this.$router.push(`course`);
         },
         toCourse: async function(id){
-            this.$router.push(`courseInfo/?id=${id}`);
+            this.$router.push(`/courseInfo/?id=${id}`);
         },
         getCourses: async function(){
             let response = await get_all_courses();
             if(response.code == 200){
+                console.log(response.data);
                 return response;
             }
             return false;
@@ -279,67 +219,12 @@ width:105px;
 font-size:25px;
 text-align:center;
 color:rgba(16,16,16,100);
-}.classContainer-div{margin-top:22px;
+}.classContainer-div{
+    overflow: hidden;
+margin-top:22px;
 margin-left:261px;
 display:flex;
 flex-flow:row;
-}.classDiv-div1{width:201px;
-height:231px;
-display:flex;
-flex-flow:column;
-border-radius:17px;
-background-color:#ffffff;
-}.faceImg-img{width:201px;
-height:114px;
-border-radius:19px 19px 0px 0px;
-background:no-repeatcentertop;
-background-size:100% 100%;
-}.className-p{margin-left:7px;
-margin-top:7px;
-font-size:10px;
-line-height:16px;
-color:rgba(16,16,16,100);
-text-align:left;
-}.schoolName-p{margin-left:7px;
-line-height:11px;
-color:rgba(142,142,147,100);
-font-size:7px;
-text-align:left;
-font-family:SourceHanSansSC-light;
-}.joins-p{margin-left:7px;
-margin-top:32px;
-line-height:14px;
-color:rgba(199,199,204,100);
-font-size:9px;
-text-align:left;
-font-family:SourceHanSansSC-light;
-}.into-p{margin-left:7px;
-line-height:14px;
-color:rgba(97,97,97,100);
-font-size:9px;
-text-align:left;
-font-family:SourceHanSansSC-regular;
-}.classDiv-div2{margin-left:19px;
-width:201px;
-height:231px;
-display:flex;
-flex-flow:column;
-border-radius:17px;
-background-color:#ffffff;
-}.classDiv-div3{margin-left:19px;
-width:201px;
-height:231px;
-display:flex;
-flex-flow:column;
-border-radius:17px;
-background-color:#ffffff;
-}.classDiv-div4{margin-left:19px;
-width:201px;
-height:231px;
-display:flex;
-flex-flow:column;
-border-radius:17px;
-background-color:#ffffff;
 }.classRanking-p{margin-top:42px;
 margin-left:261px;
 line-height:36px;

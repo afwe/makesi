@@ -17,11 +17,16 @@ import courseInfo from '@/page/courseInfo'
 import loginPanel from '@/page/loginPanel'
 import searchPanel from '@/page/searchPanel'
 import userInfo from '@/page/userInfo'
+import cardTest from '@/page/cardTest'
 Vue.use(Router)
 
 export default new Router({
   mode: "hash",
   routes: [
+   /* {
+      path:"/cardTest",
+      component: cardTest,
+    },*/
     {
       path: "",
       redirect: "/main",

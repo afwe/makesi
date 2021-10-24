@@ -56,7 +56,7 @@ export default{
     data(){
         return{
             background: {
-                backgroundImage: 'url('+require('../assets/classface2.png')+')'
+                backgroundImage: 'url('+require('../assets/cr1.jpg')+')'
             },
             courseID: "1",
             courseName: "test",
