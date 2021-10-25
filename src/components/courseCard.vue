@@ -39,10 +39,7 @@ export default {
     margin-left:19px;
     width:201px;
     height:231px;
-    overflow:hidden;
-    display:flex;
-    flex-flow:column;
-    border-radius:17px;
+    border-radius:19px;
     background-color:#ffffff;
 }
 .faceImg-img{width:201px;
