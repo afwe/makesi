@@ -143,6 +143,7 @@ export default {
                 if(data){
                     console.log(data);
                     data.data.forEach(element => {
+                        element.courseFace = `red-video-1305720498.cos.ap-nanjing.myqcloud.com/course_pic/${element.courseId}.jpg`
                         this.courses.push(element);
                     })
                 }

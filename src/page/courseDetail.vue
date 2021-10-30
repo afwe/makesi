@@ -30,11 +30,11 @@
                     <div class="nmTitle-p">
                         新建公告
                     </div>
-                    <input class="newNotiTitle-input" placeholder="请输入标题">
+                    <input class="newNotiTitle-input" placeholder="请输入标题" v-model="newTitle">
                     </input>
-                    <input class="newNotiBody-input" placeholder="请输入正文">
+                    <input class="newNotiBody-input" placeholder="请输入正文" v-model="newNotice">
                     </input>
-                    <button class="deleverNotiButton-button">
+                    <button class="deleverNotiButton-button" @click="doUploadNotice">
                         发布
                     </button>
                 </div>
@@ -90,6 +90,7 @@
 import { join_course , get_course_by_id} from '../fetch/course'
 import { getVideoListByCourseID } from '../fetch/video'
 import breadCrumb from '../components/breadCrumb.vue'
+import {getAllNotice,uploadNotice} from '../fetch/notice'
 import App from '../App.vue'
 export default {
     inject:{
@@ -144,7 +145,8 @@ export default {
                 body: 'test',
                 date:'2021/9/11 13:00'
             }],
-            monitor: true
+            monitor: true,
+            newNotice: ''
         }
     },
     mounted(){
@@ -170,6 +172,40 @@ export default {
         this.render();
     },
     methods:{
+        getNoticeList: async function(){
+            let response = await getAllNotice({
+                courseId: this.courseID
+            })
+            if(response.code==200){
+                this.notifications = response.data
+            }
+            else {
+                this.$message({
+                    message:'获取公告失败',
+                    type:'error'
+                })
+            }
+             
+        },
+        doUpLoadNotice: async function(){
+            let response = await uploadNotice({
+                courseId: this.courseID,
+                detail: this.newNotice,
+                title: this.newTitle
+            })
+            if(response.code==200) {
+                this.$message({
+                    message:'发布公告成功',
+                    type: 'success'
+                })
+            }
+            else{
+                this.$message({
+                    message: '发布公告失败',
+                    type: 'error'
+                })
+            }
+        },
         handleCommand(command){
             console.log(command)
             this.toVideo(command);

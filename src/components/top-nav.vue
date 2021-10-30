@@ -246,7 +246,6 @@ export default {
                 localStorage.setItem("monitor", true);
                 if(self.isLogin==true){
                     self.avatorOptions.length=0;
-                    console.log("]]");
                     this.isMonitor = true;
                     console.log(this.isMonitor)
                     console.log(self.avatorOptions.length);
