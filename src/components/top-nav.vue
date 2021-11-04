@@ -13,8 +13,8 @@
         <div class="course-button texiao pointer" @click="$router.push('/course');selectedBlock='course'" :class="{ 'selectedColorMain': selectedBlock=='course'&&colorMode=='main', 'selectedColor': selectedBlock=='course'}" :style="navFontColor">
             课程
         </div>
-        <div class="wordBase-button texiao pointer" @click="$router.push('/wordBase');selectedBlock='word'" :class="{ 'selectedColorMain': selectedBlock=='word'&&colorMode=='main', 'selectedColor': selectedBlock=='word'}" :style="navFontColor">
-            词库
+        <div class="wordBase-button texiao pointer" @click="$router.push('/tubeList');selectedBlock='word'" :class="{ 'selectedColorMain': selectedBlock=='word'&&colorMode=='main', 'selectedColor': selectedBlock=='word'}" :style="navFontColor">
+            直播
         </div>
         <div class="search-input pointer" :style="backgroundS" @click="showSearch=true;showMask=true;$emit('showM');">
         </div>

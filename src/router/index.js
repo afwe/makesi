@@ -17,16 +17,22 @@ import courseInfo from '@/page/courseInfo'
 import loginPanel from '@/page/loginPanel'
 import searchPanel from '@/page/searchPanel'
 import userInfo from '@/page/userInfo'
-import cardTest from '@/page/cardTest'
+import tubeList from '@/page/tubeList'
+import tubeRoom from '@/page/tubeRoom'
+
 Vue.use(Router)
 
 export default new Router({
-  mode: "hash",
+  mode: "history",
   routes: [
-   /* {
-      path:"/cardTest",
-      component: cardTest,
-    },*/
+    {
+      path:"/tubeRoom",
+      component: tubeRoom,
+    },
+   {
+      path:"/tubeList",
+      component: tubeList,
+    },
     {
       path: "",
       redirect: "/main",
