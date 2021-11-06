@@ -7,9 +7,19 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import * as echarts from 'echarts';
 import VideoPlayer from 'vue-video-player'
+import VueSocketIo from 'vue-socket.io';
+import SocketIO from "socket.io-client";
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
-
+const socketBase = 'https://localhost:443'
+Vue.prototype.socketApi = socketBase
+Vue.use(new VueSocketIo({
+    debug: true,
+    connection: SocketIO.connect(socketBase, {
+      path:'',
+      transports: ['websocket', 'xhr-polling', 'jsonp-polling'],
+    })
+}))
 Vue.use(VideoPlayer)
 Vue.config.productionTip = false
 

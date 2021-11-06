@@ -23,6 +23,7 @@ import tubeRoom from '@/page/tubeRoom'
 Vue.use(Router)
 
 export default new Router({
+  base: 'hongyu',
   mode: "history",
   routes: [
     {
