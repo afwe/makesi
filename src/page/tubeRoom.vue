@@ -17,111 +17,121 @@ export default {
                         username: 'afwe',
                     }
                 ],
-            }
+            },
+            socket: '',
+            localStream: '',
+            localVideo: '',
+            pc: '',
+            peerConnectionCollection:{},
+            state: '',
         }
     },
     mounted(){
-        this.$socket.emit('join', this.roomId);
+        this.socket = this.SocketIO(this.socketApi);
+        this.socket.emit('join',this.roomId);
+        this.localVideo = document.querySelector('video#tubeVideo');
+        this.connectSignalServer();
         console.log('join');
+    },
+    beforeDestroy(){
+        this.disconnectSignalServer();
     },
     methods:{
         handleErr(err){
             console.error(err);
         },
         sendMessage(id,data){
-            if(socket){
-                socket.emit('message',id,data);
+            if(this.socket){
+                this.socket.emit('message',id,data);
             }
         },
         getOffer(desc,masterId){
-            pc.setLocalDescription(desc);
-            sendMessage(masterId,desc);
+            this.pc.setLocalDescription(desc);
+            this.sendMessage(masterId,desc);
         },
         call(masterId){
-            if(pc){
+            if(this.pc){
                 console.log('pcsurvive');
                 let options = {
                     offerToReceiveAudio: 1,
                     offerToReceiveVideo: 1
                 }
-                if(state == 'slave'){
+                if(this.state == 'slave'){
                     console.log('offercall');
-                    pc.createOffer(options)
+                    this.pc.createOffer(options)
                     .then((desc)=>{
-                        getOffer(desc,masterId);
+                        this.getOffer(desc,masterId);
                     })
-                    .catch(handleErr)
+                    .catch(this.handleErr)
                 }
             }
         },
 
         getMediaStream(stream){
-            localStream = stream;
-            localVideo.srcObject = localStream;
+            this.localStream = stream;
+            this.localVideo.srcObject = this.localStream;
         },
         masterGetOffer(id,message){
             console.log(id);
-            peerConnectionCollection[id].setRemoteDescription(new RTCSessionDescription(message));
-            peerConnectionCollection[id].createAnswer().then((answer)=>{getAnswer(answer,id)}).catch(handleErr);
+            this.peerConnectionCollection[id].setRemoteDescription(new RTCSessionDescription(message));
+            this.peerConnectionCollection[id].createAnswer().then((answer)=>{this.getAnswer(answer,id)}).catch(this.handleErr);
         },
         masterAddCandidate(id,candidate){
-            peerConnectionCollection[id].addIceCandidate(candidate).catch();
+            this.peerConnectionCollection[id].addIceCandidate(candidate).catch();
         },
         getAnswer(desc,id){
-            peerConnectionCollection[id].setLocalDescription(desc);
-            sendMessage(id,desc);
+            this.peerConnectionCollection[id].setLocalDescription(desc);
+            this.sendMessage(id,desc);
         },
         initSocketIO(){
-
-            socket.on('newSlave',(id)=>{
-                masterCreatePeerConnection(id);
+            this.socket.on('newSlave',(id)=>{
+                this.masterCreatePeerConnection(id);
             })
-            socket.on('masterId',(id)=>{
+            this.socket.on('masterId',(id)=>{
                 console.log(id);
-                call(id);
+                this.call(id);
             })
-            socket.on('identify',(identity, id)=>{
+            this.socket.on('identify',(identity, id)=>{
                 console.log(identity);
-                state = identity;
-                socketId = id;
+                this.state = identity;
                 if(identity == "master") {
-                    socket.on('message',(id, message)=>{
+                    this.socket.on('message',(id, message)=>{
                         console.log(message);
                         if(message){
                             if(message.type==='offer'){
                                 console.log("offermessage");
-                                masterGetOffer(id,message);
+                                this.masterGetOffer(id,message);
                             }else if (message.type==='candidate'){
                                 console.log("candidatemessage");
                                 let candidate = new RTCIceCandidate({
                                     sdpMLineIndex: message.label,
                                     candidate: message.candidate
                                 })
-                                masterAddCandidate(id,candidate);
+                                this.masterAddCandidate(id,candidate);
                             }
                         }
                     })
                 }
-                start();
+                this.start();
             })
 
-            socket.on('leave',(roomId, id)=>{
-                socket.disconnected();
+            this.socket.on('leave',(roomId, id)=>{
+                this.socket.disconnected();
                 closePeerConnection();
-                closeLocal();
+                this.closeLocal();
                 console.log('leave');
             })
 
-            socket.emit('join',roomId);
+            this.socket.emit('join',this.roomId);
             return;
         },
         slaveCreatePeerConnection(){
-            if(!pc){
-                pc = new RTCPeerConnection(pcConfig);
-                pc.onicecandidate = (e)=> {
+            if(!this.pc){
+                this.pc = new RTCPeerConnection(this.pcConfig);
+                this.pc.onicecandidate = (e)=> {
                     if(e.candidate){
                         console.log("candidateOn");
-                        sendMessage('slave',{
+                        this.sendMessage('slave',{
                             type:'candidate',
                             label: e.candidate.sdpMLineIndex,
                             id: e.candidate.sdpMid,
@@ -129,24 +139,24 @@ export default {
                         })
                     }
                 }
-                pc.ontrack = (e)=>{
+                this.pc.ontrack = (e)=>{
                     console.log("track");
                     console.log(e);
-                    remoteVideo.srcObject = e.streams[0];
+                    this.localVideo.srcObject = e.streams[0];
                 }
-                socket.on('message',(id, message)=>{
+                this.socket.on('message',(id, message)=>{
                     console.log(message);
                     if(message){
                         if(message.type==='answer'){ 
                             console.log("answermessage");
-                            pc.setRemoteDescription(new RTCSessionDescription(message));
+                            this.pc.setRemoteDescription(new RTCSessionDescription(message));
                         }else if (message.type==='candidate'){
                             console.log("candidatemessage");
                             let candidate = new RTCIceCandidate({
                                 sdpMLineIndex: message.label,
                                 candidate: message.candidate
                             })
-                            pc.addIceCandidate(candidate).catch();
+                            this.pc.addIceCandidate(candidate).catch();
                         }
                     }
                 })
@@ -155,12 +165,12 @@ export default {
 
         masterCreatePeerConnection(slaveId){
             console.log(slaveId);
-            peerConnectionCollection[slaveId] = new RTCPeerConnection(pcConfig);
-            pc = peerConnectionCollection[slaveId];
-            pc.onicecandidate = (e)=> {
+            this.peerConnectionCollection[slaveId] = new RTCPeerConnection(this.pcConfig);
+            this.pc = this.peerConnectionCollection[slaveId];
+            this.pc.onicecandidate = (e)=> {
                 if(e.candidate){
                     console.log("candidateOn");
-                    sendMessage('slave',{
+                    this.sendMessage('slave',{
                         type:'candidate',
                         label: e.candidate.sdpMLineIndex,
                         id: e.candidate.sdpMid,
@@ -168,41 +178,41 @@ export default {
                     })
                 }
             }
-            if(localStream){
-                localStream.getTracks().forEach((track)=>{
-                    pc.addTrack(track,localStream);
+            if(this.localStream){
+                this.localStream.getTracks().forEach((track)=>{
+                    this.pc.addTrack(track,this.localStream);
                 })
             }
-            socket.emit('slaveStart',slaveId);
+            this.socket.emit('slaveStart',slaveId);
         },
 
         closePeerConnection(){
-            if(pc){
-                pc.close();
-                pc=null;
+            if(this.pc){
+                this.pc.close();
+                this.pc=null;
             }
         },
 
 
         closeLocal(){
-            if(localStream&&localStream.getTracks()){
-                localStream.getTracks().forEach((track)=>{
+            if(this.localStream&&this.localStream.getTracks()){
+                this.localStream.getTracks().forEach((track)=>{
                     track.stop();
                 })
-                localStream=null;
+                this.localStream=null;
             }
         },
 
         connectSignalServer(){
-            initSocketIO();
+            this.initSocketIO();
         },
         disconnectSignalServer(){
-            if(socket){
-                socket.emit('leave',roomId);
+            if(this.socket){
+                this.socket.emit('leave',this.roomId);
             }
         },
         start(){
-            if(state=='master'){
+            if(this.state=='master'){
                 if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                     console.error("请使用新版浏览器");
                     return;
@@ -213,11 +223,11 @@ export default {
                             echoCancellation: true
                         }
                     }
-                    navigator.mediaDevices.getUserMedia(constraints).then(getMediaStream).catch(handleErr);
+                    navigator.mediaDevices.getUserMedia(constraints).then(this.getMediaStream).catch(this.handleErr);
                 }
-            } else if(state=='slave'){
-                slaveCreatePeerConnection();
-                socket.emit('ready',roomId);
+            } else if(this.state=='slave'){
+                this.slaveCreatePeerConnection();
+                this.socket.emit('ready',this.roomId);
             }
         }
 
