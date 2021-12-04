@@ -1,5 +1,7 @@
 <template>
-    <video id="tubeVideo" autoplay playsinline></video>
+    <div class="mainContainer">
+        <video id="tubeVideo" autoplay playsinline></video>
+    </div>
 </template>
 <script>
 export default {
@@ -27,6 +29,8 @@ export default {
         }
     },
     mounted(){
+        this.roomId = this.$route.params.roomId;
+        console.log(this.roomId);
         this.socket = this.SocketIO(this.socketApi);
         this.socket.emit('join',this.roomId);
         this.localVideo = document.querySelector('video#tubeVideo');
@@ -235,5 +239,14 @@ export default {
 }
 </script>
 <style scoped>
-
+.mainContainer{
+    margin: auto;
+    margin-top:85px;
+    display:flex;
+    width:1400px;
+    height:3645px;
+    min-height: 2000px;
+    flex-flow:column;
+}
+    
 </style>

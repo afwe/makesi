@@ -24,10 +24,11 @@ Vue.use(Router)
 
 export default new Router({
   base: 'hongyu',
-  mode: "history",
+  mode: "hash",
   routes: [
     {
       path:"/tubeRoom",
+      name:'tubeRoom',
       component: tubeRoom,
     },
    {

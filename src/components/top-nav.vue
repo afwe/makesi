@@ -13,7 +13,7 @@
         <div class="course-button texiao pointer" @click="$router.push('/course');selectedBlock='course'" :class="{ 'selectedColorMain': selectedBlock=='course'&&colorMode=='main', 'selectedColor': selectedBlock=='course'}" :style="navFontColor">
             课程
         </div>
-        <div class="wordBase-button texiao pointer" @click="$router.push('/tubeRoom');selectedBlock='word'" :class="{ 'selectedColorMain': selectedBlock=='word'&&colorMode=='main', 'selectedColor': selectedBlock=='word'}" :style="navFontColor">
+        <div class="wordBase-button texiao pointer" @click="$router.push('/tubeList');selectedBlock='word'" :class="{ 'selectedColorMain': selectedBlock=='word'&&colorMode=='main', 'selectedColor': selectedBlock=='word'}" :style="navFontColor">
             直播
         </div>
         <div class="search-input pointer" :style="backgroundS" @click="showSearch=true;showMask=true;$emit('showM');">
@@ -209,32 +209,12 @@ export default {
     },
     watch:{
         $route(to,from){
-            let nowPath=to.path;
-            nowPath=nowPath.substr(1,nowPath.length-1);
-            console.log(nowPath);
-            switch(nowPath){
-                case 'main': 
-                    this.colorMode='main'
-                    break;
-
-                case 'userInfo': 
-                    this.colorMode ='userInfo'
-                    break;
-
-                default: 
-                    this.colorMode = 'common'
-                    console.log("?")
-            }
-            this.navBackGroundColor = this.backgroundColorMode[this.colorMode]
-            console.log()
-            this.navFontColor = this.fontColorMode[this.colorMode]
-            this.titleColor = this.titleColorMode[this.colorMode]
-            this.mainpageDivColor = this.mainpageDivColorMode[this.colorMode]
+            this.switchTopNav();
         }
     },
     
     mounted(){
-        this.navBackGroundColor = this.backgroundColorMode['main'];
+        this.switchTopNav();
         window.addEventListener('scroll', this.positionWatcher, true);
         localStorage.setItem("Login", false);
         localStorage.setItem("monitor", false);
@@ -270,6 +250,29 @@ export default {
         
     },
     methods:{
+        switchTopNav(){
+            let nowPath=this.$route.path;
+            nowPath=nowPath.substr(1,nowPath.length-1);
+            console.log(nowPath);
+            switch(nowPath){
+                case 'main': 
+                    this.colorMode='main'
+                    break;
+
+                case 'userInfo': 
+                    this.colorMode ='userInfo'
+                    break;
+
+                default: 
+                    this.colorMode = 'common'
+                    console.log("?")
+            }
+            this.navBackGroundColor = this.backgroundColorMode[this.colorMode]
+            this.navFontColor = this.fontColorMode[this.colorMode]
+            this.titleColor = this.titleColorMode[this.colorMode]
+            this.mainpageDivColor = this.mainpageDivColorMode[this.colorMode]
+            this.navBackGroundColor = this.backgroundColorMode['main'];
+        },
         closeSearch(){
             this.showMask = false;
             this.showSearch = false;

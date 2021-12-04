@@ -1,3 +1,3 @@
 import fetch from './fetch';
 
-export const getTubeList = () => fetch("nodeApi/getRooms", "get", "");
+export const getTubeList = () => fetch("nodeApi/getRooms", "GET");

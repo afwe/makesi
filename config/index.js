@@ -21,11 +21,11 @@ module.exports = {
           }
       },
       '/nodeApi' : {
-        target: 'http://localhost:8444',
-        changeOrigin: true,
-        pathRewrite: {
-            '^/nodeApi': ''
-        }
+          target: 'http://localhost:8880',
+          changeOrigin: true,
+          pathRewrite: {
+              '^/nodeApi': ''
+          }
       }
     },
     // Various Dev Server settings
