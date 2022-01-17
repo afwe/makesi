@@ -60,12 +60,11 @@
             fileKey = Date.now();
             const uploader = cos.putObject({
 
-                //存储桶的名称，命名规则为 BucketName-APPID，此处填写的存储桶名称必须为此格式
                 Bucket: 'red-video-1305720498-红育', /* 必须 */
                 //存储桶所在地域
-                Region: 'red-video-1305720498-红育.cos.ap-shanghai.myqcloud.com',    /* 必须 */
+                Region: 'red-video-1305720498-红育.cos.ap-nanjing.myqcloud.com',    /* 必须 */
                 //对象键（Object 的名称），对象在存储桶中的唯一标识，了解更多请参见
-                Key: 'fileKey',              /* 必须 */
+                Key: 'https://red-video-1305720498.cos.ap-nanjing.myqcloud.com/course_pic.jpg',              /* 必须 */
                 StorageClass: 'STANDARD',
                 Body: file.file, // 这里腾讯云需要获取到file文件里的name，根据你file结构进行填写
                 onProgress: function(info) {
