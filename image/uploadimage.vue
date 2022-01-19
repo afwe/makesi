@@ -62,7 +62,7 @@
 
                 Bucket: 'red-video-1305720498-红育', /* 必须 */
                 //存储桶所在地域
-                Region: 'red-video-1305720498.cos.ap-nanjing.myqcloud.com',    /* 必须 */
+                Region: '<red-video-1305720498-红育>.cos.ap-nanjing.myqcloud.com',    /* 必须 */
                 //对象键（Object 的名称），对象在存储桶中的唯一标识，了解更多请参见
                 Key: 'https://red-video-1305720498.cos.ap-nanjing.myqcloud.com/course_pic.jpg',              /* 必须 */
                 StorageClass: 'STANDARD',
