@@ -10,12 +10,7 @@
             multiple
             >
         <i v-if="videoFlag == false" class="el-icon-plus avatar-uploader-icon "></i>
-        </el-upload>   
-        <el-progress
-            v-if="videoFlag"
-            type="circle"
-            :percentage="videoUploadPercent"
-        ></el-progress>
+        </el-upload>  
     </div>
 </template>
 <script>
