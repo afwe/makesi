@@ -5,7 +5,7 @@
         <div class="logo-img" :style="backgroundL">
         </div>
         <div class="name-p" :style="navBackGroundColor,titleColor">
-            互动课程
+            公益平台
         </div>
         <div class="mainpage-div texiao pointer" @click="$router.push('/main');selectedBlock='main'"  :class="{ 'selectedColorMain': selectedBlock=='main'&&colorMode=='main','selectedColor': selectedBlock=='main'}" :style="navFontColor">
             <span id="mainpage" :style="mainpageDivColor">主页</span>
@@ -44,7 +44,7 @@
                             红育
                         </div>
                         <div class="productQuote-p">
-                            打通专业教育与思政教育紧密融合“最后一公里”
+                            红色育人，益启幼思——儿童思政教育公益服务平台
                         </div>
                         <input class="userCount-input" :style="backgroundU" type="text" v-model="userID" placeholder="输入账号">
                         </input>
@@ -486,6 +486,7 @@ line-height:20px;
 font-size:13px;
 text-align:left;
 font-family:SourceHanSansSC-light;
+color: red;
 }.mainpage-div{margin-left:23px;
 margin-top:10px;
 width:96px;

@@ -1,6 +1,8 @@
 <template>
     <div class="mainContainer">
-        <video id="tubeVideo" autoplay playsinline></video>
+        <div class="videoContainer">
+            <video id="tubeVideo" autoplay playsinline></video>
+        </div>
     </div>
 </template>
 <script>
@@ -222,6 +224,7 @@ export default {
                     return;
                 } else {
                     let constraints = {
+                        
                         video:true,
                         audio: {
                             echoCancellation: true
@@ -248,5 +251,9 @@ export default {
     min-height: 2000px;
     flex-flow:column;
 }
-    
+#tubeVideo{
+    width:800px;
+    height:600px;
+    margin:auto;
+}
 </style>

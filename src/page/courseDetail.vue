@@ -34,7 +34,7 @@
                     </input>
                     <input class="newNotiBody-input" placeholder="请输入正文" v-model="newNotice">
                     </input>
-                    <button class="deleverNotiButton-button" @click="doUploadNotice">
+                    <button class="deleverNotiButton-button" @click="doUploadNotice()">
                         发布
                     </button>
                 </div>

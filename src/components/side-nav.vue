@@ -1,5 +1,5 @@
 <template>
-    <div class="mainContainer" v-show="showSideNav==true">
+    <div class="sideNavContainer" v-show="showSideNav==true">
         <el-dialog title="创建课程" :visible.sync="showCreate" @close="closePanel" :modal-append-to-body="false">
             <div class='chapterNest'>
                 第
@@ -71,6 +71,10 @@ export default {
         }
     },
     mounted(){
+        let nowPath=this.$route.path;
+        nowPath=nowPath.substr(1,nowPath.length-1);
+        if(nowPath=='manage'||nowPath=='videoManage'||nowPath=='partManage') this.showSideNav=true;
+        else this.showSideNav=false;
         if(localStorage.getItem("curCourseID") != undefined){
             this.courseID = localStorage.getItem("curCourseID");
         }
@@ -102,7 +106,7 @@ export default {
 .selectedColor{
     color:red !important;
 }
-.mainContainer{
+.sideNavContainer{
     z-index:1010;
     position: fixed;
     display:flex;

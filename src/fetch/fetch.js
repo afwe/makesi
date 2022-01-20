@@ -111,7 +111,6 @@ export default async function ifetch(
         );
       });
   };
-
   const retJson = Promise.race([fetchFunc(), timeoutFunc()]).then(
     (response) => {
       return response.json();

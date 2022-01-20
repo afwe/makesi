@@ -24,7 +24,7 @@ Vue.use(Router)
 
 export default new Router({
   base: 'hongyu',
-  mode: "hash",
+  mode: "history",
   routes: [
     {
       path:"/tubeRoom",

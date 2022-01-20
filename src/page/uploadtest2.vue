@@ -1,5 +1,5 @@
 <template>
-    <div class="mainContainer">
+    <div class="uploadContainer">
         <p class="type_title">
             <span>视频上传</span>
         </p>
@@ -124,7 +124,7 @@ export default {
 }
 </script>
 <style scoped>
-.mainContainer{
+.uploadContainer{
     width: 300px;
     height: 200px;
 }

@@ -11,7 +11,7 @@ import VueSocketIo from 'vue-socket.io';
 import SocketIO from "socket.io-client";
 require('video.js/dist/video-js.css')
 require('vue-video-player/src/custom-theme.css')
-const socketBase = 'https://localhost:443'
+const socketBase = 'https://175.27.138.160:443'
 Vue.prototype.socketApi = socketBase
 Vue.prototype.SocketIO = SocketIO
 Vue.use(new VueSocketIo({

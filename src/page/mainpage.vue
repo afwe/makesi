@@ -4,9 +4,9 @@
         <div class="mainImgMask-div">
         </div>
         <div class="proLog-p" >
-            打通专业教育与思政教育紧密融合“最后一公里”
+            红色育人，益启幼思——儿童思政教育公益服务平台
         </div>
-        <button @click="toCourseList()" class="start-button pointer">
+        <button @click="$router.push(`/course`)" class="start-button pointer">
             开启学习之旅
         </button>
     </div>
