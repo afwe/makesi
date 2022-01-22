@@ -67,8 +67,7 @@
                 封面
             </div>
             <div class="newCourseFace">
-            <upload>
-            </upload>
+           <fileImage ref="yingye" :value="回显数据" @input="yingyeHandle" name="上传图片"></fileImage>
             </div>
         </div>
         <div class="line">
@@ -86,6 +85,7 @@
 </template>
 <script>
 import upload from './uploadimage.vue'
+// import fileImage from './fileImage.vue'
 import {create_course, create_course_identify} from '../fetch/course';
 export default {
     components : {
@@ -168,6 +168,7 @@ export default {
             }
             
         }).catch( err => {
+
         })
     }
 }
@@ -210,6 +211,7 @@ export default {
 .close-img{
     margin-top: 12px;
     margin-left: 688px;
+
 }
 .line{
     width: 100%;
@@ -337,6 +339,7 @@ font-family:SourceHanSansSC-light;
     width:1400px;
     display: flex;
     flex-flow: row;
+
 }
 .mainContainer{
     width:1400px;
