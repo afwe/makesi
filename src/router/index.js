@@ -19,13 +19,18 @@ import searchPanel from '@/page/searchPanel'
 import userInfo from '@/page/userInfo'
 import tubeList from '@/page/tubeList'
 import tubeRoom from '@/page/tubeRoom'
-
+import ttt from '@/page/fileImage'
 Vue.use(Router)
 
 export default new Router({
   base: 'hongyu',
   mode: "history",
   routes: [
+    {
+      path:'/ttt',
+      name:'ttt',
+      component:ttt
+    },
     {
       path:"/tubeRoom",
       name:'tubeRoom',

@@ -66,6 +66,9 @@
                 封面
             </div>
             <div class="newCourseFace">
+                <upload>
+                    
+                </upload>
             </div>
         </div>
         <div class="line">
@@ -82,12 +85,16 @@
 </div>
 </template>
 <script>
+import upload from './fileImage.vue';
 import {create_course, create_course_identify} from '../fetch/course';
 export default {
     inject:{
         manageMode: {
             default:()=>{}
         }
+    },
+    components:{
+        upload
     },
     data(){
         return{

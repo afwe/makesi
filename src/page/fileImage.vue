@@ -18,11 +18,9 @@
 </template>
 
 <script>
-
-const COS = require('cos-js-sdk-v5');
 const Bucket = 'red-video-1305720498';
 const Region = 'ap-nanjing';
-import COS from 'cos-nodejs-sdk-v5'
+import COS from 'cos-nodejs-sdk-v5';
 var request = require('request');
 var cos = new COS({
     getAuthorization: function (options, callback) {
@@ -141,7 +139,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style>
 .fileImage-wrap {
 	.el-upload--picture-card {
 		line-height: 0px !important;
