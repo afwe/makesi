@@ -26,7 +26,7 @@ var cos = new COS({
     getAuthorization: function (options, callback) {
         // 异步获取临时密钥
         request({
-            url: '175.27.138.160:8443/api/upload/coursePicture/getToken',
+            url: 'http://175.27.138.160:8443/api/upload/coursePicture/getToken',
             data: {
                 // 可从 options 取需要的参数
             }
