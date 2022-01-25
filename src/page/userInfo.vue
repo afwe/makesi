@@ -51,7 +51,8 @@
             <div class="newTitle-p">
                 名称
             </div>
-            <textarea class="newCourseTitle"  v-model="newCourseTitle">
+            <textarea class="newCours
+            eTitle"  v-model="newCourseTitle">
             </textarea>
         </div>
         <div class="descSet-div">
@@ -66,9 +67,7 @@
                 封面
             </div>
             <div class="newCourseFace">
-                <upload>
-                    
-                </upload>
+           <fileImage ref="yingye" :value="回显数据" @input="yingyeHandle" name="上传图片"></fileImage>
             </div>
         </div>
         <div class="line">
@@ -85,16 +84,18 @@
 </div>
 </template>
 <script>
-import upload from './fileImage.vue';
+import upload from './uploadimage.vue'
+// import fileImage from './fileImage.vue'
+import fileImage from './fileImage.vue';
 import {create_course, create_course_identify} from '../fetch/course';
 export default {
+    components : {
+        uploadimage
+    },
     inject:{
         manageMode: {
             default:()=>{}
         }
-    },
-    components:{
-        upload
     },
     data(){
         return{
@@ -279,7 +280,7 @@ font-size: 22px;
 text-align: left;
 font-family: SourceHanSansSC-regular;
 }
-.newCourseFace{
+.{
     margin-left:24px;
     width: 227px;
 height: 142px;
