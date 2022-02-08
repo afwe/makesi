@@ -139,43 +139,8 @@ export default {
 </script>
 
 <style scoped>
-    .el-upload--picture-card {
-        line-height: 0px !important;
-        width: 184px;
-        height: 118px;
-        position: relative;
-        .el-icon-plus {
-            margin-top: 35px;
-        }
-        .file-name {
-            display: inline-block;
-            width: 100%;
-            font-size: 14px;
-            color: #999999;
-            position: absolute;
-            bottom: 25px;
-            left: 0;
-        }
-    }
-    .el-upload-list__item {
-        width: 184px !important;
-        height: 118px !important;
-    }
-    .el-upload-list--picture-card .el-upload-list__item-status-label {
-        background: linear-gradient(180deg, #ffaa6b 0%, #ff792a 100%);
-    }
-.hide .el-upload--picture-card {
-    display: none;
-}
-// 去掉动画效果
-.el-list-enter-active,
-.el-list-leave-active {
-    transition: all 0s;
-}
-
-.el-list-enter,
-.el-list-leave-active {
-    opacity: 0;
-    transform: translateY(0);
+  .fileImage-wrap{
+    width: 300px;
+    height: 200px;
 }
 </style>
