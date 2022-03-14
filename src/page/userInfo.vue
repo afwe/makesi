@@ -66,6 +66,18 @@
                 封面
             </div>
             <div class="newCourseFace">
+            <template>
+    <div class="mainContainer">
+        <el-dialog title="上传视频" :visible.sync="showUpload" @close="showUpload=false" :modal-append-to-body="false">
+                <upload>
+                </upload>
+        </el-dialog>
+        <el-button class="createCourse" @click="showUpload=!showUpload">
+            上传图片
+        </el-button>
+        
+    </div>
+</template>
             </div>
         </div>
         <div class="line">
@@ -83,12 +95,59 @@
 </template>
 <script>
 import {create_course, create_course_identify} from '../fetch/course';
+import {getPartListByCourseID, deletePartByID} from '../fetch/video';
+import upload from './imageUploadTest.vue';
+// import upload from './uploadtest2.vue';
 export default {
+    components:{
+        upload
+    },
+    data(){
+        return{
+            courseID: '',
+            showUpload: false,
+            partList: [],
+            isDone: true
+        }
+    },
+    mounted(){
+        if(localStorage.getItem("curCourseID") != undefined){
+            this.courseID = localStorage.getItem("curCourseID");
+        }
+        this.render();
+    },
+    methods:{
+        handleDelete: function(id){
+            let self = this;
+            deletePartByID({partId: id}).then(
+                data => {
+                    if(data.code == 200){
+                        self.render();
+                    }
+                }
+            )
+        },
+        render: async function(){
+            console.log(this.courseID);
+            let response = await getPartListByCourseID(this.courseID);
+            console.log(response);
+            if(response.code == 200){
+                this.partList = response.data;
+            }
+            else{
+                this.$message({
+                    type: 'error',
+                    message: '获取片段列表失败'
+                })
+            }
+        }
+    },
+
     inject:{
         manageMode: {
             default:()=>{}
         }
-    },
+    }, 
     data(){
         return{
             showMode: 'course',
@@ -165,6 +224,7 @@ export default {
         })
     }
 }
+
 </script>
 <style scoped>
 .mask{
@@ -401,4 +461,9 @@ font-size:14px;
 text-align:center;
 font-family:MicrosoftYahei;
 }
+.mainContainer{
+    width: 300px;
+    height: 200px;
+}
+</style>
 </style>
