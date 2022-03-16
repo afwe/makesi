@@ -66,18 +66,13 @@
                 封面
             </div>
             <div class="newCourseFace">
-            <template>
-    <div class="mainContainer">
-        <el-dialog title="上传视频" :visible.sync="showUpload" @close="showUpload=false" :modal-append-to-body="false">
+            <el-dialog title="上传视频" :visible.sync="showUpload" @close="showUpload=false" :modal-append-to-body="false">
                 <upload>
                 </upload>
         </el-dialog>
-        <el-button class="createCourse" @click="showUpload=!showUpload">
-            上传图片
+            <el-button class="createCourse" @click="showUpload=!showUpload">
+            上传视频
         </el-button>
-        
-    </div>
-</template>
             </div>
         </div>
         <div class="line">
@@ -95,11 +90,10 @@
 </template>
 <script>
 import {create_course, create_course_identify} from '../fetch/course';
-import {getPartListByCourseID, deletePartByID} from '../fetch/video';
 import upload from './imageUploadTest.vue';
-// import upload from './uploadtest2.vue';
+import {getPartListByCourseID, deletePartByID} from '../fetch/video';
 export default {
-    components:{
+     components:{
         upload
     },
     data(){
@@ -142,12 +136,11 @@ export default {
             }
         }
     },
-
     inject:{
         manageMode: {
             default:()=>{}
         }
-    }, 
+    },
     data(){
         return{
             showMode: 'course',
@@ -224,7 +217,6 @@ export default {
         })
     }
 }
-
 </script>
 <style scoped>
 .mask{
@@ -461,9 +453,4 @@ font-size:14px;
 text-align:center;
 font-family:MicrosoftYahei;
 }
-.mainContainer{
-    width: 300px;
-    height: 200px;
-}
-</style>
 </style>
