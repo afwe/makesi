@@ -71,8 +71,17 @@
                 </upload>
         </el-dialog>
             <el-button class="createCourse" @click="showUpload=!showUpload">
-            上传视频
+            上传图片
         </el-button>
+        <el-table :data="partList" stripe border>
+            <el-table-column  type="index"></el-table-column>
+            <el-table-column  label="图片名称" prop="name"></el-table-column>
+            <el-table-column label="删除">
+                <template slot-scope="scope">
+                    <el-button size="mini" type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
             </div>
         </div>
         <div class="line">
@@ -95,14 +104,6 @@ import {getPartListByCourseID, deletePartByID} from '../fetch/video';
 export default {
      components:{
         upload
-    },
-    data(){
-        return{
-            courseID: '',
-            showUpload: false,
-            partList: [],
-            isDone: true
-        }
     },
     mounted(){
         if(localStorage.getItem("curCourseID") != undefined){
@@ -163,6 +164,10 @@ export default {
             showMask: false,
             newCourseTitle:"",
             newCourseDesc: "",
+             courseID: '',
+            showUpload: false,
+            partList: [],
+            isDone: true,
         }
     },
     methods:{
