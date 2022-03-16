@@ -44,8 +44,8 @@ export default {
         httpRequest(file){
             const _this = this;
             console.log(file);
-            // // 限制视频格式
-            // if (["video/jpg", "video/quicktime"].indexOf(file.file.type) == -1) {
+            // 限制视频格式
+            // if (["video/mp4", "video/quicktime"].indexOf(file.file.type) == -1) {
             //     this.$message.error("视频格式有误，上传失败");
             //     return false;
             // }
