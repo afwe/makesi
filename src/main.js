@@ -14,13 +14,13 @@ require('vue-video-player/src/custom-theme.css')
 const socketBase = 'https://175.27.138.160:443'
 Vue.prototype.socketApi = socketBase
 Vue.prototype.SocketIO = SocketIO
-Vue.use(new VueSocketIo({
-    debug: true,
-    connection: SocketIO.connect(socketBase, {
-      path:'',
-      transports: ['websocket', 'xhr-polling', 'jsonp-polling'],
-    })
-}))
+// Vue.use(new VueSocketIo({
+//     debug: true,
+//     connection: SocketIO.connect(socketBase, {
+//       path:'',
+//       transports: ['websocket', 'xhr-polling', 'jsonp-polling'],
+//     })
+// }))
 Vue.use(VideoPlayer)
 Vue.config.productionTip = false
 
